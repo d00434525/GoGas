@@ -5,21 +5,25 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <!-- Vuetify -->
-    <link href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900" rel="stylesheet">
+    <!-- <link href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/@mdi/font@6.x/css/materialdesignicons.min.css" rel="stylesheet">
-    <link href="https://cdn.jsdelivr.net/npm/vuetify@2.x/dist/vuetify.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/vuetify@2.x/dist/vuetify.min.css" rel="stylesheet"> -->
     <title>GoGas</title>
 </head>
-<body id="app">
-    <div id="registerPage">
-        <h1>Register</h1>
-        <input id="registerUsername" placeholder="Username" v-model=""><br>
-        <input id="registerEmail" placeholder="Email" v-model=""><br>
-        <input id="registerPass" placeholder="Password" v-model=""><br>
-        <input id="registerConfirmPass" placeholder="Confirm Password" v-model=""><br>
-        <input id="registerZip" placeholder="Zip" v-model=""><br>
-    </div>
 
+<body id="app">
+    <!-- REGISTER PAGE -->
+    <div id="registerPage" v-if="page == 'register'">
+
+        <h1>Register</h1>
+        <input id="registerUsername" placeholder="Username" v-model="rUsername"><br>
+        <input id="registerEmail" placeholder="Email" v-model="rEmail"><br>
+        <input id="registerPass" placeholder="Password" v-model="rPass"><br>
+        <input id="registerConfirmPass" placeholder="Confirm Password" v-model="rConfirmPass"><br>
+        <input id="registerZip" placeholder="Zip" v-model="rZip"><br>
+        <button @click="setPage('register')">Register</button>
+
+    </div>
 
 
     <script src="app.js"></script>
