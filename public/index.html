@@ -8,11 +8,22 @@
     <link href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/@mdi/font@6.x/css/materialdesignicons.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/vuetify@2.x/dist/vuetify.min.css" rel="stylesheet">
-    <title>Document</title>
+    <title>GoGas</title>
 </head>
-<body>
-    
 
+<body id="app">
+    <!-- REGISTER PAGE -->
+    <div id="registerPage" v-if="page == 'register'">
+
+        <h1>Register</h1>
+        <input id="registerUsername" placeholder="Username" v-model="rUsername"><br>
+        <input id="registerEmail" placeholder="Email" v-model="rEmail"><br>
+        <input id="registerPass" placeholder="Password" v-model="rPass"><br>
+        <input id="registerConfirmPass" placeholder="Confirm Password" v-model="rConfirmPass"><br>
+        <input id="registerZip" placeholder="Zip" v-model="rZip"><br>
+        <button @click="setPage('register')">Register</button>
+
+    </div>
 
 
     <script src="app.js"></script>
