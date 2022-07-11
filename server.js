@@ -15,8 +15,10 @@ const { User } = require("./persist/model");
 app.post("/user", async (req, res) => {
     try {
         let user = await User.create ({
-            username: req.body.username,
+            email: req.body.email,
             password: req.body.password,
+            username: req.body.username,
+            zip: req.body.zip,
         });
         res.status(201).json(user);
     } catch (err) {

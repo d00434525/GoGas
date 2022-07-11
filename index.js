@@ -8,12 +8,12 @@ const config = require("./config");
 const { onConnect, connect } = require("./persist/connect");
 
 // // Pull in authentication and authorization
-// const setUpAuth = require("./auth");
-// const setUpSession = require("./session");
+const setUpAuth = require("./auth");
+const setUpSession = require("./session");
 
-// // Set up authentication and authorization
-// setUpSession(app);
-// setUpAuth(app);
+// Set up authentication and authorization
+setUpSession(app);
+setUpAuth(app);
 
 // Connect to mongodb and start server
 onConnect (() => {

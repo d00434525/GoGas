@@ -6,5 +6,5 @@ module.exports = {
     port: port,
     dbusername: process.env.DBUSERNAME,
     password: process.env.PASSWORD,
-    stuff: process.env.SECRET,
+    secret: process.env.SECRET,
 }
