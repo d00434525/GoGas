@@ -11,42 +11,37 @@
     <title>GoGas</title>
 </head>
 
-<<<<<<< HEAD
-<body id="app">
-    <!-- REGISTER PAGE -->
-    <div id="registerPage" v-if="page == 'register'">
-        <v-app>
-
-            <v-btn
-            depressed
-            elevation="2"
-            rounded
-          ></v-btn>
-=======
 <body>
     <div id="app">
-        <!-- REGISTER PAGE -->
-        <div id="registerPage" v-if="page == 'register'">
+        
+        <!-- HOME PAGE -->
+        <div id="home_page">
+            <h1>Welcome to GoGas</h1>
 
->>>>>>> 9c1ab705af28186cc4c15c0ba5ba54119cff4ff0
+            <button>Login</button>
+            <button>Register</button>
+            <button>Continue as Guest</button>
+        </div>
+
+        <!-- REGISTER PAGE -->
+        <div id="register_page" v-if="page == 'register'">
+
             <h1>Register</h1>
             <input id="registerUsername" placeholder="Username" v-model="rUsername"><br>
             <input id="registerEmail" placeholder="Email" v-model="rEmail"><br>
             <input id="registerPass" placeholder="Password" v-model="rPass"><br>
             <input id="registerConfirmPass" placeholder="Confirm Password" v-model="rConfirmPass"><br>
             <input id="registerZip" placeholder="Zip" v-model="rZip"><br>
-<<<<<<< HEAD
-            <button @click="setPage('register')">Register</button>
-=======
             <button @click="setPage('signIn')">Register</button>
 
         </div>
->>>>>>> 9c1ab705af28186cc4c15c0ba5ba54119cff4ff0
+
+
+        <!-- LOGIN PAGE -->
 
 
 
 
-        </v-app>
     </div>
 
 
