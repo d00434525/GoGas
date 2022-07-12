@@ -16,7 +16,11 @@ var app = new Vue({
         rEmail: "",
         rPass:"",
         rConfirmPass:"",
-        rZip: ""
+        rZip: "",
+
+        lEmail: "",
+        lPassword: ""
+
 
 
     },
