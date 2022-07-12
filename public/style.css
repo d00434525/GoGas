@@ -88,3 +88,15 @@
     color: var(--nav-color);
     margin: 20px 0px;
 }
+
+
+/* ====================== Map PAGE ============================= */
+
+#map{
+    height: 100%;
+    width: 50%;
+}
+body{
+    height: 100;
+    width: auto;
+}
