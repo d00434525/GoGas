@@ -2,7 +2,7 @@ var app = new Vue({
     el: "#app",
     data:{
         // data members go here
-        page: "initial",
+        page: "register",
 
         // Register Page
         rUsername: "",
