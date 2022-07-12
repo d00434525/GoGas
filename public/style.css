@@ -1,4 +1,90 @@
-[v-cloak] {
-    display: none;
+/* ======================= CSS RESET ============================== */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Lato', sans-serif;
+    font-family: 'Montserrat', sans-serif;
 }
 
+/* ===================== VARIABLES AND CROSS PAGE STYLES ================================ */
+:root {
+    --nav-color: #4F4789;
+    --gray-color: #D9D9D9;
+    --orange-color: #FFB17A;
+    --input-color: #FFFFFF;
+}
+
+.input_style {
+    width: 800px;
+    height: 50px;
+    border-radius: 15px;
+    border: none;
+    padding: 10px;
+    margin-bottom: 10px;
+    background-color: var(--input-color);
+    font-size: 25px;
+    text-align: center;
+}
+
+.input_style:focus {
+    outline-color: var(--orange-color);
+}
+
+.button_style {
+    width: 300;
+    height: 50px;
+    border-radius: 15px;
+    border: none;
+    padding: 10px;
+    margin-bottom: 10px;
+    background-color: var(--orange-color);
+    font-size: 25px;
+    font-weight: 600;
+    text-align: center;
+    transition: 0.5s;
+}
+
+.button_style:hover {
+    box-shadow: 0px 5px 0px black;
+}
+
+
+/* ====================== REGISTER PAGE ============================= */
+#register_page {
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+#register_header {
+    background-color: var(--nav-color);
+    width: 1000px;
+    text-align: center;
+    border-radius: 50px 50px 0px 0px;
+}
+
+#register_header img {
+    padding: 20px;
+    width: 100%;
+    height: 150px;
+}
+
+#register_body {
+    background-color: var(--gray-color);
+    width: 1000px;
+    height: 80vh;
+    border-radius: 0px 0px 50px 50px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+#register_body h1 {
+    font-size: 50px;
+    color: var(--nav-color);
+    margin: 20px 0px;
+}
