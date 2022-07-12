@@ -14,27 +14,36 @@
 
 <body>
     <div id="app">
+
+        <!-- HOME PAGE -->
+        <div id="home_page" v-if="page == 'home'">
+            <h1>Welcome to GoGas</h1>
+            <button v-on:click="page = 'register'">Register</button>
+            <button v-on:click="page = 'signIn'">Sign In</button>
+            <button>Continue as Guest</button>
+        </div>
+
         <!-- REGISTER PAGE -->
-        <div id="registerPage" v-if="page == 'register'">
+        <div id="register_page" v-if="page == 'register'">
 
             <h1>Register</h1>
-            <input id="registerUsername" placeholder="Username" v-model="rUsername"><br>
-            <input id="registerEmail" placeholder="Email" v-model="rEmail"><br>
-            <input id="registerPass" placeholder="Password" v-model="rPass"><br>
-            <input id="registerConfirmPass" placeholder="Confirm Password" v-model="rConfirmPass"><br>
-            <input id="registerZip" placeholder="Zip" v-model="rZip"><br>
-            <button @click="setPage('signIn')">Register</button>
+            <input id="register_username" placeholder="Username" v-model="rUsername"><br>
+            <input id="register_email" placeholder="Email" v-model="rEmail"><br>
+            <input id="register_pass" placeholder="Password" v-model="rPass"><br>
+            <input id="register_confirmPass" placeholder="Confirm Password" v-model="rConfirmPass"><br>
+            <input id="register_zip" placeholder="Zip" v-model="rZip"><br>
+            <button>Register</button>
+            <button @click="setPage('home')">Back To Home</button>
 
         </div>
 
         <!-- SIGN IN PAGE -->
-        <div id="loginPage" v-else-if="page == 'signIn'">
+        <div id="login_page" v-if="page == 'signIn'">
             <h1>Sign In</h1>
-            <input id="loginEmail" placeholder="Email" v-model="lEmail"><br>
-            <input id="loginPassword" placeholder="Password" v-model="lPassword"><br>
+            <input id="login_email" placeholder="Email" v-model="lEmail"><br>
+            <input id="login_password" placeholder="Password" v-model="lPassword"><br>
             <button @click="setPage('home')">Login</button>
-            <button @click="setPage('register')">Back To Register</button>
-            <button @click="setPage('home')">Continue As Guest</button>
+            <button @click="setPage('home')">Back To Home</button>
 
         </div>
 
