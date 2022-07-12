@@ -24,6 +24,8 @@
 
   <body>
     <div id="app" v-cloak>
+        <v-app>
+
       <!-- HOME PAGE -->
       <div id="home_page" v-if="page == 'home'">
         <h1>Welcome to GoGas</h1>
@@ -68,9 +70,12 @@
         <button @click="setPage('home')">Login</button>
         <button @click="setPage('home')">Back To Home</button>
       </div>
+
+      </v-app>
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vuetify@1.x/dist/vuetify.js"></script>
     <script src="app.js"></script>
   </body>
 </html>
