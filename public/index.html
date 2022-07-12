@@ -1,61 +1,76 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <!-- Vuetify -->
-    <link rel="stylesheet" href="style.css">
-    <link href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900" rel="stylesheet">
-    <link href="https://cdn.jsdelivr.net/npm/@mdi/font@6.x/css/materialdesignicons.min.css" rel="stylesheet">
-    <link href="https://cdn.jsdelivr.net/npm/vuetify@2.x/dist/vuetify.min.css" rel="stylesheet">
-   
+    <link rel="stylesheet" href="style.css" />
+    <link
+      href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900"
+      rel="stylesheet"
+    />
+    <link
+      href="https://cdn.jsdelivr.net/npm/@mdi/font@6.x/css/materialdesignicons.min.css"
+      rel="stylesheet"
+    />
+    <link
+      href="https://cdn.jsdelivr.net/npm/vuetify@2.x/dist/vuetify.min.css"
+      rel="stylesheet"
+    />
 
     <title>GoGas</title>
-</head>
+  </head>
 
-<body>
-    <div id="app">
+  <body>
+    <div id="app" v-cloak>
+      <!-- HOME PAGE -->
+      <div id="home_page" v-if="page == 'home'">
+        <h1>Welcome to GoGas</h1>
+        <button v-on:click="page = 'register'">Register</button>
+        <button v-on:click="page = 'signIn'">Sign In</button>
+        <button>Continue as Guest</button>
+      </div>
 
-        <!-- HOME PAGE -->
-        <div id="home_page" v-if="page == 'home'">
-            <h1>Welcome to GoGas</h1>
-            <button v-on:click="page = 'register'">Register</button>
-            <button v-on:click="page = 'signIn'">Sign In</button>
-            <button>Continue as Guest</button>
-        </div>
+      <!-- REGISTER PAGE -->
+      <div id="register_page" v-if="page == 'register'">
+        <h1>Register</h1>
+        <input
+          id="register_username"
+          placeholder="Username"
+          v-model="rUsername"
+        /><br />
+        <input id="register_email" placeholder="Email" v-model="rEmail" /><br />
+        <input
+          id="register_pass"
+          placeholder="Password"
+          v-model="rPass"
+        /><br />
+        <input
+          id="register_confirmPass"
+          placeholder="Confirm Password"
+          v-model="rConfirmPass"
+        /><br />
+        <input id="register_zip" placeholder="Zip" v-model="rZip" /><br />
+        <button>Register</button>
+        <button @click="setPage('home')">Back To Home</button>
+      </div>
 
-        <!-- REGISTER PAGE -->
-        <div id="register_page" v-if="page == 'register'">
-
-            <h1>Register</h1>
-            <input id="register_username" placeholder="Username" v-model="rUsername"><br>
-            <input id="register_email" placeholder="Email" v-model="rEmail"><br>
-            <input id="register_pass" placeholder="Password" v-model="rPass"><br>
-            <input id="register_confirmPass" placeholder="Confirm Password" v-model="rConfirmPass"><br>
-            <input id="register_zip" placeholder="Zip" v-model="rZip"><br>
-            <button>Register</button>
-            <button @click="setPage('home')">Back To Home</button>
-
-        </div>
-
-        <!-- SIGN IN PAGE -->
-        <div id="login_page" v-if="page == 'signIn'">
-            <h1>Sign In</h1>
-            <input id="login_email" placeholder="Email" v-model="lEmail"><br>
-            <input id="login_password" placeholder="Password" v-model="lPassword"><br>
-            <button @click="setPage('home')">Login</button>
-            <button @click="setPage('home')">Back To Home</button>
-
-        </div>
-
-
-
-
+      <!-- SIGN IN PAGE -->
+      <div id="login_page" v-if="page == 'signIn'">
+        <h1>Sign In</h1>
+        <input id="login_email" placeholder="Email" v-model="lEmail" /><br />
+        <input
+          id="login_password"
+          placeholder="Password"
+          v-model="lPassword"
+        /><br />
+        <button @click="setPage('home')">Login</button>
+        <button @click="setPage('home')">Back To Home</button>
+      </div>
     </div>
-
 
     <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
     <script src="app.js"></script>
-</body>
+  </body>
 </html>
