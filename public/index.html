@@ -9,11 +9,9 @@
     <link href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/@mdi/font@6.x/css/materialdesignicons.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/vuetify@2.x/dist/vuetify.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="style/main.css">
-    <link rel="stylesheet" href="style/home.css">
-    <link rel="stylesheet" href="style/register.css">
-    <link rel="stylesheet" href="style/login.css">
-
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;0,700;1,300&family=Montserrat:wght@100;300;400;600;700&display=swap" rel="stylesheet">
 
     <title>GoGas</title>
 </head>
@@ -31,15 +29,19 @@
 
         <!-- REGISTER PAGE -->
         <div id="register_page" v-if="page == 'register'">
-
-            <h1>Register</h1>
-            <input id="register_username" placeholder="Username" v-model="rUsername"><br>
-            <input id="register_email" placeholder="Email" v-model="rEmail"><br>
-            <input id="register_pass" placeholder="Password" v-model="rPass"><br>
-            <input id="register_confirmPass" placeholder="Confirm Password" v-model="rConfirmPass"><br>
-            <input id="register_zip" placeholder="Zip" v-model="rZip"><br>
-            <button>Register</button>
-            <button @click="setPage('home')">Back To Home</button>
+            <div id="register_header">
+                <img src="./images/gogaslogo.svg" alt="Go Gas Logo">
+            </div>
+            <div id="register_body">
+                <h1>Register</h1>   
+                <input id="register_username" placeholder="Username" v-model="rUsername" class="input_style"><br>
+                <input id="register_email" placeholder="Email" v-model="rEmail" class="input_style"><br>
+                <input id="register_pass" placeholder="Password" v-model="rPass" class="input_style"><br>
+                <input id="register_confirmPass" placeholder="Confirm Password" v-model="rConfirmPass" class="input_style"><br>
+                <input id="register_zip" placeholder="Zip" v-model="rZip" class="input_style"><br>
+                <button class="button_style">Register</button>
+                <button @click="setPage('home')" class="button_style">Back To Home</button>
+            </div>
 
         </div>
 
