@@ -14,15 +14,25 @@
 <body id="app">
     <!-- REGISTER PAGE -->
     <div id="registerPage" v-if="page == 'register'">
+        <v-app>
 
-        <h1>Register</h1>
-        <input id="registerUsername" placeholder="Username" v-model="rUsername"><br>
-        <input id="registerEmail" placeholder="Email" v-model="rEmail"><br>
-        <input id="registerPass" placeholder="Password" v-model="rPass"><br>
-        <input id="registerConfirmPass" placeholder="Confirm Password" v-model="rConfirmPass"><br>
-        <input id="registerZip" placeholder="Zip" v-model="rZip"><br>
-        <button @click="setPage('register')">Register</button>
+            <v-btn
+            depressed
+            elevation="2"
+            rounded
+          ></v-btn>
+            <h1>Register</h1>
+            <input id="registerUsername" placeholder="Username" v-model="rUsername"><br>
+            <input id="registerEmail" placeholder="Email" v-model="rEmail"><br>
+            <input id="registerPass" placeholder="Password" v-model="rPass"><br>
+            <input id="registerConfirmPass" placeholder="Confirm Password" v-model="rConfirmPass"><br>
+            <input id="registerZip" placeholder="Zip" v-model="rZip"><br>
+            <button @click="setPage('register')">Register</button>
 
+
+
+
+        </v-app>
     </div>
 
 
