@@ -7,14 +7,6 @@ const config = require("./config");
 // Pull in mongo connections
 const { onConnect, connect } = require("./persist/connect");
 
-// // Pull in authentication and authorization
-const setUpAuth = require("./auth");
-const setUpSession = require("./session");
-
-// Set up authentication and authorization
-setUpSession(app);
-setUpAuth(app);
-
 // Connect to mongodb and start server
 onConnect (() => {
     var server = app.listen(config.port, () => {

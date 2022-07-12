@@ -11,13 +11,21 @@ app.use(express.static(`${__dirname}/public`));
 // Pull in user model
 const { User } = require("./persist/model");
 
+// // Pull in authentication and authorization
+const setUpAuth = require("./auth");
+const setUpSession = require("./session");
+
+// Set up authentication and authorization
+setUpSession(app);
+setUpAuth(app);
+
 // Create new user
 app.post("/user", async (req, res) => {
     try {
         let user = await User.create ({
-            email: req.body.email,
-            password: req.body.password,
             username: req.body.username,
+            password: req.body.password,
+            name: req.body.name,
             zip: req.body.zip,
         });
         res.status(201).json(user);

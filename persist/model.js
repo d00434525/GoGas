@@ -1,12 +1,12 @@
 // Pull in mongoose
 const mongoose = require("mongoose");
 
-// Pull in bcrypt
+// Pull in bcrypy
 const bcrypt = require("bcrypt");
 
 // User schema
 const userSchema = mongoose.Schema({
-    email: {
+    username: {
         type: String,
         match: [
             /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/,
@@ -16,7 +16,7 @@ const userSchema = mongoose.Schema({
         unique: true,
     },
     password: { type: String, required: true },
-    username: { type: String, required: true},
+    name: { type: String, required: true, unique: true},
     zip: { type: Number, required: true},
 });
 
