@@ -33,19 +33,44 @@
 
         <!-- REGISTER PAGE -->
         <div id="register_page" v-if="page == 'register'">
-            <div id="register_header">
-                <img src="./images/gogaslogo.svg" alt="Go Gas Logo">
-            </div>
-            <div id="register_body">
-                <h1>Register</h1>   
-                <input id="register_username" placeholder="Username" v-model="rUsername" class="input_style"><br>
-                <input id="register_email" placeholder="Email" v-model="rEmail" class="input_style"><br>
-                <input id="register_pass" placeholder="Password" v-model="rPass" class="input_style"><br>
-                <input id="register_confirmPass" placeholder="Confirm Password" v-model="rConfirmPass" class="input_style"><br>
-                <input id="register_zip" placeholder="Zip" v-model="rZip" class="input_style"><br>
-                <button class="button_style">Register</button>
-                <button @click="setPage('home')" class="button_style">Back To Home</button>
-            </div>
+
+            <v-sheet rounded id="sheet">
+
+                <!-- header -->
+                <div id="register_header">
+                    <img src="./images/gogaslogo.svg" alt="Go Gas Logo">
+                </div>
+
+                <!-- body -->
+                <div id="register_body">
+                    <h1>Register</h1>   
+                <v-row class="mx-10">
+                    <v-text-field required  color="#FFB17A" id="register_username" label="Username" v-model="rUsername">
+                </v-row>
+
+                <v-row>
+                    <v-text-field id="register_email" color="#FFB17A" label="Email" v-model="rEmail">
+                </v-row>
+
+                <v-row>
+                    <v-text-field id="register_pass" color="#FFB17A" label="Password" v-model="rPass">
+                </v-row>
+
+                <v-row>
+                    <v-text-field id="register_confirmPass" color="#FFB17A" label="Confirm Password" v-model="rConfirmPass">
+                </v-row>
+
+                <v-row>
+                    <v-text-field id="register_zip" color="#FFB17A" label="Zip" v-model="rZip">
+                </v-row>
+
+                    <button class="button_style">Register</button>
+
+                    <button @click="setPage('home')" class="button_style">Back To Home</button>
+
+                </div>
+
+            </v-sheet>
         </div>
 
         <!-- SIGN IN PAGE -->
