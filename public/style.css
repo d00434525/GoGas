@@ -138,5 +138,5 @@
 
 #column {
     flex: 0 0 30%;
-    max-width: 100;
+    max-width: 100%;
 }
