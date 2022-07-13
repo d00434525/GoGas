@@ -9,32 +9,7 @@
     <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
     <link href="locatorplus.css" rel="stylesheet">
     <script src="locatorplus.js"></script>
-    <script>
-      const CONFIGURATION = {
-        "locations": [
-          {"title":"Maverik Adventure\u0027s First Stop","address1":"995 E St George Blvd","address2":"St. George, UT 84770, USA","coords":{"lat":37.110533023837064,"lng":-113.5627422067459},"placeId":"ChIJoTFbxi1byoARQC6N--G6y3I"},
-          {"title":"Maverik Adventure\u0027s First Stop","address1":"1216 S Bluff St","address2":"St. George, UT 84770, USA","coords":{"lat":37.0871070413972,"lng":-113.58549446441803},"placeId":"ChIJeZqdq5RFyoARKYzkH1ehLfQ"},
-          {"title":"Maverik Adventure\u0027s First Stop","address1":"980 Hoodoo Way","address2":"Washington, UT 84780, USA","coords":{"lat":37.144940304138835,"lng":-113.48755169325409},"placeId":"ChIJqS_5vaJbyoARaGHNCPfxn1s"},
-          {"title":"Maverik Adventure\u0027s First Stop","address1":"1880 W Sunset Blvd","address2":"St. George, UT 84770, USA","coords":{"lat":37.12335401804215,"lng":-113.62329556441804},"placeId":"ChIJO9iMUnxEyoARqMc1oe6WtJM"},
-          {"title":"Maverik Adventure\u0027s First Stop","address1":"2078 E Riverside Dr","address2":"St. George, UT 84790, USA","coords":{"lat":37.09919137171999,"lng":-113.53733453558198},"placeId":"ChIJV2vFL-VayoARIG2WgppKOx8"},
-          {"title":"Chevron Saint George","address1":"125 E Riverside Dr ste a","address2":"St. George, UT 84790, USA","coords":{"lat":37.08177763682795,"lng":-113.58075563558197},"placeId":"ChIJScqP6DZFyoAR9XeB4K91KE8"},
-          {"title":"Chevron","address1":"1946 S River Rd","address2":"St. George, UT 84790, USA","coords":{"lat":37.07483985998879,"lng":-113.55385243558199},"placeId":"ChIJiU9jvrxayoARi7YsoLtMtQQ"},
-          {"title":"Chevron","address1":"81 S River Rd","address2":"St. George, UT 84790, USA","coords":{"lat":37.10929160000001,"lng":-113.5550396932541},"placeId":"ChIJi7NgBiRbyoAR5AYrVbP76R4"},
-          {"title":"Chevron","address1":"927 W Sunset Blvd","address2":"St. George, UT 84770, USA","coords":{"lat":37.12439900878296,"lng":-113.60306283558197},"placeId":"ChIJi4gBBJpEyoARjiUUp6R1u80"},
-          {"title":"Chevron - Terrible\u0027s","address1":"954 N Commerce Blvd #2","address2":"Washington, UT 84780, USA","coords":{"lat":37.14384116097574,"lng":-113.4865708932541},"placeId":"ChIJEd9X9wFbyoARtCi5P9TkxmE"},
-          {"title":"Shell","address1":"795 E E 700 S","address2":"St. George, UT 84770, USA","coords":{"lat":37.09645514245291,"lng":-113.5667895509262},"placeId":"ChIJ5VmoVNFayoART9egmRgT2uo"},
-          {"title":"Shell","address1":"915 E St George Blvd","address2":"St. George, UT 84770, USA","coords":{"lat":37.1101511680058,"lng":-113.56382876441803},"placeId":"ChIJMS6asi9byoART5quZoVDWKk"},
-          {"title":"Shellee Drive","address1":"Shellee Dr","address2":"St. George, UT 84790, USA","coords":{"lat":37.07291280104127,"lng":-113.55168273558198},"placeId":"EiVTaGVsbGVlIERyLCBTdC4gR2VvcmdlLCBVVCA4NDc5MCwgVVNBIi4qLAoUChIJ1x-RW6JayoARLlIQDbjSoxwSFAoSCeU5SZjQRMqAER4cofjyBxdT"}
-        ],
-        "mapOptions": {"center":{"lat":38.0,"lng":-100.0},"fullscreenControl":true,"mapTypeControl":false,"streetViewControl":false,"zoom":4,"zoomControl":true,"maxZoom":17},
-        "mapsApiKey": "AIzaSyDaVrWcsJembN9zTo2mKM4CYATmEd3f0dw",
-        "capabilities": {"input":true,"autocomplete":true,"directions":true,"distanceMatrix":true,"details":true,"actions":false}
-      };
-
-      function initMap() {
-        new LocatorPlus(CONFIGURATION);
-      }
-    </script>
+    
     <script id="locator-result-items-tmpl" type="text/x-handlebars-template">
       {{#each locations}}
         <li class="location-result" data-location-index="{{index}}">

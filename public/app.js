@@ -3,7 +3,7 @@ var app = new Vue({
     vuetify: new Vuetify(),
     data:{
         // data members go here
-        page: "home",
+        page: "map",
 
         // Register Page
         rUsername: "",
