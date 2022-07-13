@@ -171,5 +171,6 @@ app.post("/price", async (req, res) => {
         res.status(500).json({message: "Failed to create price"}, err)
     }
 });
+
 // Export app
 module.exports = app;
