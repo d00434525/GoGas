@@ -134,6 +134,43 @@ app.post("/review", async (req, res) => {
     }
 });
 
+// Post price on a station
+app.post("/price", async (req, res) => {
+    // Check auth
+    if (!req.user) {
+        res.status(401).json({message: "Unauthorized"});
+        return;
+    }
+
+    let station;
+
+    try {
+        station = await Station.findByIdAndUpdate(
+            req.body.station_id,
+            {
+                $push: {
+                    prices: {
+                        user_id: req.user.id,
+                        price: req.body.price,
+                        station_id: req.body.station_id
+                    },
+                }
+            },
+            {
+                new: true,
+            });
+            if (!station) {
+                res.status(500).json({
+                    message: `get request failed to get station`,
+                    error: err,
+                });
+                return;
+            }
+        res.status(201).json(station.prices[station.prices.length - 1])
+    } catch (err) {
+        res.status(500).json({message: "Failed to create price"}, err)
+    }
+});
 
 // Export app
 module.exports = app;
