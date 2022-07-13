@@ -46,17 +46,20 @@
                 <button class="button_style">Register</button>
                 <button @click="setPage('home')" class="button_style">Back To Home</button>
             </div>
-
         </div>
 
         <!-- SIGN IN PAGE -->
         <div id="login_page" v-if="page == 'signIn'">
-            <h1>Sign In</h1>
-            <input id="login_email" placeholder="Email" v-model="lEmail"><br>
-            <input id="login_password" placeholder="Password" v-model="lPassword"><br>
-            <button @click="setPage('home')">Login</button>
-            <button @click="setPage('home')">Back To Home</button>
-
+            <div id="login_header">
+                <img src="./images/gogaslogo.svg" alt="Go Gas Logo">
+            </div>
+            <div id="login_body">
+                <h1>Sign In</h1>
+                <input id="login_email" placeholder="Email" v-model="lEmail" class="input_style"><br>
+                <input id="login_password" placeholder="Password" v-model="lPassword" class="input_style"><br>
+                <button @click="setPage('home')" class="button_style">Login</button>
+                <button @click="setPage('home')" class="button_style">Back To Home</button>
+            </div>
         </div>
 
 
