@@ -173,45 +173,10 @@ app.post("/price", async (req, res) => {
 });
 
 // Delete review from station if user is owner
-// app.delete("/review/:id", async (req, res) => {
-//     // Check auth
-//     if (!req.user) {
-//         res.status(401).json({message: "Unauthorized"});
-//         return;
-//     }
-
-//     let station;
-
-//     try {
-//         station = await Station.findByIdAndUpdate(
-//             req.body.station_id,
-//             {
-//                 $pull: {
-//                     reviews: {
-//                         user_id: req.user.id,
-//                         _id: req.params.id
-//                     },
-//                 }
-//             },
-//             {
-//                 new: true,
-//             });
-//             if (!station) {
-//                 res.status(500).json({
-//                     message: `get request failed to get station`,
-//                     error: err,
-//                 });
-//                 return;
-//             }
-//         res.status(201).json(station.reviews[station.reviews.length - 1])
-//     } catch (err) {
-//         res.status(500).json({message: "Failed to delete review"}, err)
-//     }
-// });
 app.delete("/station/:station_id/review/:review_id", async (req, res) => {
     // check auth
     if (!req.user) {
-      res.status(401).json({ message: "unauthed" });
+      res.status(401).json({ message: "Unauthorized" });
       return;
     }
   
@@ -240,22 +205,19 @@ app.delete("/station/:station_id/review/:review_id", async (req, res) => {
       });
       return;
     }
-    // check that the post on the thread is "owned" by the requesting user (authorization)
-    // for loop over thread.posts to find the post you're looking for so you can check the user_id
+
     let isSameUser = false;
     for (let k in station.reviews) {
-      // find post
       if (station.reviews[k]._id == req.params.review_id) {
         review = station.reviews[k];
         if (station.reviews[k].user_id == req.user.id) {
           isSameUser = true;
         }
       }
-      // check user id
     }
   
     if (!isSameUser) {
-      res.status(403).json({ mesage: "unauthorized" });
+      res.status(403).json({ mesage: "Unauthorized" });
       return;
     }
   
@@ -263,7 +225,7 @@ app.delete("/station/:station_id/review/:review_id", async (req, res) => {
     try {
       await Station.findByIdAndUpdate(req.params.station_id, {
         $pull: {
-          posts: {
+          reviews: {
             _id: req.params.review_id,
           },
         },
@@ -278,7 +240,7 @@ app.delete("/station/:station_id/review/:review_id", async (req, res) => {
   
     // return the deleted post
     res.status(200).json(review);
-  });
+});
 
 // Export app
 module.exports = app;
