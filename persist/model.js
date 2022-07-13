@@ -44,6 +44,11 @@ const priceSchema = mongoose.Schema({
         required: true,
     },
     price: { type: Number, required: true },
+    station_id: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Station",
+        required: true,
+    },
 }, { timestamps: true });
 
 // Review schema
