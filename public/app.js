@@ -3,7 +3,7 @@ var app = new Vue({
     vuetify: new Vuetify(),
     data:{
         // data members go here
-        page: "map",
+        page: "home",
 
         // Register Page
         rUsername: "",
@@ -23,7 +23,13 @@ var app = new Vue({
         setPage: function(page){
             this.page = page
             console.log("setPage")
-        }
+        },
+        initMap: function() {
+            map = new google.maps.Map(document.getElementById("map"), {
+              center: { lat: -34.397, lng: 150.644 },
+              zoom: 8,
+            });
+          }
     }
 })
   
