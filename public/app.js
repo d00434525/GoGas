@@ -1,5 +1,6 @@
 var app = new Vue({
     el: "#app",
+    vuetify: new Vuetify(),
     data:{
         // data members go here
         page: "home",
