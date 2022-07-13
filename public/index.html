@@ -66,16 +66,14 @@
         </div>
         
         <!-- Map -->
-        <div v-if="page == 'map'">
-            <iframe src="https://storage.googleapis.com/maps-solutions-okjbo9izcx/locator-plus/plqw/locator-plus.html"
-                    width="100%" height="100%"
-                    style="border:0;"
-                    loading="lazy">
-            </iframe>
-        </div>
-
         <div id="map" v-if="page == 'map'">
-
+            <div id="mapcontainer" v-if="page == 'map'">
+                <iframe src="https://storage.googleapis.com/maps-solutions-okjbo9izcx/locator-plus/plqw/locator-plus.html"
+                        width="100%" height="100%"
+                        style="border:0;"
+                        loading="lazy">
+                </iframe>
+            </div>
         </div>
         </v-app>
     </div>
