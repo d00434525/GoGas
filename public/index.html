@@ -27,7 +27,7 @@
             <h1>Welcome to GoGas</h1>
             <button v-on:click="page = 'register'">Register</button>
             <button v-on:click="page = 'signIn'">Sign In</button>
-            <button>Continue as Guest</button>
+            <button v-on:click="page = 'main'">Continue as Guest</button>
         </div>
 
         <!-- REGISTER PAGE -->
@@ -37,13 +37,13 @@
             </div>
             <div id="register_body">
                 <h1>Register</h1>   
-                <input id="register_username" placeholder="Username" v-model="rUsername" class="input_style"><br>
-                <input id="register_email" placeholder="Email" v-model="rEmail" class="input_style"><br>
-                <input id="register_pass" placeholder="Password" v-model="rPass" class="input_style"><br>
-                <input id="register_confirmPass" placeholder="Confirm Password" v-model="rConfirmPass" class="input_style"><br>
-                <input id="register_zip" placeholder="Zip" v-model="rZip" class="input_style"><br>
-                <button class="button_style">Register</button>
-                <button @click="setPage('home')" class="button_style">Back To Home</button>
+                <v-text-field required label="Username" v-model="rUsername" class="input_style"><br>
+                <v-text-field required label="Email" v-model="rEmail" class="input_style"><br>
+                <v-text-field required label="Password" v-model="rPass" class="input_style"><br>
+                <v-text-field required label="Confirm Password" v-model="rConfirmPass" class="input_style"><br>
+                <v-text-field required label="Zip" v-model="rZip" class="input_style"><br>
+                <v-btn class="button_style">Register</v-btn>
+                <v-btn @click="setPage('home')" class="button_style">Back To Home</v-btn>
             </div>
 
         </div>
@@ -56,6 +56,15 @@
             <button @click="setPage('home')">Login</button>
             <button @click="setPage('home')">Back To Home</button>
 
+        </div>
+
+        <!-- MAIN PAGE -->
+        <div id="main_page" v-if="page == 'main'">
+            <v-row color="grey"></v-row>
+
+
+
+            
         </div>
 
 
