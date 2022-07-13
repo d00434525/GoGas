@@ -132,3 +132,11 @@
     color: var(--nav-color);
     margin: 20px 0px;
 }
+
+
+/* ========= GUEST PAGE ======= */
+
+#column {
+    flex: 0 0 30%;
+    max-width: 100;
+}
