@@ -13,7 +13,14 @@ var app = new Vue({
         rZip: "",
 
         lEmail: "",
-        lPassword: ""
+        lPassword: "",
+
+        links: [
+            'Dashboard',
+            'Messages',
+            'Profile',
+            'Updates',
+        ]
 
 
 

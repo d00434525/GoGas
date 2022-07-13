@@ -36,10 +36,47 @@ userSchema.pre("save", async function (next) {
 }
 );
 
+// Price schema
+const priceSchema = mongoose.Schema({
+    user_id: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "User",
+        required: true,
+    },
+    price: { type: Number, required: true },
+}, { timestamps: true });
+
+// Review schema
+const reviewSchema = mongoose.Schema({
+    user_id: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "User",
+        required: true,
+    },
+    rating: { type: Number, required: true },
+    comment: { type: String, required: false },
+    station_id: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Station",
+        required: true,
+    },
+}, { timestamps: true });
+
+// Gas station schema
+const gasStationSchema = mongoose.Schema({
+    address: { type: String },
+    prices: { type: [priceSchema], required: false, default: [] },
+    stationType: {type: String },
+    reviews: { type: [reviewSchema], required: false, default: [] },
+    pumpHours: { type: String }
+});
+
 // Model user schema
 const User = mongoose.model("User", userSchema);
+const Station = mongoose.model("Station", gasStationSchema);
 
 // Export user model
 module.exports = {
-    User
+    User,
+    Station
 }
