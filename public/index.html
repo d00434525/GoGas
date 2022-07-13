@@ -5,7 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <!-- Vuetify -->
-    <link rel="stylesheet" href="style.css">
+    <!-- <link rel="stylesheet" href="style.css"> -->
     <link href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/@mdi/font@6.x/css/materialdesignicons.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/vuetify@2.x/dist/vuetify.min.css" rel="stylesheet">
@@ -21,6 +21,7 @@
 
 <body>
     <div id="app" v-cloak>
+        <v-app>
 
         <!-- HOME PAGE -->
         <div id="home_page" v-if="page == 'home'">
@@ -32,35 +33,41 @@
         </div>
 
         <!-- REGISTER PAGE -->
+        <v-main>
         <div id="register_page" v-if="page == 'register'">
 
-            <v-sheet rounded id="sheet">
+            <v-card class="mx-auto"  width="600px" rounded id="sheet">
 
                 <!-- header -->
-                <div id="register_header">
-                    <img src="./images/gogaslogo.svg" alt="Go Gas Logo">
+                <div class="mx-auto text-center" id="register_header" :style="{ background: '#4F4789' }">
+                    <v-img
+                        max-height="500"
+                        max-width="500"
+                        src="./images/gogaslogo.svg"
+                        ></v-img>
+                    <!-- <img class="mx-auto" :style="{ height: '85%' }" src="./images/gogaslogo.svg" alt="Go Gas Logo"> -->
                 </div>
 
                 <!-- body -->
-                <div id="register_body">
+                <div id="register_body" :style="{ background: '#D9D9D9' }">
                     <h1>Register</h1>   
-                <v-row class="mx-10">
+                <v-row class="formrow mx-auto" :style="{ width: '75%' }">
                     <v-text-field required  color="#FFB17A" id="register_username" label="Username" v-model="rUsername">
                 </v-row>
 
-                <v-row>
+                <v-row class="formrow">
                     <v-text-field id="register_email" color="#FFB17A" label="Email" v-model="rEmail">
                 </v-row>
 
-                <v-row>
+                <v-row class="formrow">
                     <v-text-field id="register_pass" color="#FFB17A" label="Password" v-model="rPass">
                 </v-row>
 
-                <v-row>
+                <v-row class="formrow">
                     <v-text-field id="register_confirmPass" color="#FFB17A" label="Confirm Password" v-model="rConfirmPass">
                 </v-row>
 
-                <v-row>
+                <v-row class="formrow">
                     <v-text-field id="register_zip" color="#FFB17A" label="Zip" v-model="rZip">
                 </v-row>
 
@@ -70,8 +77,9 @@
 
                 </div>
 
-            </v-sheet>
+            </v-card>   
         </div>
+        </v-main>
 
         <!-- SIGN IN PAGE -->
         <div id="login_page" v-if="page == 'signIn'">
