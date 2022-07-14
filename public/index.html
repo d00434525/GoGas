@@ -50,7 +50,7 @@
                   <v-col id="column" cols="2">
                     <v-sheet rounded="lg">
                       <v-list color="transparent">
-                        <v-list-item v-for="(station, index) in allStations" :key="index" link>
+                        <v-list-item v-for="(station, index) in allStations" :key="index" link @click="getSingleStation(station._id)">
                           <v-list-item-content>
                             <v-list-item-title>
                               {{ station.name }}
@@ -111,7 +111,11 @@
             </div>
         </div>
 
-
+        <div id="station_page" v-if="page == 'station'">
+          <div>
+              <p>{{ currentStation.name }}</p>
+          </div>
+      </div>
 
 
         </v-app>

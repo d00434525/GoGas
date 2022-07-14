@@ -26,8 +26,7 @@ var app = new Vue({
 
         // Gas station stuff
         allStations: [],
-
-
+        currentStation: "",
 
     },
     methods:{
@@ -51,6 +50,24 @@ var app = new Vue({
                 this.allStations = body;
             } else {
                 console.log("error GETTING /stations", response.status, response);
+            }
+        },
+        
+        // load station page
+        loadStationPage: function () {
+            this.page = 'station';
+        },
+
+        // get gas station by id
+        getSingleStation: async function (id) {
+            let response = await fetch(URL + "/station/" + id);
+
+            // check response status
+            if (response.status == 200) {
+                this.currentStation = await response.json();
+                this.loadStationPage();
+            } else {
+                console.error("Error fetching individual request with id", id, "- status:", response.status);
             }
         },
     },
