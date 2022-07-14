@@ -186,11 +186,12 @@
                                       :value="currentStationPrices"
                                       color="#FFB17A"
                                       height="100"
-                                      padding="24"
+                                      padding="8"
                                       stroke-linecap="round"
                                       smooth
                                       auto-draw
                                       :auto-draw-duration="4000"
+                                      :gradient="sparklineGradient"
                                     >
                                     <template v-slot:label="item">
                                       ${{ item.value }}
