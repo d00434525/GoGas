@@ -95,13 +95,13 @@
                               <div id="register_body">
                                   <h1>Register</h1>   
                                   <input id="register_username" placeholder="Username" v-model="rUsername" class="input_style"><br>
-                                  <input id="register_email" placeholder="Email" v-model="rEmail" class="input_style"><br>
+                                  <input id="register_email" placeholder="Email (optional)" v-model="rEmail" class="input_style"><br>
                                   <input id="register_pass" placeholder="Password" v-model="rPass" class="input_style"><br>
                                   <input id="register_confirmPass" placeholder="Confirm Password" v-model="rConfirmPass" class="input_style"><br>
                                   <input id="register_zip" placeholder="Zip" v-model="rZip" class="input_style">
                                     <v-row class="mb-4">
                                       <v-col class="col-12" sm="6">
-                                      <button class="button_style">Register</button>
+                                      <button class="button_style" v-on:click="registerUser()">Register</button>
                                     </v-col>
                                     <v-col class="col-12" sm="6">
                                       <button v-on:click="dialogScreen = 'home'" class="button_style">Back</button>
@@ -123,7 +123,7 @@
                             </div> -->
                             <div id="login_body">
                               <h1>Login</h1>   
-                              <input id="login_email" placeholder="Email" v-model="lEmail" class="input_style"><br>
+                              <input id="login_username" placeholder="Username" v-model="lUsername" class="input_style"><br>
                               <input id="login_password" placeholder="Password" v-model="lPassword" class="input_style"><br>
                                 <v-row class="mb-4">
                                   <v-col class="col-12" sm="6">

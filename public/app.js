@@ -17,7 +17,7 @@ var app = new Vue({
         dialogScreen: "home",
         guest: false,
 
-        lEmail: "",
+        lUsername: "",
         lPassword: "",
 
         // Gas station stuff
@@ -75,6 +75,21 @@ var app = new Vue({
                 console.error("Error fetching individual request with id", id, "- status:", response.status);
             }
         },
+
+        registerUser: function() {
+            if (this.rConfirmPass != "" && this.rConfirmPass != this.rPass){
+                console.log("Passwords don't match.");
+                return;
+            }
+            if (this.rPass != "" && this.rPass != this.rConfirmPass){
+                console.log("Passwords don't match.");
+                return;
+            }
+            else if (this.rUsername == "" || this.rPass == "" || this.rZip == ""){
+                console.log("You must enter all required fields.");
+                return;
+            }
+        }
 
         // get single gas station prices
         // getSingleStationPrices: async function (id) {
