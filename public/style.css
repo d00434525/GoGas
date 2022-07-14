@@ -140,3 +140,10 @@
     flex: 0 0 30%;
     max-width: 100%;
 }
+
+/* ========= MAP PAGE ======= */
+
+#iframe-container{
+    height: 100%;
+    background-color: red;
+}
