@@ -20,13 +20,6 @@ var app = new Vue({
         lEmail: "",
         lPassword: "",
 
-        links: [
-            'Dashboard',
-            'Messages',
-            'Profile',
-            'Updates',
-        ],
-
         // Gas station stuff
         allStations: [],
         currentStation: "",

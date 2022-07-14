@@ -33,20 +33,10 @@
 
         <!-- MAIN PAGE -->
         <v-app id="inspire" v-if="page == 'main'">
-
-            <!-- overlay goes here -->
-            
-            
+              
 
             <v-app-bar app color="#4F4789" flat>
               <img src="./images/gogaslogo.svg" alt="Go Gas Logo" width="175px" />
-              <v-container class="py-0 fill-height">
-                <v-avatar class="mr-10" color="grey darken-1" size="32"></v-avatar>
-    
-                <v-btn v-for="link in links" :key="link" text> {{ link }} </v-btn>
-    
-                <v-spacer></v-spacer>
-              </v-container>
             </v-app-bar>
     
             <v-main class="grey lighten-3">
