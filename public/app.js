@@ -90,19 +90,6 @@ var app = new Vue({
                 return;
             }
         }
-
-        // get single gas station prices
-        // getSingleStationPrices: async function (id) {
-        //     let response = await fetch(URL + "/station/" + id);
-
-        //     // check response status
-        //     if (response.status == 200) {
-        //         let data = await response.json();
-        //         this.currentStationPrices = data.prices;
-        //     } else {
-        //         console.error("Error fetching individual request with id", id, "- status:", response.status);
-        //     }
-        // },
     },
     created: function () {
         this.getStations();
