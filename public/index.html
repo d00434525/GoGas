@@ -114,7 +114,7 @@
                                       <button class="button_style">Register</button>
                                     </v-col>
                                     <v-col class="col-12" sm="6">
-                                      <button v-on:click="dialogScreen = 'home'" class="button_style">Go Back</button>
+                                      <button v-on:click="dialogScreen = 'home'" class="button_style">Back</button>
                                     </v-col>
                                     </v-row>
                               </div>
@@ -124,13 +124,26 @@
                             <div id="login_header">
                                 <img src="./images/gogaslogo.svg" alt="Go Gas Logo">
                             </div>
-                            <div id="login_body">
+                            <!-- <div id="login_body">
                                 <h1>Sign In</h1>
                                 <input id="login_email" placeholder="Email" v-model="lEmail" class="input_style"><br>
                                 <input id="login_password" placeholder="Password" v-model="lPassword" class="input_style"><br>
                                 <button @click="setPage('home')" class="button_style">Login</button>
                                 <button v-on:click="dialogScreen = 'home'" class="button_style">Go Back</button>
-                            </div>
+                            </div> -->
+                            <div id="login_body">
+                              <h1>Login</h1>   
+                              <input id="login_email" placeholder="Email" v-model="lEmail" class="input_style"><br>
+                              <input id="login_password" placeholder="Password" v-model="lPassword" class="input_style"><br>
+                                <v-row class="mb-4">
+                                  <v-col class="col-12" sm="6">
+                                  <button class="button_style">Login</button>
+                                </v-col>
+                                <v-col class="col-12" sm="6">
+                                  <button v-on:click="dialogScreen = 'home'" class="button_style">Back</button>
+                                </v-col>
+                                </v-row>
+                          </div>
                         </div>
                           
                           </v-dialog>
