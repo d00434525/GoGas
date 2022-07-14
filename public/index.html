@@ -173,9 +173,11 @@
                     <v-list color="transparent">
                       <v-list-item link>
                         <v-list-item-content>
-                          <v-list-item-title>
-                            {{ currentStation.name }}
-                            {{ currentStation.address }}
+                          <v-list-item-title class="text-center mb-8">
+                            <h1 class="">{{ currentStation.name }}</h1>
+                            <h3>{{ currentStation.address }}</h3>
+                            <h4><i>{{ currentStation.pumpHours }}</i></h4>
+                          </v-list-item-title>
                             <template>
                               <v-card
                                 class="mx-auto text-center"
@@ -209,7 +211,37 @@
                                 <v-divider></v-divider>
                               </v-card>
                             </template>
-                          </v-list-item-title>
+                            <template>
+                              <v-card
+                                class="mx-auto mt-8"
+                                max-width="600"
+                              >
+                                <v-card-title>Leave a Review</v-card-title>
+                                <v-card-text>
+                                  <span><b>{{ currentStation.name }}</b> <i>{{ currentStation.address }}</i></span>
+                                  <template>
+                                    <div class="text-center">
+                                      <v-rating
+                                        v-model="rating"
+                                        background-color="orange lighten-3"
+                                        color="#FFB17A"
+                                        large
+                                      ></v-rating>
+                                    </div>
+                                  </template>
+                                  <v-text-field label="Enter a comment...">
+                                  </v-text-field>
+                                </v-card-text>
+                                <v-card-actions>
+                                  <v-btn
+                                    text
+                                    color="#FFB17A"
+                                  >
+                                    Sumit Review
+                                  </v-btn>
+                                </v-card-actions>
+                              </v-card>
+                            </template>
                         </v-list-item-content>
                       </v-list-item>
   
