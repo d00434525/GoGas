@@ -13,6 +13,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;0,700;1,300&family=Montserrat:wght@100;300;400;600;700&display=swap" rel="stylesheet">
 
+
     <title>GoGas</title>
     <link rel="icon" type="image/x-icon" href="./images/gogasicon.png">
 
@@ -68,10 +69,37 @@
                       </v-list>
                     </v-sheet>
                   </v-col>
-    
+
+                  <!-- MAP -->
                   <v-col>
                     <v-sheet min-height="100%" rounded="lg">
-                      <!--  -->
+                      <v-main class="green lighten-5">
+                        <v-container class="fill-height white">
+                            <v-row>
+                                <v-text-field 
+                                    class="mx-16"
+                                    @keydown.enter="addMarker()" 
+                                    label="New Address" 
+                                    v-model="addressInput"
+                                ></v-text-field>
+                            </v-row>
+                            <v-row>
+                                <v-col>
+                                    <v-sheet v-show="mapIsInitialized" height="600" id="map"></v-sheet>
+                                    <v-sheet v-if="!mapIsInitialized" class="transparent" height="600">
+                                        <v-card class="fill-height" loading="green lighten-2">
+                                            <v-card-title>Loading Map</v-card-title>
+                                            <v-card-text>
+                                                If this is taking a long time, make sure you've
+                                                entered in your google api key in the html script tag. It
+                                                will not work until you've provided one
+                                            </v-card-text>
+                                        </v-card>
+                                    </v-sheet>
+                                </v-col>
+                            </v-row>
+                        </v-container>
+                      </v-main>
                     </v-sheet>
                   </v-col>
                 </v-row>
@@ -116,6 +144,11 @@
         </v-app>
     </div>
 
+
+    <script
+    src="https://maps.googleapis.com/maps/api/js?key=<%= mapAPI %>&callback=initMap&v=weekly"
+    defer
+    ></script>
 
     <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/vuetify@2.x/dist/vuetify.js"></script>

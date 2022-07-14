@@ -1,9 +1,11 @@
+const map = require("../maps/map.js")
+
 var app = new Vue({
     el: "#app",
     vuetify: new Vuetify(),
     data:{
         // data members go here
-        page: "home",
+        page: "main",
 
         // Register Page
         rUsername: "",
