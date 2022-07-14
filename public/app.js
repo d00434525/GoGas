@@ -1,5 +1,3 @@
-const map = require("../maps/map.js")
-
 var app = new Vue({
     el: "#app",
     vuetify: new Vuetify(),

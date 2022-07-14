@@ -13,7 +13,7 @@ const myStyles = [
 ];
 
 var app = new Vue({
-    el: "#app",
+    el: "#map",
     vuetify: new Vuetify(),
     data: {
         map: null,
@@ -94,4 +94,3 @@ function initMap() {
         }
     });
 }
-
