@@ -69,6 +69,7 @@ const reviewSchema = mongoose.Schema({
 
 // Gas station schema
 const gasStationSchema = mongoose.Schema({
+    name: { type: String, required: true },
     address: { type: String },
     prices: { type: [priceSchema], required: false, default: [] },
     stationType: {type: String },

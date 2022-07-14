@@ -85,6 +85,7 @@ app.post("/station", async (req, res) => {
     // Create new station
     try {
         let station = await Station.create({
+            name: req.body.name,
             address: req.body.address,
             stationType: req.body.stationType,
             pumpHours: req.body.pumpHours,
