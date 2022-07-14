@@ -102,7 +102,7 @@
 #home_dialog {
     background-color: var(--gray-color);
     width: 600px;
-    height: 80vh;
+    height: 43vh;
     /* border-radius: 0px 0px 50px 50px; */
     display: flex;
     flex-direction: column;
