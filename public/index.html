@@ -176,19 +176,21 @@
                             <template>
                               <v-card
                                 class="mx-auto text-center"
-                                color="green"
+                                color="#4F4789"
                                 dark
                                 max-width="600"
                               >
                                 <v-card-text>
-                                  <v-sheet color="rgba(0, 0, 0, .12)">
+                                  <v-sheet color="#4F4789">
                                     <v-sparkline
                                       :value="currentStationPrices"
-                                      color="rgba(255, 255, 255, .7)"
+                                      color="#FFB17A"
                                       height="100"
                                       padding="24"
                                       stroke-linecap="round"
                                       smooth
+                                      auto-draw
+                                      :auto-draw-duration="4000"
                                     >
                                     <template v-slot:label="item">
                                       ${{ item.value }}
@@ -198,12 +200,6 @@
                                       </template>
                                     </v-sparkline>
                                   </v-sheet>
-                                </v-card-text>
-                            
-                                <v-card-text>
-                                  <div class="text-h4 font-weight-thin">
-                                    Gas Prices Last 24h
-                                  </div>
                                 </v-card-text>
                             
                                 <v-divider></v-divider>
