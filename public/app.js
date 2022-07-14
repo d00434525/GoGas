@@ -31,7 +31,7 @@ var app = new Vue({
         allStations: [],
         currentStation: "",
         currentStationPrices: [],
-        test: [1,5,67,7,4,3,2,5,7,8,],
+        sparklineGradient: ["#FFB17A", "yellow"],
 
     },
     methods:{
