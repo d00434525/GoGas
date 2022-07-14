@@ -4,7 +4,8 @@ var app = new Vue({
     el: "#app",
     vuetify: new Vuetify(),
     data:{
-        // data members go here
+        rules: [(value) => !!value || "This field is required."],
+
         page: "main",
 
         // Register Page
@@ -19,6 +20,11 @@ var app = new Vue({
 
         lUsername: "",
         lPassword: "",
+
+        errorMessage: "",
+        errorOccurred: false,
+        successOccurred: false,
+        successMessage: "",
 
         // Gas station stuff
         allStations: [],
@@ -77,17 +83,35 @@ var app = new Vue({
         },
 
         registerUser: function() {
-            if (this.rConfirmPass != "" && this.rConfirmPass != this.rPass){
-                console.log("Passwords don't match.");
+            if (this.rUsername == ""){
+                this.errorOccurred = true;
+                this.errorMessage = "You must enter a username.";
                 return;
             }
-            if (this.rPass != "" && this.rPass != this.rConfirmPass){
-                console.log("Passwords don't match.");
+            else if (this.rPass == ""){
+                this.errorOccurred = true;
+                this.errorMessage = "You must enter a password.";
                 return;
             }
-            else if (this.rUsername == "" || this.rPass == "" || this.rZip == ""){
-                console.log("You must enter all required fields.");
+            else if (this.rConfirmPass == ""){
+                this.errorOccurred = true;
+                this.errorMessage = "You must confirm your password.";
                 return;
+            }
+            else if (this.rZip == ""){
+                this.errorOccurred = true;
+                this.errorMessage = "You must enter a Zip code.";
+                return;
+            }
+            else if (this.rPass != this.rConfirmPass){
+                this.errorOccurred = true;
+                this.errorMessage = "Passwords don't match.";
+                return;
+            }
+            else {
+                this.successMessage = "User successfully created.";
+                this.successOccurred = true;
+                // this.UpdateServer();
             }
         }
 
