@@ -33,6 +33,11 @@
 
         <!-- MAIN PAGE -->
         <v-app id="inspire" v-if="page == 'main'">
+
+            <!-- overlay goes here -->
+            
+            
+
             <v-app-bar app color="#4F4789" flat>
               <img src="./images/gogaslogo.svg" alt="Go Gas Logo" width="15%" />
               <v-container class="py-0 fill-height">
@@ -73,11 +78,64 @@
                   <v-col>
                     <v-sheet min-height="100%" rounded="lg">
                       <!--  -->
+
+                      <template>
+                        <v-row justify="center">
+                          <v-dialog
+                          scrollable="false"
+                            v-model="dialog"
+                            persistent
+                            max-width="600px"
+                            class="my-auto"
+                          >
+                            <template v-slot:activator="{ on, attrs }">
+                            </template>
+                            <!-- HOME DIALOG GOES HERE -->
+                              <div id="home_dialog" width="600px" v-if="dialogScreen == 'home'">
+                                  <h1>Welcome to Go Gas</h1>   
+                                  <button class="button_style">Login</button>
+                                  <button class="button_style" v-on:click="dialogScreen = 'register'">Register</button>
+                                  <button v-on:click="dialog = false" class="button_style">Continue as Guest</button>
+                              </div>
+                            <!-- REGISTER DIALOG GOES HERE -->
+                            <div id="register_page" v-if="dialogScreen == 'register'">
+                              <div id="register_header">
+                                  <img src="./images/gogaslogo.svg" alt="Go Gas Logo">
+                              </div>
+                              <div id="register_body">
+                                  <h1>Register</h1>   
+                                  <input id="register_username" placeholder="Username" v-model="rUsername" class="input_style"><br>
+                                  <input id="register_email" placeholder="Email" v-model="rEmail" class="input_style"><br>
+                                  <input id="register_pass" placeholder="Password" v-model="rPass" class="input_style"><br>
+                                  <input id="register_confirmPass" placeholder="Confirm Password" v-model="rConfirmPass" class="input_style"><br>
+                                  <input id="register_zip" placeholder="Zip" v-model="rZip" class="input_style">
+                                    <v-row>
+                                      <v-col class="col-12" sm="6">
+                                      <button class="button_style">Register</button>
+                                    </v-col>
+                                    <v-col class="col-12" sm="6">
+                                      <button v-on:click="dialogScreen = 'home'" class="button_style">Go Back</button>
+                                    </v-col>
+                                    </v-row>
+                              </div>
+                          </div>
+                          
+                          </v-dialog>
+                        </v-row>
+                      </template>
+
+
+
+
+
+
                     </v-sheet>
                   </v-col>
                 </v-row>
               </v-container>
             </v-main>
+
+            
           </v-app>
 
         <!-- REGISTER PAGE -->
