@@ -73,16 +73,8 @@
                   <!-- MAP -->
                     <v-col>
                       <v-sheet min-height="100%" rounded="lg">
-                        <v-main class="green lighten-5">
+                        <v-main class="green lighten-5 pt-0">
                           <v-container class="fill-height white">
-                              <v-row>
-                                  <v-text-field 
-                                      class="mx-16"
-                                      @keydown.enter="addMarker()" 
-                                      label="New Address" 
-                                      v-model="addressInput"
-                                  ></v-text-field>
-                              </v-row>
                               <v-row>
                                   <v-col>
                                       <v-sheet v-show="mapIsInitialized" height="600" id="map"></v-sheet>
@@ -150,7 +142,7 @@
     <script src="https://cdn.jsdelivr.net/npm/vuetify@2.x/dist/vuetify.js"></script>
     <script src="app.js"></script>
     <script
-    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA_AU3PAvFLx6xjRd6Mt-ASoqFnLr0sWXo&callback=initMap&v=weekly"
+    src="https://maps.googleapis.com/maps/api/js?key=&callback=initMap&v=weekly"
         defer
     ></script>
   </body>

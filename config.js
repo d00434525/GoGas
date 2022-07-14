@@ -7,5 +7,5 @@ module.exports = {
     dbusername: process.env.DBUSERNAME,
     password: process.env.PASSWORD,
     secret: process.env.SECRET,
-    mapAPI: process.env.MAP_API
+    mapAPI: process.env.VUE_APP_MAP_API
 }

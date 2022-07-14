@@ -84,7 +84,7 @@ function initMap() {
             MAP = new google.maps.Map(document.getElementById("map"), {
                 zoom: 14,
                 center: results[0].geometry.location,
-                styles: myStyles,
+                //styles: myStyles,
             });
             // calls vue's initialize map function
             app.initializeMap();
