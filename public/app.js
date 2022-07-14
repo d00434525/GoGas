@@ -15,6 +15,7 @@ var app = new Vue({
         rZip: "",
         dialog: true,
         dialogScreen: "home",
+        guest: false,
 
         lEmail: "",
         lPassword: "",
