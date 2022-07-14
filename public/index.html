@@ -186,6 +186,7 @@
                           <v-list-item-title>
                             {{ currentStation.name }}
                             {{ currentStation.address }}
+                          </v-list-item-title>
                             <template>
                               <v-card
                                 class="mx-auto text-center"
@@ -209,9 +210,6 @@
                                     <template v-slot:label="item">
                                       ${{ item.value }}
                                     </template>
-                                      <template>
-                                        stuff
-                                      </template>
                                     </v-sparkline>
                                   </v-sheet>
                                 </v-card-text>
@@ -219,7 +217,16 @@
                                 <v-divider></v-divider>
                               </v-card>
                             </template>
-                          </v-list-item-title>
+                            <template>
+                              <div class="text-center">
+                                <v-rating
+                                  v-model="rating"
+                                  background-color="orange lighten-3"
+                                  color="#FFB17A"
+                                  large
+                                ></v-rating>
+                              </div>
+                            </template>
                         </v-list-item-content>
                       </v-list-item>
   
