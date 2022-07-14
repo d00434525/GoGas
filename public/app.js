@@ -3,7 +3,7 @@ var app = new Vue({
     vuetify: new Vuetify(),
     data:{
         // data members go here
-        page: "home",
+        page: "main",
 
         // Register Page
         rUsername: "",
@@ -11,6 +11,8 @@ var app = new Vue({
         rPass:"",
         rConfirmPass:"",
         rZip: "",
+        dialog: true,
+        dialogScreen: "home",
 
         lEmail: "",
         lPassword: "",
