@@ -33,6 +33,9 @@ var app = new Vue({
         currentStationPrices: [],
         sparklineGradient: ["#FFB17A", "yellow"],
 
+        // rating stuff
+        rating: 0,
+
     },
     methods:{
         // methods go here
