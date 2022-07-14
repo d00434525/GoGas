@@ -82,6 +82,7 @@
                       <template>
                         <v-row justify="center">
                           <v-dialog
+                            round
                             v-model="dialog"
                             persistent
                             max-width="600px"
@@ -108,7 +109,7 @@
                                   <input id="register_pass" placeholder="Password" v-model="rPass" class="input_style"><br>
                                   <input id="register_confirmPass" placeholder="Confirm Password" v-model="rConfirmPass" class="input_style"><br>
                                   <input id="register_zip" placeholder="Zip" v-model="rZip" class="input_style">
-                                    <v-row>
+                                    <v-row class="mb-4">
                                       <v-col class="col-12" sm="6">
                                       <button class="button_style">Register</button>
                                     </v-col>
