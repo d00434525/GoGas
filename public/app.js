@@ -29,6 +29,8 @@ var app = new Vue({
         // Gas station stuff
         allStations: [],
         currentStation: "",
+        currentStationPrices: [],
+        test: [1,5,67,7,4,3,2,5,7,8,],
 
     },
     methods:{
@@ -66,12 +68,29 @@ var app = new Vue({
 
             // check response status
             if (response.status == 200) {
-                this.currentStation = await response.json();
+                let data = await response.json();
+                this.currentStation = data;
+                data.prices.forEach(price => {
+                    this.currentStationPrices.push(price.price);
+                });
                 this.loadStationPage();
             } else {
                 console.error("Error fetching individual request with id", id, "- status:", response.status);
             }
         },
+
+        // get single gas station prices
+        // getSingleStationPrices: async function (id) {
+        //     let response = await fetch(URL + "/station/" + id);
+
+        //     // check response status
+        //     if (response.status == 200) {
+        //         let data = await response.json();
+        //         this.currentStationPrices = data.prices;
+        //     } else {
+        //         console.error("Error fetching individual request with id", id, "- status:", response.status);
+        //     }
+        // },
     },
     created: function () {
         this.getStations();
