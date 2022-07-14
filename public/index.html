@@ -93,7 +93,7 @@
                             <!-- HOME DIALOG GOES HERE -->
                               <div id="home_dialog" width="600px" v-if="dialogScreen == 'home'">
                                   <h1>Welcome to Go Gas</h1>   
-                                  <button class="button_style">Login</button>
+                                  <button class="button_style" v-on:click="dialogScreen = 'login'">Login</button>
                                   <button class="button_style" v-on:click="dialogScreen = 'register'">Register</button>
                                   <button v-on:click="dialog = false, guest = true" class="button_style">Continue as Guest</button>
                               </div>
@@ -119,6 +119,19 @@
                                     </v-row>
                               </div>
                           </div>
+                          <!-- SIGN IN PAGE -->
+                          <div id="login_page" v-if="dialogScreen == 'login'">
+                            <div id="login_header">
+                                <img src="./images/gogaslogo.svg" alt="Go Gas Logo">
+                            </div>
+                            <div id="login_body">
+                                <h1>Sign In</h1>
+                                <input id="login_email" placeholder="Email" v-model="lEmail" class="input_style"><br>
+                                <input id="login_password" placeholder="Password" v-model="lPassword" class="input_style"><br>
+                                <button @click="setPage('home')" class="button_style">Login</button>
+                                <button v-on:click="dialogScreen = 'home'" class="button_style">Go Back</button>
+                            </div>
+                        </div>
                           
                           </v-dialog>
                         </v-row>
@@ -138,36 +151,6 @@
             
           </v-app>
 
-        <!-- REGISTER PAGE -->
-        <div id="register_page" v-if="page == 'register'">
-            <div id="register_header">
-                <img src="./images/gogaslogo.svg" alt="Go Gas Logo">
-            </div>
-            <div id="register_body">
-                <h1>Register</h1>   
-                <input id="register_username" placeholder="Username" v-model="rUsername" class="input_style"><br>
-                <input id="register_email" placeholder="Email" v-model="rEmail" class="input_style"><br>
-                <input id="register_pass" placeholder="Password" v-model="rPass" class="input_style"><br>
-                <input id="register_confirmPass" placeholder="Confirm Password" v-model="rConfirmPass" class="input_style"><br>
-                <input id="register_zip" placeholder="Zip" v-model="rZip" class="input_style"><br>
-                <button class="button_style">Register</button>
-                <button @click="setPage('home')" class="button_style">Back To Home</button>
-            </div>
-        </div>
-
-        <!-- SIGN IN PAGE -->
-        <div id="login_page" v-if="page == 'signIn'">
-            <div id="login_header">
-                <img src="./images/gogaslogo.svg" alt="Go Gas Logo">
-            </div>
-            <div id="login_body">
-                <h1>Sign In</h1>
-                <input id="login_email" placeholder="Email" v-model="lEmail" class="input_style"><br>
-                <input id="login_password" placeholder="Password" v-model="lPassword" class="input_style"><br>
-                <button @click="setPage('home')" class="button_style">Login</button>
-                <button @click="setPage('home')" class="button_style">Back To Home</button>
-            </div>
-        </div>
 
         <!-- SINGLE STATION PAGE -->
         <v-app id="inspire" v-if="page == 'station'">
