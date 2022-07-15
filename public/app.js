@@ -33,6 +33,7 @@ var app = new Vue({
 
         lUsername: "",
         lPassword: "",
+        loggedIn: true,
 
         errorOccurred: false,
         errorMessage: "",
@@ -68,7 +69,7 @@ var app = new Vue({
     methods:{
         // methods go here
         setPage: function(page){
-            this.page = page
+            this.page = page;
         },
 
         // get all gas stations
@@ -228,6 +229,37 @@ var app = new Vue({
                 this.page = 'main';
                 this.dialog = false;
                 this.guest = false;
+
+                 // reload page
+                window.location.reload(); 
+            }
+        },
+
+        // get session
+        getSession: async function () {
+            let response = await fetch(`${URL}/session`, {
+                method: "GET",
+                credentials: "include"
+            });
+
+            // Check if logged in
+            if (response.status == 200) {
+                // logged in
+                console.log("logged in");
+                let data = await response.json();
+                console.log(data);
+                this.page = 'main';
+                this.dialog = false;
+                this.guest = false;  
+                this.dialogScreen = 'main';
+            } else if (response.status == 401) {
+                // not logged in
+                console.log("not logged in");
+                let data = await response.json();
+                console.log(data);
+                this.loggedIn = false;
+            } else {
+                console.log("error GETTING /session", response.status, response);
             }
         },
 
@@ -291,13 +323,32 @@ var app = new Vue({
 
             if (response.status == 201) {
                 // created successfully
+                this.rating = 0;
+                this.comment = "";
                 this.getSingleStation(id);
             } else {
                 console.log("Error posting review:", response.status);
             }
         },
+
+        logoutUser: function () {
+            try {
+                fetch(`${URL}/logout`, {
+                    method: "DELETE",
+                });
+                this.guest = true;
+                this.loggedIn = false;
+                // reload page
+                window.location.reload();   
+            } catch (err) {
+                console.log(err)
+            }
+
+            
+        },
     },
     created: function () {
+        this.getSession();
         this.getStations();
     }
 })

@@ -33,7 +33,7 @@
     <div id="app" v-cloak>
       <!-- HOME PAGE -->
       <div id="home_page" v-if="page == 'home'">
-        <h1>Welcome to GoGas</h1>
+        <h1>Welcome to Go Gas</h1>
         <button v-on:click="page = 'register'">Register</button>
         <button v-on:click="page = 'signIn'">Sign In</button>
         <button @click="page = 'main'">Continue as Guest</button>
@@ -51,7 +51,7 @@
                 <v-btn
                   color="#FFB17A"
                   class="ma-4 black--text fs-100"
-                  v-on:click="dialogScreen = 'login'"
+                  v-on:click="dialogScreen = 'register'; dialog = true;"
                   v-bind:style=" {fontSize: '20px'}"
                 >
                   Register
@@ -69,7 +69,7 @@
                 <v-btn
                   color="#FFB17A"
                   class="ma-4 black--text fs-100"
-                  v-on:click="dialogScreen = 'login'"
+                  v-on:click="dialogScreen = 'login'; dialog = true"
                   v-bind:style=" {fontSize: '20px'}"
                 >
                   Sign In
@@ -82,12 +82,12 @@
                 </v-btn>
               </div>
             </template>
-            <template v-if="guest == false && dialogScreen == 'main'">
+            <template v-if="loggedIn && dialogScreen == 'main'">
               <div class="text-center">
                 <v-btn
                   color="#FFB17A"
                   class="ma-4 black--text fs-100"
-                  v-on:click="dialogScreen = 'login'"
+                  v-on:click="logoutUser()"
                   v-bind:style=" {fontSize: '20px'}"
                 >
                   Logout
@@ -157,7 +157,7 @@
                     </v-sheet>
                   </v-col>
 
-                  <template>
+                  <template v-if="!loggedIn">
                     <v-row justify="center">
                       <v-dialog
                         round
@@ -174,12 +174,6 @@
                           v-if="dialogScreen == 'home'"
                         >
                           <h1>Welcome to Go Gas</h1>
-                          <!-- <button
-                            class="button_style"
-                            v-on:click="dialogScreen = 'login'"
-                          >
-                            Login
-                          </button> -->
                           <template>
                             <div class="text-center">
                               <v-btn
@@ -268,18 +262,21 @@
                               placeholder="Password"
                               v-model="rPass"
                               class="input_style"
+                              type="password"
                             /><br />
                             <input
                               id="register_confirmPass"
                               placeholder="Confirm Password"
                               v-model="rConfirmPass"
                               class="input_style"
+                              type="password"
                             /><br />
                             <input
                               id="register_zip"
                               placeholder="Zip"
                               v-model="rZip"
                               class="input_style"
+                              type="number"
                             />
                             <v-row class="mb-4">
                               <v-col class="col-12" sm="6">
@@ -375,6 +372,7 @@
                               placeholder="Password"
                               v-model="lPassword"
                               class="input_style"
+                              type="password"
                             /><br />
                             <v-row class="mb-4">
                               <v-col class="col-12" sm="6">
@@ -383,7 +381,7 @@
                                     <v-btn
                                       color="#FFB17A"
                                       class="ma-4 black--text fs-100"
-                                      v-on:click="dialogScreen = 'login'"
+                                      v-on:click="loginUser()"
                                       v-bind:style=" {fontSize: '20px'}"
                                     >
                                       Sign In
@@ -463,7 +461,7 @@
                 <v-btn
                   color="#FFB17A"
                   class="ma-4 black--text fs-100"
-                  v-on:click="dialogScreen = 'login'"
+                  v-on:click="setPage('main'); dialogScreen = 'register'; dialog = true"
                   v-bind:style=" {fontSize: '20px'}"
                 >
                   Register
@@ -481,7 +479,7 @@
                 <v-btn
                   color="#FFB17A"
                   class="ma-4 black--text fs-100"
-                  v-on:click="dialogScreen = 'login'"
+                  v-on:click="setPage('main'); dialogScreen = 'login'; dialog = true"
                   v-bind:style=" {fontSize: '20px'}"
                 >
                   Sign In
@@ -499,7 +497,7 @@
                 <v-btn
                   color="#FFB17A"
                   class="ma-4 black--text fs-100"
-                  v-on:click="dialogScreen = 'login'"
+                  v-on:click="logoutUser()"
                   v-bind:style=" {fontSize: '20px'}"
                 >
                   Logout
@@ -677,7 +675,7 @@
                         </v-text-field>
                       </v-card-text>
                       <v-card-actions>
-                        <v-btn text color="#FFB17A" @click="postReview()">
+                        <v-btn text color="#FFB17A" @click="postReview(currentStation._id)">
                           Submit Review
                         </v-btn>
                       </v-card-actions>

@@ -53,6 +53,13 @@ const setUpAuth = function (app) {
         }
         res.status(200).json({message: "Authorized", id: req.user.id, email: req.user.username, password: req.user.password});
     });
+
+    app.delete('/logout', function(req, res){
+        req.logout(function(err) {
+          if (err) { return next(err); }
+          res.redirect('/');
+        });
+      });
 }
 
 // Export authentication setup
