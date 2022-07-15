@@ -60,6 +60,7 @@ var app = new Vue({
         recentMarker: null,
 
         addressInput: "",
+        markers: [],
 
 
     },
