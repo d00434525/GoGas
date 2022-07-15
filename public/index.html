@@ -612,34 +612,6 @@
                           </v-card>
                         </template>
                         <template>
-                          <v-card class="mx-auto mt-8" max-width="600">
-                            <v-card-title>Leave a Review</v-card-title>
-                            <v-card-text>
-                              <span
-                                ><b>{{ currentStation.name }}</b>
-                                <i>{{ currentStation.address }}</i></span
-                              >
-                              <template>
-                                <div class="text-center">
-                                  <v-rating
-                                    v-model="rating"
-                                    background-color="orange lighten-3"
-                                    color="#FFB17A"
-                                    large
-                                  ></v-rating>
-                                </div>
-                              </template>
-                              <v-text-field label="Enter a comment..." v-model="comment">
-                              </v-text-field>
-                            </v-card-text>
-                            <v-card-actions>
-                              <v-btn text color="#FFB17A" @click="postReview()">
-                                Submit Review
-                              </v-btn>
-                            </v-card-actions>
-                          </v-card>
-                        </template>
-                        <template>
                           <v-card
                             class="mx-auto mt-8"
                             max-width="600"
@@ -682,7 +654,34 @@
                   <!--  -->
                 </v-sheet>
                 <v-sheet min-height="49%" rounded="lg" class="mt-4">
-                  <!--  -->
+                  <template>
+                    <v-card class="mx-auto" max-width="600" height="395px">
+                      <v-card-title>Leave a Review</v-card-title>
+                      <v-card-text>
+                        <span
+                          ><b>{{ currentStation.name }}</b>
+                          <i>{{ currentStation.address }}</i></span
+                        >
+                        <template>
+                          <div class="text-center">
+                            <v-rating
+                              v-model="rating"
+                              background-color="orange lighten-3"
+                              color="#FFB17A"
+                              large
+                            ></v-rating>
+                          </div>
+                        </template>
+                        <v-text-field label="Enter a comment..." v-model="comment">
+                        </v-text-field>
+                      </v-card-text>
+                      <v-card-actions>
+                        <v-btn text color="#FFB17A" @click="postReview()">
+                          Submit Review
+                        </v-btn>
+                      </v-card-actions>
+                    </v-card>
+                  </template>
                 </v-sheet>
               </v-col>
             </v-row>
