@@ -304,6 +304,46 @@
                               </v-col>
                             </v-row>
                           </div>
+                          <!-- snackbar goes here -->
+                          <v-snackbar
+                          shaped
+                          centered
+                          v-model="errorOccurred"
+                        >
+                          {{ errorMessage }}
+        
+                          <template v-slot:action="{ attrs }">
+                          <v-btn
+                            color="pink"
+                            text
+                            v-bind="attrs"
+                            @click="errorOccurred = false"
+                          >
+                            Close
+                          </v-btn>
+                          </template>
+                        </v-snackbar>
+        
+        
+                        <v-snackbar
+                          shaped
+                          centered
+                          color="blue-grey"
+                          v-model="successOccurred"
+                        >
+                          {{ successMessage }}
+        
+                          <template v-slot:action="{ attrs }">
+                          <v-btn
+                            color="pink"
+                            text
+                            v-bind="attrs"
+                            @click="successOccurred = false"
+                          >
+                            Close
+                          </v-btn>
+                          </template>
+                        </v-snackbar>
                         </div>
                         <!-- SIGN IN PAGE -->
                         <div id="login_page" v-if="dialogScreen == 'login'">
