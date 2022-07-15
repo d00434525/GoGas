@@ -116,8 +116,13 @@
                       @click="getSingleStation(station._id)"
                     >
                       <v-list-item-content>
-                        <v-list-item-title>
-                          {{ station.name }} {{ station.address }}
+                        <v-list-item-title class="d-flex justify-space-between">
+                          <div>
+                            {{ station.name }} {{ station.address }}
+                          </div> 
+                          <div>
+                            ${{ station.prices[station.prices.length -1].price }}
+                          </div>
                         </v-list-item-title>
                       </v-list-item-content>
                     </v-list-item>
@@ -528,7 +533,6 @@
                     <v-list-item>
                       <v-list-item-content>
                         <v-list-item-title class="text-center mb-8">
-                          
                           <div class="d-flex justify-space-around align-center">
                             <template>
                               <div class="text-center"> 
