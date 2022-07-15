@@ -121,7 +121,7 @@
                             {{ station.name }} {{ station.address }}
                           </div> 
                           <div>
-                            ${{ station.prices[station.prices.length -1].price }}
+                            <span class="actual_price"><b>${{ station.prices[station.prices.length -1].price }}</b></span>
                           </div>
                         </v-list-item-title>
                       </v-list-item-content>
@@ -586,6 +586,9 @@
                             </template>
                           </div>
                         </v-list-item-title>
+                        <v-list-item id="recent_price" class="mb-4">
+                          <p>CURRENT PRICE: <span class="actual_price"><b>${{ currentStation.prices[currentStation.prices.length - 1].price }}</b></span></p>
+                        </v-list-item>
                         <template>
                           <v-card
                             class="mx-auto text-center"

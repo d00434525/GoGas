@@ -198,3 +198,15 @@
     font-size: 1rem;
     color: black;
 }
+
+#recent_price {
+    font-size: 1.5rem;
+    color: black;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.actual_price {
+    color: var(--orange-color);
+}
