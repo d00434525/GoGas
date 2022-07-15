@@ -558,9 +558,8 @@
                             v-for="(review, index) in currentStation.reviews"
                             :key="index"
                           >
-                            <v-card-text>
-                              <div>
-                                {{ review.user.name }}
+                            <v-card-title class="d-flex align-center justify-space-between">
+                                <p id="review_username">{{ review.user.name }}</p>
                                 <div class="text-center">
                                   <v-rating
                                     v-model="review.rating"
@@ -570,7 +569,9 @@
                                     readonly
                                   ></v-rating>
                                 </div>
-                              </div>
+                            </v-card-title>
+                            <v-card-text>
+                              <p id="review_comment">{{ review.comment}}</p>
                             </v-card-text>
                             <v-card-actions>
                               <v-btn
