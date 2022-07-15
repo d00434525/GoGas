@@ -113,10 +113,34 @@ var app = new Vue({
                 this.successOccurred = true;
                 // this.UpdateServer();
             }
-        }
+        },
     },
     created: function () {
         this.getStations();
     }
 })
   
+// This function is a callback that is given to the google api
+// It is ran when the api has finished loading
+function initMap() {
+    // geocoder is for turning an address (1234 E 5678 S) into Latitude and Longitude
+    GEOCODER = new google.maps.Geocoder();
+
+    // Center on the map on St. George using the Geocoder
+    GEOCODER.geocode({'address' : 'St. George, UT'}, function (results, status) {
+        switch (status) {
+        case "OK":
+            // creates the map
+            MAP = new google.maps.Map(document.getElementById("map"), {
+                zoom: 14,
+                center: results[0].geometry.location,
+                styles: myStyles,
+            });
+            // calls vue's initialize map function
+            app.initializeMap();
+            break;
+        default:
+            console.error('Geocode was not successful for the following reason: ' + status);
+        }
+    });
+}
