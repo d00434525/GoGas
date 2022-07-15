@@ -137,10 +137,11 @@ var app = new Vue({
 
             if (response.status == 201) {
                 console.log(response, "User succesfully created.");
-                console.log("Welcome,", this.rName);
+                // console.log("Welcome,", this.rName);
                 // user succesfully created
                 this.rUsername = "";
                 this.rPass = "";
+                this.rConfirmPass = "";
                 this.rName = "";
                 this.rZip = "";
 
@@ -187,6 +188,46 @@ var app = new Vue({
             }
             else {
                 this.addUser();
+            }
+        },
+        loginUser: async function () {
+            // attempt to login
+            let loginCredentials = {
+                username: this.lUsername,
+                password: this.lPassword
+            };
+
+            let response = await fetch('http://localhost:8080/session', {
+                method: "POST",
+                body: JSON.stringify(loginCredentials),
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                credentials: "include"
+            });
+
+            // parse the body
+            let body;
+            try {
+                body = response.json();
+                console.log(body);
+            } catch (error) {
+                console.log("Response body was not json")
+            }
+
+            // check - was the login successfull
+            if (response.status == 201) {
+                // successfull login
+                console.log("Welcome,", this.lUsername);
+
+                // clear inputs
+                this.lUsername = "";
+                this.lPassword = "";
+
+                // take the user to the home page
+                this.page = 'main';
+                this.dialog = false;
+                this.guest = false;
             }
         },
 
