@@ -256,14 +256,14 @@
                             <h1>Register</h1>
                             <input
                               id="register_username"
-                              placeholder="Username"
+                              placeholder="Email"
                               v-model="rUsername"
                               class="input_style"
                             /><br />
                             <input
-                              id="register_email"
-                              placeholder="Email (optional)"
-                              v-model="rEmail"
+                              id="register_name"
+                              placeholder="Name"
+                              v-model="rName"
                               class="input_style"
                             /><br />
                             <input
@@ -348,26 +348,6 @@
                           </template>
                         </v-snackbar>
         
-        
-                        <v-snackbar
-                          shaped
-                          centered
-                          color="blue-grey"
-                          v-model="successOccurred"
-                        >
-                          {{ successMessage }}
-        
-                          <template v-slot:action="{ attrs }">
-                          <v-btn
-                            color="pink"
-                            text
-                            v-bind="attrs"
-                            @click="successOccurred = false"
-                          >
-                            Close
-                          </v-btn>
-                          </template>
-                        </v-snackbar>
                         </div>
                         <!-- SIGN IN PAGE -->
                         <div id="login_page" v-if="dialogScreen == 'login'">
@@ -442,6 +422,27 @@
                               </v-col>
                             </v-row>
                           </div>
+                          <!-- LOGIN SNACKBAR AFTER CREATING USER -->
+                          <v-snackbar
+                          timeout="2000"
+                          shaped
+                          centered
+                          color="blue-grey"
+                          v-model="successfullyCreated"
+                        >
+                          {{ successMessage }}
+        
+                          <template v-slot:action="{ attrs }">
+                          <v-btn
+                            color="pink"
+                            text
+                            v-bind="attrs"
+                            @click="successfullyCreated = false"
+                          >
+                            Close
+                          </v-btn>
+                          </template>
+                        </v-snackbar>
                         </div>
                       </v-dialog>
                     </v-row>
