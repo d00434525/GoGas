@@ -1,5 +1,6 @@
 const URL = 'http://localhost:8080';
 
+var STATIONMAP;
 var MAP;
 var GEOCODER;
 
@@ -203,8 +204,8 @@ var app = new Vue({
             GEOCODER.geocode( {'address': address}, (results, status) => {
                 if (status == 'OK') {
                     // centers/zooms map
-                    this.map.setCenter(results[0].geometry.location);
-                    this.map.setZoom(16);
+                    //this.map.setCenter(results[0].geometry.location);
+                    //this.map.setZoom(16);
                     
                     // creates new marker
                     var marker = new google.maps.Marker({
@@ -228,6 +229,7 @@ var app = new Vue({
             stations.forEach(station => {
                 this.addMarker(station.address);
                 console.log(station.address);
+                app
             });
         },
 
@@ -273,10 +275,14 @@ function initMap() {
         case "OK":
             // creates the map
             MAP = new google.maps.Map(document.getElementById("map"), {
-                zoom: 14,
+                zoom: 13,
                 center: results[0].geometry.location,
                 styles: myStyles,
             });
+            STATIONMAP = new google.maps.Map(document.getElementById("stationmap"),{
+                zoom: 13,
+                center: this.markers[]
+            })
             //add station markers
             app.addMarkers(app.allStations)
             // calls vue's initialize map function
