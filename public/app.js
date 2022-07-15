@@ -60,6 +60,7 @@ var app = new Vue({
         recentMarker: null,
 
         addressInput: "",
+        markers: [],
 
 
     },
@@ -67,7 +68,6 @@ var app = new Vue({
         // methods go here
         setPage: function(page){
             this.page = page
-            console.log("setPage")
         },
 
         // get all gas stations
@@ -165,7 +165,7 @@ var app = new Vue({
                     });
                     this.recentMarker = marker;
                 } else {
-                    alert('Geocode was not successful for the following reason: ' + status);
+                    console.log('Geocode was not successful for the following reason: ' + status);
                 }
                 this.addressInput = "";
             });
@@ -175,6 +175,12 @@ var app = new Vue({
             this.map = MAP;
             this.geocoder = GEOCODER;
             this.mapIsInitialized = true;
+        },
+        addMarkers: function(stations){
+            stations.forEach(station => {
+                this.addMarker(station.address);
+                console.log(station.address);
+            });
         },
 
         // Post review on a station
@@ -223,6 +229,8 @@ function initMap() {
                 center: results[0].geometry.location,
                 styles: myStyles,
             });
+            //add station markers
+            app.addMarkers(app.allStations)
             // calls vue's initialize map function
             app.initializeMap();
             break;
