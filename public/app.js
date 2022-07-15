@@ -24,6 +24,7 @@ var app = new Vue({
         errorMessage: "",
         successOccurred: false,
         successMessage: "",
+        successfullyCreated: false,
 
         // Gas station stuff
         allStations: [],
@@ -116,6 +117,9 @@ var app = new Vue({
                 this.rZip = "";
 
                 // take user to login page HERE:
+                this.dialogScreen = "login";
+                this.successfullyCreated = true;
+                this.successMessage = "Successfully Created User."
             } else {
                 // error creating user
                 this.rPass = "";
@@ -154,9 +158,6 @@ var app = new Vue({
                 return;
             }
             else {
-                this.successMessage = "User successfully created.";
-                this.successOccurred = true;
-
                 this.addUser();
             }
         }
