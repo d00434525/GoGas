@@ -1,5 +1,19 @@
 const URL = 'http://localhost:8080';
 
+var MAP;
+var GEOCODER;
+
+// disables poi's (Points of Interest)
+const myStyles = [
+    {
+        featureType: "poi",
+        elementType: "labels",
+        stylers: [
+              { visibility: "off" }
+        ]
+    }
+];
+
 var app = new Vue({
     el: "#app",
     vuetify: new Vuetify(),
@@ -33,6 +47,19 @@ var app = new Vue({
 
         // rating stuff
         rating: 0,
+
+        //MAP
+        map: null,
+        geocoder: null,
+
+        // displays a placeholder if false
+        mapIsInitialized: false,
+
+        // if you want to look at the most recent marker object in the console:
+        recentMarker: null,
+
+        addressInput: "",
+
 
     },
     methods:{
@@ -113,6 +140,40 @@ var app = new Vue({
                 this.successOccurred = true;
                 // this.UpdateServer();
             }
+        },
+        //Map Methods
+        addMarker: function (parameterAddress = null) {
+            let address = "";
+            if (parameterAddress !== null) {
+                address = parameterAddress;
+            } else {
+                address = this.addressInput;
+            }
+
+            // uses geocode api to look up address
+            GEOCODER.geocode( {'address': address}, (results, status) => {
+                if (status == 'OK') {
+                    // centers/zooms map
+                    this.map.setCenter(results[0].geometry.location);
+                    this.map.setZoom(16);
+
+                    // creates new marker
+                    var marker = new google.maps.Marker({
+                        map: this.map,
+                        position: results[0].geometry.location,
+                    });
+                    this.recentMarker = marker;
+                } else {
+                    alert('Geocode was not successful for the following reason: ' + status);
+                }
+                this.addressInput = "";
+            });
+        },
+        initializeMap: function () {
+            console.log(MAP);
+            this.map = MAP;
+            this.geocoder = GEOCODER;
+            this.mapIsInitialized = true;
         },
     },
     created: function () {
