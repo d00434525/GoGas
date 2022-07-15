@@ -71,6 +71,33 @@ app.get("/station/:id", async (req, res) => {
         });
         return;
     }
+
+    // get the users for reviews
+    station = station.toObject();
+    for (let k in station.reviews) {
+        try {
+            let user = await User.findById(station.reviews[k].user_id, "-password");
+            station.reviews[k].user = user;
+        } catch (err) {
+            console.log(
+            `unable to get user ${station.reviews[k].user_id} for post ${station.reviews[k]._id} when getting thread ${station._id}: ${err}`
+            );
+        }
+    }
+
+    // get the users for prices
+    for (let k in station.prices) {
+        try {
+            let user = await User.findById(station.prices[k].user_id, "-password");
+            station.prices[k].user = user;
+        } catch (err) {
+            console.log(
+            `unable to get user ${station.prices[k].user_id} for post ${station.prices[k]._id} when getting thread ${station._id}: ${err}`
+            );
+        }
+    }
+
+    // return the thread
     res.status(200).json(station)
 });
 

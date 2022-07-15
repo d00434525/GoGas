@@ -187,3 +187,14 @@
     flex: 0 0 30%;
     max-width: 100%;
 }
+
+/* ============ SINGLE STATION PAGE ============ */
+#review_username {
+    font-size: 1.5rem;
+    color: black;
+}
+
+#review_comment {
+    font-size: 1rem;
+    color: black;
+}

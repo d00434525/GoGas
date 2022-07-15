@@ -517,6 +517,7 @@
           </div>
         </v-app-bar>
 
+        <!-- Left column -->
         <v-main class="grey lighten-3">
           <v-container>
             <v-row>
@@ -604,12 +605,44 @@
                                   ></v-rating>
                                 </div>
                               </template>
-                              <v-text-field label="Enter a comment...">
+                              <v-text-field label="Enter a comment..." v-model="comment">
                               </v-text-field>
                             </v-card-text>
                             <v-card-actions>
-                              <v-btn text color="#FFB17A">
+                              <v-btn text color="#FFB17A" @click="postReview()">
                                 Submit Review
+                              </v-btn>
+                            </v-card-actions>
+                          </v-card>
+                        </template>
+                        <template>
+                          <v-card
+                            class="mx-auto mt-8"
+                            max-width="600"
+                            v-for="(review, index) in currentStation.reviews"
+                            :key="index"
+                          >
+                            <v-card-title class="d-flex align-center justify-space-between">
+                                <p id="review_username">{{ review.user.name }}</p>
+                                <div class="text-center">
+                                  <v-rating
+                                    v-model="review.rating"
+                                    background-color="orange lighten-3"
+                                    color="#FFB17A"
+                                    large
+                                    readonly
+                                  ></v-rating>
+                                </div>
+                            </v-card-title>
+                            <v-card-text>
+                              <p id="review_comment">{{ review.comment}}</p>
+                            </v-card-text>
+                            <v-card-actions>
+                              <v-btn
+                                text
+                                color="teal accent-4"
+                              >
+                                Delete
                               </v-btn>
                             </v-card-actions>
                           </v-card>
