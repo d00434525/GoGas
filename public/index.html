@@ -266,11 +266,13 @@
                             <input
                               id="register_pass"
                               placeholder="Password"
+                              type="password"
                               v-model="rPass"
                               class="input_style"
                             /><br />
                             <input
                               id="register_confirmPass"
+                              type="password"
                               placeholder="Confirm Password"
                               v-model="rConfirmPass"
                               class="input_style"
@@ -346,7 +348,7 @@
                         </v-snackbar>
         
                         </div>
-                        <!-- SIGN IN PAGE -->
+                        <!-- LOGIN PAGE -->
                         <div id="login_page" v-if="dialogScreen == 'login'">
                           <div id="login_header">
                             <img
@@ -372,6 +374,7 @@
                             /><br />
                             <input
                               id="login_password"
+                              type="password"
                               placeholder="Password"
                               v-model="lPassword"
                               class="input_style"
@@ -383,7 +386,7 @@
                                     <v-btn
                                       color="#FFB17A"
                                       class="ma-4 black--text fs-100"
-                                      v-on:click="dialogScreen = 'login'"
+                                      v-on:click="loginUser()"
                                       v-bind:style=" {fontSize: '20px'}"
                                     >
                                       Sign In
@@ -421,7 +424,7 @@
                           </div>
                           <!-- LOGIN SNACKBAR AFTER CREATING USER -->
                           <v-snackbar
-                          timeout="2000"
+                          timeout="1000"
                           shaped
                           centered
                           color="blue-grey"
