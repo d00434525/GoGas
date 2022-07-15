@@ -270,26 +270,36 @@ function initMap() {
     GEOCODER = new google.maps.Geocoder();
 
     // Center on the map on St. George using the Geocoder
-    GEOCODER.geocode({'address' : 'St. George, UT'}, function (results, status) {
+    GEOCODER.geocode({'address' : 'St. George, UT'}, function (results, status) { 
+
         switch (status) {
-        case "OK":
-            // creates the map
-            MAP = new google.maps.Map(document.getElementById("map"), {
-                zoom: 13,
-                center: results[0].geometry.location,
-                styles: myStyles,
-            });
-            STATIONMAP = new google.maps.Map(document.getElementById("stationmap"),{
-                zoom: 13,
-                center: this.markers[]
-            })
-            //add station markers
-            app.addMarkers(app.allStations)
-            // calls vue's initialize map function
-            app.initializeMap();
-            break;
-        default:
-            console.error('Geocode was not successful for the following reason: ' + status);
+            case "OK":
+                // creates the map
+                MAP = new google.maps.Map(document.getElementById("map"), {
+                    zoom: 13,
+                    center: results[0].geometry.location,
+                    styles: myStyles,
+                });
+                if(!this.currentStation){
+                    STATIONMAP = new google.maps.Map(document.getElementById("stationmap"),{
+                        zoom: 13,
+                        center: this.markers[this.currentStation.address],
+                        styles: myStyles
+                    });
+                }els
+                    STATIONMAP = new google.maps.Map(document.getElementById("stationmap"),{
+                        zoom: 13,
+                        center: this.markers[this.currentStation.address],
+                        styles: myStyles
+                    });
+                }
+                //add station markers
+                app.addMarkers(app.allStations)
+                // calls vue's initialize map function
+                app.initializeMap();
+                break;
+                default:
+                    alert('Geocode was not successful for the following reason: ' + status)
         }
     });
 }
