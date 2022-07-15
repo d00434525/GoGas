@@ -1,150 +1,321 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <!-- Vuetify -->
-    <link rel="stylesheet" href="style.css">
-    <link href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900" rel="stylesheet">
-    <link href="https://cdn.jsdelivr.net/npm/@mdi/font@6.x/css/materialdesignicons.min.css" rel="stylesheet">
-    <link href="https://cdn.jsdelivr.net/npm/vuetify@2.x/dist/vuetify.min.css" rel="stylesheet">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;0,700;1,300&family=Montserrat:wght@100;300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css" />
+    <link
+      href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900"
+      rel="stylesheet"
+    />
+    <link
+      href="https://cdn.jsdelivr.net/npm/@mdi/font@6.x/css/materialdesignicons.min.css"
+      rel="stylesheet"
+    />
+    <link
+      href="https://cdn.jsdelivr.net/npm/vuetify@2.x/dist/vuetify.min.css"
+      rel="stylesheet"
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;0,700;1,300&family=Montserrat:wght@100;300;400;600;700&display=swap"
+      rel="stylesheet"
+    />
 
     <title>GoGas</title>
-    <link rel="icon" type="image/x-icon" href="./images/gogasicon.png">
+    <link rel="icon" type="image/x-icon" href="./images/gogasicon.png" />
+  </head>
 
-    
-</head>
-
-<body>
+  <body>
     <div id="app" v-cloak>
+      <!-- HOME PAGE -->
+      <div id="home_page" v-if="page == 'home'">
+        <h1>Welcome to GoGas</h1>
+        <button v-on:click="page = 'register'">Register</button>
+        <button v-on:click="page = 'signIn'">Sign In</button>
+        <button @click="page = 'main'">Continue as Guest</button>
+      </div>
 
-        <!-- HOME PAGE -->
-        <div id="home_page" v-if="page == 'home'">
-            <h1>Welcome to GoGas</h1>
-            <button v-on:click="page = 'register'">Register</button>
-            <button v-on:click="page = 'signIn'">Sign In</button>
-            <button @click="page = 'main'">Continue as Guest</button>
-            
-        </div>
+      <!-- MAIN PAGE -->
+      <v-app id="inspire" v-if="page == 'main'">
+        <v-app-bar app color="#4F4789" flat elevation="4">
+          <img src="./images/gogaslogo.svg" alt="Go Gas Logo" width="175px" />
+        </v-app-bar>
 
-        <!-- MAIN PAGE -->
-        <v-app id="inspire" v-if="page == 'main'">
-              
+        <v-main class="grey lighten-3">
+          <v-container>
+            <v-row>
+              <v-col id="column" cols="2">
+                <v-sheet rounded="lg">
+                  <v-list color="transparent">
+                    <v-list-item
+                      v-for="(station, index) in allStations"
+                      :key="index"
+                      link
+                      @click="getSingleStation(station._id)"
+                    >
+                      <v-list-item-content>
+                        <v-list-item-title>
+                          {{ station.name }} {{ station.address }}
+                        </v-list-item-title>
+                      </v-list-item-content>
+                    </v-list-item>
 
-            <v-app-bar app color="#4F4789" flat>
-              <img src="./images/gogaslogo.svg" alt="Go Gas Logo" width="175px" />
-            </v-app-bar>
-    
-            <v-main class="grey lighten-3">
-              <v-container>
-                <v-row>
-                  <v-col id="column" cols="2">
-                    <v-sheet rounded="lg">
-                      <v-list color="transparent">
-                        <v-list-item v-for="(station, index) in allStations" :key="index" link @click="getSingleStation(station._id)">
-                          <v-list-item-content>
-                            <v-list-item-title>
-                              {{ station.name }}
-                              {{ station.address }}
-                            </v-list-item-title>
-                          </v-list-item-content>
-                        </v-list-item>
-    
-                        <v-divider class="my-2"></v-divider>
-    
-                        <v-list-item link color="grey lighten-4">
-                          <v-list-item-content>
-                            <v-list-item-title> Refresh </v-list-item-title>
-                          </v-list-item-content>
-                        </v-list-item>
-                      </v-list>
-                    </v-sheet>
-                  </v-col>
-    
-                  <v-col>
-                    <v-sheet min-height="100%" rounded="lg">
-                      <!--  -->
+                    <v-divider class="my-2"></v-divider>
 
-                      <template>
-                        <v-row justify="center">
-                          <v-dialog
-                            round
-                            v-model="dialog"
-                            persistent
-                            max-width="600px"
-                            class="my-auto"
+                    <v-list-item link color="grey lighten-4">
+                      <v-list-item-content>
+                        <v-list-item-title> Refresh </v-list-item-title>
+                      </v-list-item-content>
+                    </v-list-item>
+                  </v-list>
+                </v-sheet>
+              </v-col>
+
+              <v-col>
+                <v-sheet min-height="100%" rounded="lg">
+                  <!--  -->
+
+                  <template>
+                    <v-row justify="center">
+                      <v-dialog
+                        round
+                        v-model="dialog"
+                        persistent
+                        max-width="600px"
+                        class="my-auto"
+                      >
+                        <template v-slot:activator="{ on, attrs }"> </template>
+                        <!-- HOME DIALOG GOES HERE -->
+                        <div
+                          id="home_dialog"
+                          width="600px"
+                          v-if="dialogScreen == 'home'"
+                        >
+                          <h1>Welcome to Go Gas</h1>
+                          <button
+                            class="button_style"
+                            v-on:click="dialogScreen = 'login'"
                           >
-                            <template v-slot:activator="{ on, attrs }">
-                            </template>
-                            <!-- HOME DIALOG GOES HERE -->
-                              <div id="home_dialog" width="600px" v-if="dialogScreen == 'home'">
-                                  <h1>Welcome to Go Gas</h1>   
-                                  <button class="button_style" v-on:click="dialogScreen = 'login'">Login</button>
-                                  <button class="button_style" v-on:click="dialogScreen = 'register'">Register</button>
-                                  <button v-on:click="dialog = false, guest = true" class="button_style">Continue as Guest</button>
-                              </div>
-                            <!-- REGISTER DIALOG GOES HERE -->
-                            <div id="register_page" v-if="dialogScreen == 'register'">
-                              <div id="register_header">
-                                  <img src="./images/gogaslogo.svg" alt="Go Gas Logo" width="175px">
-                              </div>
-                              <div id="register_body">
-                                  <h1>Register</h1>   
-                                  <input id="register_username" placeholder="Username" v-model="rUsername" class="input_style"><br>
-                                  <input id="register_email" placeholder="Email (optional)" v-model="rEmail" class="input_style"><br>
-                                  <input id="register_pass" placeholder="Password" v-model="rPass" class="input_style"><br>
-                                  <input id="register_confirmPass" placeholder="Confirm Password" v-model="rConfirmPass" class="input_style"><br>
-                                  <input id="register_zip" placeholder="Zip" v-model="rZip" class="input_style">
-                                    <v-row class="mb-4">
-                                      <v-col class="col-12" sm="6">
-                                      <button class="button_style" v-on:click="registerUser()">Register</button>
-                                    </v-col>
-                                    <v-col class="col-12" sm="6">
-                                      <button v-on:click="dialogScreen = 'home'" class="button_style">Back</button>
-                                    </v-col>
-                                    </v-row>
-                              </div>
+                            Login
+                          </button>
+                          <button
+                            class="button_style"
+                            v-on:click="dialogScreen = 'register'"
+                          >
+                            Register
+                          </button>
+                          <button
+                            v-on:click="dialog = false, guest = true"
+                            class="button_style"
+                          >
+                            Continue as Guest
+                          </button>
+                        </div>
+                        <!-- REGISTER DIALOG GOES HERE -->
+                        <div
+                          id="register_page"
+                          v-if="dialogScreen == 'register'"
+                        >
+                          <div id="register_header">
+                            <img
+                              src="./images/gogaslogo.svg"
+                              alt="Go Gas Logo"
+                              width="175px"
+                            />
                           </div>
-                          <!-- SIGN IN PAGE -->
-                          <div id="login_page" v-if="dialogScreen == 'login'">
-                            <div id="login_header">
-                                <img src="./images/gogaslogo.svg" alt="Go Gas Logo" width="175px">
-                            </div>
-                            <!-- <div id="login_body">
+                          <div id="register_body">
+                            <h1>Register</h1>
+                            <input
+                              id="register_username"
+                              placeholder="Username"
+                              v-model="rUsername"
+                              class="input_style"
+                            /><br />
+                            <input
+                              id="register_email"
+                              placeholder="Email (optional)"
+                              v-model="rEmail"
+                              class="input_style"
+                            /><br />
+                            <input
+                              id="register_pass"
+                              placeholder="Password"
+                              v-model="rPass"
+                              class="input_style"
+                            /><br />
+                            <input
+                              id="register_confirmPass"
+                              placeholder="Confirm Password"
+                              v-model="rConfirmPass"
+                              class="input_style"
+                            /><br />
+                            <input
+                              id="register_zip"
+                              placeholder="Zip"
+                              v-model="rZip"
+                              class="input_style"
+                            />
+                            <v-row class="mb-4">
+                              <v-col class="col-12" sm="6">
+                                <button
+                                  class="button_style"
+                                  v-on:click="registerUser()"
+                                >
+                                  Register
+                                </button>
+                              </v-col>
+                              <v-col class="col-12" sm="6">
+                                <button
+                                  v-on:click="dialogScreen = 'home'"
+                                  class="button_style"
+                                >
+                                  Back
+                                </button>
+                              </v-col>
+                            </v-row>
+                          </div>
+                        </div>
+                        <!-- SIGN IN PAGE -->
+                        <div id="login_page" v-if="dialogScreen == 'login'">
+                          <div id="login_header">
+                            <img
+                              src="./images/gogaslogo.svg"
+                              alt="Go Gas Logo"
+                              width="175px"
+                            />
+                          </div>
+                          <!-- <div id="login_body">
                                 <h1>Sign In</h1>
                                 <input id="login_email" placeholder="Email" v-model="lEmail" class="input_style"><br>
                                 <input id="login_password" placeholder="Password" v-model="lPassword" class="input_style"><br>
                                 <button @click="setPage('home')" class="button_style">Login</button>
                                 <button v-on:click="dialogScreen = 'home'" class="button_style">Go Back</button>
                             </div> -->
-                            <div id="login_body">
-                              <h1>Login</h1>   
-                              <input id="login_username" placeholder="Username" v-model="lUsername" class="input_style"><br>
-                              <input id="login_password" placeholder="Password" v-model="lPassword" class="input_style"><br>
-                                <v-row class="mb-4">
-                                  <v-col class="col-12" sm="6">
-                                  <button class="button_style">Login</button>
-                                </v-col>
-                                <v-col class="col-12" sm="6">
-                                  <button v-on:click="dialogScreen = 'home'" class="button_style">Back</button>
-                                </v-col>
-                                </v-row>
+                          <div id="login_body">
+                            <h1>Login</h1>
+                            <input
+                              id="login_username"
+                              placeholder="Username"
+                              v-model="lUsername"
+                              class="input_style"
+                            /><br />
+                            <input
+                              id="login_password"
+                              placeholder="Password"
+                              v-model="lPassword"
+                              class="input_style"
+                            /><br />
+                            <v-row class="mb-4">
+                              <v-col class="col-12" sm="6">
+                                <button class="button_style">Login</button>
+                              </v-col>
+                              <v-col class="col-12" sm="6">
+                                <button
+                                  v-on:click="dialogScreen = 'home'"
+                                  class="button_style"
+                                >
+                                  Back
+                                </button>
+                              </v-col>
+                            </v-row>
                           </div>
                         </div>
-                          
-                          </v-dialog>
-                        </v-row>
-                      </template>
+                      </v-dialog>
+                    </v-row>
+                  </template>
+                </v-sheet>
+              </v-col>
+            </v-row>
+          </v-container>
+        </v-main>
+      </v-app>
 
+      <!-- SINGLE STATION PAGE -->
+      <v-app id="inspire" v-if="page == 'station'">
+        <v-app-bar app color="#4F4789" flat>
+          <img src="./images/gogaslogo.svg" alt="Go Gas Logo" width="175px" />
+          <v-container class="py-0 fill-height">
+            <v-spacer></v-spacer>
+          </v-container>
+        </v-app-bar>
 
+        <v-main class="grey lighten-3">
+          <v-container>
+            <v-row>
+              <v-col id="column" cols="2">
+                <v-sheet rounded="lg" width="700px">
+                  <v-list color="transparent">
+                    <v-list-item>
+                      <v-list-item-content>
+                        <v-list-item-title class="text-center mb-8">
+                          <h1 class="">{{ currentStation.name }}</h1>
+                          <h3>{{ currentStation.address }}</h3>
+                          <h4><i>{{ currentStation.pumpHours }}</i></h4>
+                        </v-list-item-title>
+                        <template>
+                          <v-card
+                            class="mx-auto text-center"
+                            color="#4F4789"
+                            dark
+                            max-width="600"
+                          >
+                            <v-card-text>
+                              <v-sheet color="#4F4789">
+                                <v-sparkline
+                                  :value="currentStationPrices"
+                                  color="#FFB17A"
+                                  height="100"
+                                  padding="8"
+                                  stroke-linecap="round"
+                                  smooth
+                                  auto-draw
+                                  :auto-draw-duration="4000"
+                                  :gradient="sparklineGradient"
+                                >
+                                  <template v-slot:label="item">
+                                    ${{ item.value }}
+                                  </template>
+                                </v-sparkline>
+                              </v-sheet>
+                            </v-card-text>
 
-
-
-
+                            <v-divider></v-divider>
+                          </v-card>
+                        </template>
+                        <template>
+                          <v-card class="mx-auto mt-8" max-width="600">
+                            <v-card-title>Leave a Review</v-card-title>
+                            <v-card-text>
+                              <span
+                                ><b>{{ currentStation.name }}</b>
+                                <i>{{ currentStation.address }}</i></span
+                              >
+                              <template>
+                                <div class="text-center">
+                                  <v-rating
+                                    v-model="rating"
+                                    background-color="orange lighten-3"
+                                    color="#FFB17A"
+                                    large
+                                  ></v-rating>
+                                </div>
+                              </template>
+                              <v-text-field label="Enter a comment...">
+                              </v-text-field>
+                            </v-card-text>
+                            <v-card-actions>
+                              <v-btn text color="#FFB17A">
+                                Submit Review
+                              </v-btn>
+                            </v-card-actions>
+                          </v-card>
+                        </template>
+                      </v-list-item-content>
+                    </v-list-item>
                     </v-sheet>
                   </v-col>
                 </v-row>
@@ -191,122 +362,32 @@
               </v-container>
             </v-main>
 
-            
-          </v-app>
+                    <v-divider class="my-2"></v-divider>
 
+                    <v-list-item link color="grey lighten-4">
+                      <v-list-item-content
+                        @click="setPage('main'); currentStationPrices = []"
+                      >
+                        <v-list-item-title> Back </v-list-item-title>
+                      </v-list-item-content>
+                    </v-list-item>
+                  </v-list>
+                </v-sheet>
+              </v-col>
 
-        <!-- SINGLE STATION PAGE -->
-        <v-app id="inspire" v-if="page == 'station'">
-          <v-app-bar app color="#4F4789" flat>
-            <img src="./images/gogaslogo.svg" alt="Go Gas Logo" width="175px" />
-            <v-container class="py-0 fill-height">
-  
-              <v-spacer></v-spacer>
-            </v-container>
-          </v-app-bar>
-  
-          <v-main class="grey lighten-3">
-            <v-container>
-              <v-row>
-                <v-col id="column" cols="2">
-                  <v-sheet rounded="lg" width="700px">
-                    <v-list color="transparent">
-                      <v-list-item>
-                        <v-list-item-content>
-                          <v-list-item-title class="text-center mb-8">
-                            <h1 class="">{{ currentStation.name }}</h1>
-                            <h3>{{ currentStation.address }}</h3>
-                            <h4><i>{{ currentStation.pumpHours }}</i></h4>
-                          </v-list-item-title>
-                            <template>
-                              <v-card
-                                class="mx-auto text-center"
-                                color="#4F4789"
-                                dark
-                                max-width="600"
-                              >
-                                <v-card-text>
-                                  <v-sheet color="#4F4789">
-                                    <v-sparkline
-                                      :value="currentStationPrices"
-                                      color="#FFB17A"
-                                      height="100"
-                                      padding="8"
-                                      stroke-linecap="round"
-                                      smooth
-                                      auto-draw
-                                      :auto-draw-duration="4000"
-                                      :gradient="sparklineGradient"
-                                    >
-                                    <template v-slot:label="item">
-                                      ${{ item.value }}
-                                    </template>
-                                    </v-sparkline>
-                                  </v-sheet>
-                                </v-card-text>
-                            
-                                <v-divider></v-divider>
-                              </v-card>
-                            </template>
-                            <template>
-                              <v-card
-                                class="mx-auto mt-8"
-                                max-width="600"
-                              >
-                                <v-card-title>Leave a Review</v-card-title>
-                                <v-card-text>
-                                  <span><b>{{ currentStation.name }}</b> <i>{{ currentStation.address }}</i></span>
-                                  <template>
-                                    <div class="text-center">
-                                      <v-rating
-                                        v-model="rating"
-                                        background-color="orange lighten-3"
-                                        color="#FFB17A"
-                                        large
-                                      ></v-rating>
-                                    </div>
-                                  </template>
-                                  <v-text-field label="Enter a comment...">
-                                  </v-text-field>
-                                </v-card-text>
-                                <v-card-actions>
-                                  <v-btn
-                                    text
-                                    color="#FFB17A"
-                                  >
-                                    Submit Review
-                                  </v-btn>
-                                </v-card-actions>
-                              </v-card>
-                            </template>
-                        </v-list-item-content>
-                      </v-list-item>
-  
-                      <v-divider class="my-2"></v-divider>
-  
-                      <v-list-item link color="grey lighten-4">
-                        <v-list-item-content @click="setPage('main'); currentStationPrices = []">
-                          <v-list-item-title> Back </v-list-item-title>
-                        </v-list-item-content>
-                      </v-list-item>
-                    </v-list>
-                  </v-sheet>
-                </v-col>
-  
-                <v-col>
-                  <v-sheet min-height="100%" rounded="lg">
-                    <!--  -->
-                  </v-sheet>
-                </v-col>
-              </v-row>
-            </v-container>
-          </v-main>
-        </v-app>
+              <v-col>
+                <v-sheet min-height="100%" rounded="lg">
+                  <!--  -->
+                </v-sheet>
+              </v-col>
+            </v-row>
+          </v-container>
+        </v-main>
+      </v-app>
     </div>
-
 
     <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/vuetify@2.x/dist/vuetify.js"></script>
     <script src="app.js"></script>
-</body>
+  </body>
 </html>

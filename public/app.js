@@ -86,6 +86,7 @@ var app = new Vue({
             if (this.rUsername == ""){
                 this.errorOccurred = true;
                 this.errorMessage = "You must enter a username.";
+                console.log("You need a username");
                 return;
             }
             else if (this.rPass == ""){
