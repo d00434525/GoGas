@@ -527,7 +527,31 @@
                     <v-list-item>
                       <v-list-item-content>
                         <v-list-item-title class="text-center mb-8">
+                          
                           <div class="d-flex justify-space-around align-center">
+                            <template>
+                              <div class="text-center"> 
+                                <v-tooltip left>
+                                  <template v-slot:activator="{ on, attrs }">
+                                    <v-btn
+                                    class="mx-2"
+                                    fab
+                                    dark
+                                    large
+                                    color="#FFB17A"
+                                    v-bind="attrs"
+                                    v-on="on"
+                                    @click="setPage('main'); currentStationPrices = []"
+                                  >
+                                    <v-icon dark color="black">
+                                      mdi-keyboard-backspace
+                                    </v-icon>
+                                  </v-btn>
+                                  </template>
+                                  <span>Back to main page</span>
+                                </v-tooltip>
+                              </div>
+                            </template>
                             <div>
                               <h1 class="">{{ currentStation.name }}</h1>
                               <h3>{{ currentStation.address }}</h3>
@@ -647,16 +671,6 @@
                             </v-card-actions>
                           </v-card>
                         </template>
-                      </v-list-item-content>
-                    </v-list-item>
-
-                    <v-divider class="my-2"></v-divider>
-
-                    <v-list-item link color="grey lighten-4">
-                      <v-list-item-content
-                        @click="setPage('main'); currentStationPrices = []"
-                      >
-                        <v-list-item-title > Back </v-list-item-title>
                       </v-list-item-content>
                     </v-list-item>
                   </v-list>
