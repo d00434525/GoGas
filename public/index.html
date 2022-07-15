@@ -266,13 +266,11 @@
                             <input
                               id="register_pass"
                               placeholder="Password"
-                              type="password"
                               v-model="rPass"
                               class="input_style"
                             /><br />
                             <input
                               id="register_confirmPass"
-                              type="password"
                               placeholder="Confirm Password"
                               v-model="rConfirmPass"
                               class="input_style"
@@ -348,7 +346,7 @@
                         </v-snackbar>
         
                         </div>
-                        <!-- LOGIN PAGE -->
+                        <!-- SIGN IN PAGE -->
                         <div id="login_page" v-if="dialogScreen == 'login'">
                           <div id="login_header">
                             <img
@@ -374,7 +372,6 @@
                             /><br />
                             <input
                               id="login_password"
-                              type="password"
                               placeholder="Password"
                               v-model="lPassword"
                               class="input_style"
@@ -386,7 +383,7 @@
                                     <v-btn
                                       color="#FFB17A"
                                       class="ma-4 black--text fs-100"
-                                      v-on:click="loginUser()"
+                                      v-on:click="dialogScreen = 'login'"
                                       v-bind:style=" {fontSize: '20px'}"
                                     >
                                       Sign In
@@ -424,7 +421,7 @@
                           </div>
                           <!-- LOGIN SNACKBAR AFTER CREATING USER -->
                           <v-snackbar
-                          timeout="1000"
+                          timeout="2000"
                           shaped
                           centered
                           color="blue-grey"
@@ -681,7 +678,10 @@
               </v-col>
 
               <v-col>
-                <v-sheet min-height="100%" rounded="lg">
+                <v-sheet min-height="49%" rounded="lg" class="mb-4">
+                  <!--  -->
+                </v-sheet>
+                <v-sheet min-height="49%" rounded="lg" class="mt-4">
                   <!--  -->
                 </v-sheet>
               </v-col>
