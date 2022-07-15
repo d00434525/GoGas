@@ -28,6 +28,7 @@ var app = new Vue({
 
         // rating stuff
         rating: 0,
+        comment: "",
 
     },
     methods:{
@@ -89,7 +90,32 @@ var app = new Vue({
                 console.log("You must enter all required fields.");
                 return;
             }
-        }
+        },
+
+        // Post review on a station
+        postReview: async function (id) {
+            let postBody = {
+                rating: this.rating,
+                comment: this.comment,
+                station_id: id
+            }
+
+            let response = await fetch(URL + "/review", {
+                method: "POST",
+                body: JSON.stringify(postBody),
+                headers: {
+                    "Content-Type" : "application/json"
+                },
+                credentials: "include"
+            });
+
+            if (response.status == 201) {
+                // created successfully
+                this.getSingleStation(id);
+            } else {
+                console.log("Error posting review:", response.status);
+            }
+        },
     },
     created: function () {
         this.getStations();
