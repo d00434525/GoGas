@@ -515,6 +515,7 @@
           </div>
         </v-app-bar>
 
+        <!-- Left column -->
         <v-main class="grey lighten-3">
           <v-container>
             <v-row>
@@ -608,6 +609,37 @@
                             <v-card-actions>
                               <v-btn text color="#FFB17A">
                                 Submit Review
+                              </v-btn>
+                            </v-card-actions>
+                          </v-card>
+                        </template>
+                        <template>
+                          <v-card
+                            class="mx-auto mt-8"
+                            max-width="600"
+                            v-for="(review, index) in currentStation.reviews"
+                            :key="index"
+                          >
+                            <v-card-text>
+                              <div>
+                                {{ review.user.name }}
+                                <div class="text-center">
+                                  <v-rating
+                                    v-model="review.rating"
+                                    background-color="orange lighten-3"
+                                    color="#FFB17A"
+                                    large
+                                    readonly
+                                  ></v-rating>
+                                </div>
+                              </div>
+                            </v-card-text>
+                            <v-card-actions>
+                              <v-btn
+                                text
+                                color="teal accent-4"
+                              >
+                                Delete
                               </v-btn>
                             </v-card-actions>
                           </v-card>
