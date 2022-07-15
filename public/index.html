@@ -453,6 +453,7 @@
           </div>
         </v-app-bar>
 
+        <!-- Left column -->
         <v-main class="grey lighten-3">
           <v-container>
             <v-row>
@@ -552,14 +553,23 @@
                         </template>
                         <template>
                           <v-card
-                            class="mx-auto"
-                            max-width="344"
+                            class="mx-auto mt-8"
+                            max-width="600"
                             v-for="(review, index) in currentStation.reviews"
                             :key="index"
                           >
                             <v-card-text>
-                              <div class="text--primary">
-                                {{ review.user }}
+                              <div>
+                                {{ review.user.name }}
+                                <div class="text-center">
+                                  <v-rating
+                                    v-model="review.rating"
+                                    background-color="orange lighten-3"
+                                    color="#FFB17A"
+                                    large
+                                    readonly
+                                  ></v-rating>
+                                </div>
                               </div>
                             </v-card-text>
                             <v-card-actions>
