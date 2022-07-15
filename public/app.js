@@ -284,9 +284,14 @@ function initMap() {
                     STATIONMAP = new google.maps.Map(document.getElementById("stationmap"),{
                         zoom: 13,
                         center: this.markers[this.currentStation.address],
-                        styles: myStyles
+                        styles: myStyles,
                     });
-                }els
+                    app.addMarkers(app.allStations)
+                    app.initializeMap();
+                    break;
+                    default:
+                        console.log('Geocode was not successful for the following reason: ' + status);
+                }else
                     STATIONMAP = new google.maps.Map(document.getElementById("stationmap"),{
                         zoom: 13,
                         center: this.markers[this.currentStation.address],
@@ -294,12 +299,7 @@ function initMap() {
                     });
                 }
                 //add station markers
-                app.addMarkers(app.allStations)
                 // calls vue's initialize map function
-                app.initializeMap();
-                break;
-                default:
-                    alert('Geocode was not successful for the following reason: ' + status)
         }
     });
 }
