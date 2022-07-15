@@ -9,7 +9,7 @@ var app = new Vue({
 
         // Register Page
         rUsername: "",
-        rEmail: "",
+        rName: "",
         rPass:"",
         rConfirmPass:"",
         rZip: "",
@@ -80,6 +80,47 @@ var app = new Vue({
                 console.error("Error fetching individual request with id", id, "- status:", response.status);
             }
         },
+        addUser: async function () {
+            let newUser = {
+                username: this.rUsername,
+                password: this.rPass,
+                name: this.rName,
+                zip: this.rZip,
+            }
+
+            let response = await fetch('http://localhost:8080/user', {
+                method: "POST",
+                body: JSON.stringify(newUser),
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                credentials: "include"
+            });
+
+            // parse the response body
+            let body;
+            try {
+                body = response.json();
+            } catch (error) {
+                console.error("Error parsing body as JSON:", error);
+                body = "An Unknown Error has occurred";
+            }
+
+            if (response.status == 201) {
+                console.log(response, "User succesfully created.");
+                console.log("Welcome,", this.rName);
+                // user succesfully created
+                this.rUsername = "";
+                this.rPass = "";
+                this.rName = "";
+                this.rZip = "";
+
+                // take user to login page HERE:
+            } else {
+                // error creating user
+                this.rPass = "";
+            }
+        },
 
         registerUser: function() {
             if (this.rUsername == ""){
@@ -98,6 +139,10 @@ var app = new Vue({
                 this.errorMessage = "You must confirm your password.";
                 return;
             }
+            else if (this.rName == ""){
+                this.errorOccurred = true;
+                this.errorMessage = "You must enter a name."
+            }
             else if (this.rZip == ""){
                 this.errorOccurred = true;
                 this.errorMessage = "You must enter a Zip code.";
@@ -111,9 +156,10 @@ var app = new Vue({
             else {
                 this.successMessage = "User successfully created.";
                 this.successOccurred = true;
-                // this.UpdateServer();
+
+                this.addUser();
             }
-        },
+        }
     },
     created: function () {
         this.getStations();
