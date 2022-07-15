@@ -47,6 +47,7 @@ var app = new Vue({
 
         // rating stuff
         rating: 0,
+        comment: "",
 
         //MAP
         map: null,
@@ -174,6 +175,31 @@ var app = new Vue({
             this.map = MAP;
             this.geocoder = GEOCODER;
             this.mapIsInitialized = true;
+        },
+
+        // Post review on a station
+        postReview: async function (id) {
+            let postBody = {
+                rating: this.rating,
+                comment: this.comment,
+                station_id: id
+            }
+
+            let response = await fetch(URL + "/review", {
+                method: "POST",
+                body: JSON.stringify(postBody),
+                headers: {
+                    "Content-Type" : "application/json"
+                },
+                credentials: "include"
+            });
+
+            if (response.status == 201) {
+                // created successfully
+                this.getSingleStation(id);
+            } else {
+                console.log("Error posting review:", response.status);
+            }
         },
     },
     created: function () {

@@ -603,11 +603,11 @@
                                   ></v-rating>
                                 </div>
                               </template>
-                              <v-text-field label="Enter a comment...">
+                              <v-text-field label="Enter a comment..." v-model="comment">
                               </v-text-field>
                             </v-card-text>
                             <v-card-actions>
-                              <v-btn text color="#FFB17A">
+                              <v-btn text color="#FFB17A" @click="postReview()">
                                 Submit Review
                               </v-btn>
                             </v-card-actions>
