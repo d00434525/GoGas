@@ -149,6 +149,7 @@ var app = new Vue({
                 console.log("You must enter all required fields.");
                 return;
             }
+<<<<<<< HEAD
         },
         
         // get single gas station prices
@@ -197,3 +198,12 @@ function initMap() {
         }
     });
 }
+=======
+        }
+    },
+    created: function () {
+        this.getStations();
+    }
+})
+  
+>>>>>>> main

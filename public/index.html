@@ -25,8 +25,12 @@
       rel="stylesheet"
     />
 
+<<<<<<< HEAD
 
     <title>GoGas</title>
+=======
+    <title>Go Gas</title>
+>>>>>>> main
     <link rel="icon" type="image/x-icon" href="./images/gogasicon.png" />
   </head>
 
@@ -43,7 +47,65 @@
       <!-- MAIN PAGE -->
       <v-app id="inspire" v-if="page == 'main'">
         <v-app-bar app color="#4F4789" flat elevation="4">
-          <img src="./images/gogaslogo.svg" alt="Go Gas Logo" width="175px" />
+          <div>
+            <img src="./images/gogaslogo.svg" alt="Go Gas Logo" width="175px" />
+          </div>
+          <div class="d-flex">
+            <template v-if="guest == true && dialogScreen == 'main'">
+              <div class="text-center">
+                <v-btn
+                  color="#FFB17A"
+                  class="ma-4 black--text fs-100"
+                  v-on:click="dialogScreen = 'login'"
+                  v-bind:style=" {fontSize: '20px'}"
+                >
+                  Register
+                  <v-icon
+                    right
+                    dark
+                  >
+                    mdi-login-variant
+                  </v-icon>
+                </v-btn>
+              </div>
+            </template>
+            <template v-if="guest == true && dialogScreen == 'main'">
+              <div class="text-center">
+                <v-btn
+                  color="#FFB17A"
+                  class="ma-4 black--text fs-100"
+                  v-on:click="dialogScreen = 'login'"
+                  v-bind:style=" {fontSize: '20px'}"
+                >
+                  Sign In
+                  <v-icon
+                    right
+                    dark
+                  >
+                    mdi-account-plus-outline
+                  </v-icon>
+                </v-btn>
+              </div>
+            </template>
+            <template v-if="guest == false && dialogScreen == 'main'">
+              <div class="text-center">
+                <v-btn
+                  color="#FFB17A"
+                  class="ma-4 black--text fs-100"
+                  v-on:click="dialogScreen = 'login'"
+                  v-bind:style=" {fontSize: '20px'}"
+                >
+                  Logout
+                  <v-icon
+                    right
+                    dark
+                  >
+                    mdi-account-minus-outline
+                  </v-icon>
+                </v-btn>
+              </div>
+            </template>
+          </div>
         </v-app-bar>
 
         <!-- MAIN PAGE -->
@@ -143,7 +205,7 @@
               </v-col>
 
               <v-col>
-                <v-sheet min-height="100%" rounded="lg">
+                <v-sheet min-height="100%" rounded="lg" >
                   <!--  -->
 
                   <template>
@@ -163,24 +225,68 @@
                           v-if="dialogScreen == 'home'"
                         >
                           <h1>Welcome to Go Gas</h1>
-                          <button
+                          <!-- <button
                             class="button_style"
                             v-on:click="dialogScreen = 'login'"
                           >
                             Login
-                          </button>
-                          <button
-                            class="button_style"
-                            v-on:click="dialogScreen = 'register'"
-                          >
-                            Register
-                          </button>
-                          <button
-                            v-on:click="dialog = false, guest = true"
-                            class="button_style"
-                          >
-                            Continue as Guest
-                          </button>
+                          </button> -->
+                          <template>
+                            <div class="text-center">
+                              <v-btn
+                                color="#FFB17A"
+                                class="ma-4 black--text fs-100"
+                                v-on:click="dialogScreen = 'login'"
+                                v-bind:style=" {fontSize: '20px'}"
+                              >
+                                Sign In
+                                <v-icon
+                                  right
+                                  dark
+                                >
+                                  mdi-login-variant
+                                </v-icon>
+                              </v-btn>
+                            </div>
+                          </template>
+
+                          <template>
+                            <div class="text-center">
+                              <v-btn
+                                color="#FFB17A"
+                                class="ma-4 black--text fs-100"
+                                v-on:click="dialogScreen = 'register'"
+                                v-bind:style=" {fontSize: '20px'}"
+                              >
+                                Register
+                                <v-icon
+                                  right
+                                  dark
+                                >
+                                  mdi-account-plus-outline
+                                </v-icon>
+                              </v-btn>
+                            </div>
+                          </template>
+                          
+                          <template>
+                            <div class="text-center">
+                              <v-btn
+                                color="#FFB17A"
+                                class="ma-4 black--text fs-100"
+                                v-on:click="dialog = false, guest = true, dialogScreen ='main'"
+                                v-bind:style=" {fontSize: '20px'}"
+                              >
+                                Continue as Guest
+                                <v-icon
+                                  right
+                                  dark
+                                >
+                                  mdi-account-arrow-right-outline
+                                </v-icon>
+                              </v-btn>
+                            </div>
+                          </template>
                         </div>
                         <!-- REGISTER DIALOG GOES HERE -->
                         <div
@@ -228,20 +334,44 @@
                             />
                             <v-row class="mb-4">
                               <v-col class="col-12" sm="6">
-                                <button
-                                  class="button_style"
-                                  v-on:click="registerUser()"
-                                >
-                                  Register
-                                </button>
+                                <template>
+                                  <div class="text-center">
+                                    <v-btn
+                                      color="#FFB17A"
+                                      class="ma-4 black--text fs-100"
+                                      v-on:click="registerUser()"
+                                      v-bind:style=" {fontSize: '20px'}"
+                                    >
+                                      Register
+                                      <v-icon
+                                        right
+                                        dark
+                                      >
+                                        mdi-account-plus-outline
+                                      </v-icon>
+                                    </v-btn>
+                                  </div>
+                                </template>
                               </v-col>
                               <v-col class="col-12" sm="6">
-                                <button
-                                  v-on:click="dialogScreen = 'home'"
-                                  class="button_style"
-                                >
-                                  Back
-                                </button>
+                                <template>
+                                  <div class="text-center">
+                                    <v-btn
+                                      color="#FFB17A"
+                                      class="ma-4 black--text fs-100"
+                                      v-on:click="dialogScreen = 'home'"
+                                      v-bind:style=" {fontSize: '20px'}"
+                                    >
+                                      Back
+                                      <v-icon
+                                        right
+                                        dark
+                                      >
+                                        mdi-keyboard-backspace
+                                      </v-icon>
+                                    </v-btn>
+                                  </div>
+                                </template>
                               </v-col>
                             </v-row>
                           </div>
@@ -263,7 +393,7 @@
                                 <button v-on:click="dialogScreen = 'home'" class="button_style">Go Back</button>
                             </div> -->
                           <div id="login_body">
-                            <h1>Login</h1>
+                            <h1>Sign In</h1>
                             <input
                               id="login_username"
                               placeholder="Username"
@@ -278,15 +408,44 @@
                             /><br />
                             <v-row class="mb-4">
                               <v-col class="col-12" sm="6">
-                                <button class="button_style">Login</button>
+                                <template>
+                                  <div class="text-center">
+                                    <v-btn
+                                      color="#FFB17A"
+                                      class="ma-4 black--text fs-100"
+                                      v-on:click="dialogScreen = 'login'"
+                                      v-bind:style=" {fontSize: '20px'}"
+                                    >
+                                      Sign In
+                                      <v-icon
+                                        right
+                                        dark
+                                      >
+                                        mdi-login-variant
+                                      </v-icon>
+                                    </v-btn>
+                                  </div>
+                                </template>
                               </v-col>
                               <v-col class="col-12" sm="6">
-                                <button
-                                  v-on:click="dialogScreen = 'home'"
-                                  class="button_style"
-                                >
-                                  Back
-                                </button>
+                                <template>
+                                  <div class="text-center">
+                                    <v-btn
+                                      color="#FFB17A"
+                                      class="ma-4 black--text fs-100"
+                                      v-on:click="dialogScreen = 'home'"
+                                      v-bind:style=" {fontSize: '20px'}"
+                                    >
+                                      Back
+                                      <v-icon
+                                        right
+                                        dark
+                                      >
+                                        mdi-keyboard-backspace
+                                      </v-icon>
+                                    </v-btn>
+                                  </div>
+                                </template>
                               </v-col>
                             </v-row>
                           </div>
@@ -303,11 +462,66 @@
 
       <!-- SINGLE STATION PAGE -->
       <v-app id="inspire" v-if="page == 'station'">
-        <v-app-bar app color="#4F4789" flat>
-          <img src="./images/gogaslogo.svg" alt="Go Gas Logo" width="175px" />
-          <v-container class="py-0 fill-height">
-            <v-spacer></v-spacer>
-          </v-container>
+        <v-app-bar app color="#4F4789" flat elevation="4">
+          <div>
+            <img src="./images/gogaslogo.svg" alt="Go Gas Logo" width="175px" />
+          </div>
+          <div class="d-flex">
+            <template v-if="guest == true && dialogScreen == 'main'">
+              <div class="text-center">
+                <v-btn
+                  color="#FFB17A"
+                  class="ma-4 black--text fs-100"
+                  v-on:click="dialogScreen = 'login'"
+                  v-bind:style=" {fontSize: '20px'}"
+                >
+                  Register
+                  <v-icon
+                    right
+                    dark
+                  >
+                    mdi-login-variant
+                  </v-icon>
+                </v-btn>
+              </div>
+            </template>
+            <template v-if="guest == true && dialogScreen == 'main'">
+              <div class="text-center">
+                <v-btn
+                  color="#FFB17A"
+                  class="ma-4 black--text fs-100"
+                  v-on:click="dialogScreen = 'login'"
+                  v-bind:style=" {fontSize: '20px'}"
+                >
+                  Sign In
+                  <v-icon
+                    right
+                    dark
+                  >
+                    mdi-account-plus-outline
+                  </v-icon>
+                </v-btn>
+              </div>
+            </template>
+            <template v-if="guest == false && dialogScreen == 'main'">
+              <div class="text-center">
+                <v-btn
+                  color="#FFB17A"
+                  class="ma-4 black--text fs-100"
+                  v-on:click="dialogScreen = 'login'"
+                  v-bind:style=" {fontSize: '20px'}"
+                >
+                  Logout
+                  <v-icon
+                    right
+                    dark
+                  >
+                    mdi-account-minus-outline
+                  </v-icon>
+                </v-btn>
+              </div>
+            </template>
+          </div>
         </v-app-bar>
 
         <v-main class="grey lighten-3">
@@ -319,9 +533,35 @@
                     <v-list-item>
                       <v-list-item-content>
                         <v-list-item-title class="text-center mb-8">
-                          <h1 class="">{{ currentStation.name }}</h1>
-                          <h3>{{ currentStation.address }}</h3>
-                          <h4><i>{{ currentStation.pumpHours }}</i></h4>
+                          <div class="d-flex justify-space-around align-center">
+                            <div>
+                              <h1 class="">{{ currentStation.name }}</h1>
+                              <h3>{{ currentStation.address }}</h3>
+                              <h4><i>{{ currentStation.pumpHours }}</i></h4>
+                            </div>
+                            <template>
+                              <div class="text-center"> 
+                                <v-tooltip right>
+                                  <template v-slot:activator="{ on, attrs }">
+                                    <v-btn
+                                    class="mx-2"
+                                    fab
+                                    dark
+                                    large
+                                    color="#FFB17A"
+                                    v-bind="attrs"
+                                    v-on="on"
+                                  >
+                                    <v-icon dark color="black">
+                                      mdi-currency-usd
+                                    </v-icon>
+                                  </v-btn>
+                                  </template>
+                                  <span>Post updated price</span>
+                                </v-tooltip>
+                              </div>
+                            </template>
+                          </div>
                         </v-list-item-title>
                         <template>
                           <v-card
