@@ -11,6 +11,7 @@ const { onConnect, connect } = require("./persist/connect");
 onConnect (() => {
     var server = app.listen(config.port, () => {
         console.log(`Server is running on port ${config.port}`);
+        console.log(`http://localhost:${config.port}`);
     });
 });
 
