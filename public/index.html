@@ -391,11 +391,66 @@
 
       <!-- SINGLE STATION PAGE -->
       <v-app id="inspire" v-if="page == 'station'">
-        <v-app-bar app color="#4F4789" flat>
-          <img src="./images/gogaslogo.svg" alt="Go Gas Logo" width="175px" />
-          <v-container class="py-0 fill-height">
-            <v-spacer></v-spacer>
-          </v-container>
+        <v-app-bar app color="#4F4789" flat elevation="4" class="d-flex justify-space-between">
+          <div>
+            <img src="./images/gogaslogo.svg" alt="Go Gas Logo" width="175px" />
+          </div>
+          <div class="d-flex">
+            <template v-if="guest == true && dialogScreen == 'main'">
+              <div class="text-center">
+                <v-btn
+                  color="#FFB17A"
+                  class="ma-4 black--text fs-100"
+                  v-on:click="dialogScreen = 'login'"
+                  v-bind:style=" {fontSize: '20px'}"
+                >
+                  Register
+                  <v-icon
+                    right
+                    dark
+                  >
+                    mdi-login-variant
+                  </v-icon>
+                </v-btn>
+              </div>
+            </template>
+            <template v-if="guest == true && dialogScreen == 'main'">
+              <div class="text-center">
+                <v-btn
+                  color="#FFB17A"
+                  class="ma-4 black--text fs-100"
+                  v-on:click="dialogScreen = 'login'"
+                  v-bind:style=" {fontSize: '20px'}"
+                >
+                  Sign In
+                  <v-icon
+                    right
+                    dark
+                  >
+                    mdi-account-plus-outline
+                  </v-icon>
+                </v-btn>
+              </div>
+            </template>
+            <template v-if="guest == false && dialogScreen == 'main'">
+              <div class="text-center">
+                <v-btn
+                  color="#FFB17A"
+                  class="ma-4 black--text fs-100"
+                  v-on:click="dialogScreen = 'login'"
+                  v-bind:style=" {fontSize: '20px'}"
+                >
+                  Logout
+                  <v-icon
+                    right
+                    dark
+                  >
+                    mdi-account-minus-outline
+                  </v-icon>
+                </v-btn>
+              </div>
+            </template>
+          </div>
         </v-app-bar>
 
         <v-main class="grey lighten-3">
