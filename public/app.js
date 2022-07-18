@@ -333,6 +333,7 @@ var app = new Vue({
                 // created successfully
                 this.rating = 0;
                 this.comment = "";
+                this.currentStationPrices = [];
                 this.getSingleStation(id);
             } else {
                 console.log("Error posting review:", response.status);
@@ -409,6 +410,7 @@ var app = new Vue({
             if (response.status == 200) {
                 // deleted successfully
                 console.log("deleted review");
+                this.currentStationPrices = [];
                 this.getSingleStation(stationId);
             } else {
                 console.log("Error deleting review:", response.status);
