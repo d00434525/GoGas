@@ -19,6 +19,9 @@
     --yellow-color: yellow;
     --input-color: #FFFFFF;
 }
+img {
+    cursor: pointer;
+}
 
 .input_style {
     width: 800px;
