@@ -397,7 +397,7 @@ var app = new Vue({
 
         // Get all current station prices
         getAllPrices: function (station) {
-            return station.prices[station.prices.length -1].price
+            return parseFloat(station.prices[station.prices.length -1].price).toFixed(2);
         },
 
         // Delete a review on a station
@@ -425,9 +425,9 @@ var app = new Vue({
         allStationsAverage: function () {
             let sum = 0;
             this.allStations.forEach(station => {
-                sum += this.getAllPrices(station);
+                sum += parseFloat(this.getAllPrices(station));
             });
-            return sum / this.allStations.length;
+            return (sum / this.allStations.length);
         }
     }
 })
