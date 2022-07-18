@@ -461,7 +461,7 @@
                 <v-btn
                   color="#FFB17A"
                   class="ma-4 black--text fs-100"
-                  v-on:click="setPage('main'); dialogScreen = 'register'; dialog = true"
+                  v-on:click="setPage('main'); dialogScreen = 'register'; dialog = true; currentStationPrices = []"
                   v-bind:style=" {fontSize: '20px'}"
                 >
                   Register
@@ -479,7 +479,7 @@
                 <v-btn
                   color="#FFB17A"
                   class="ma-4 black--text fs-100"
-                  v-on:click="setPage('main'); dialogScreen = 'login'; dialog = true"
+                  v-on:click="setPage('main'); dialogScreen = 'login'; dialog = true; currentStationPrices = []"
                   v-bind:style=" {fontSize: '20px'}"
                 >
                   Sign In
