@@ -351,9 +351,19 @@ var app = new Vue({
         },
         // Post price on a station
         postPrice: async function (id) {
-            let postBody = {
-                price: parseFloat(this.newCurrentPrice),
-                station_id: id
+            let currentPrice = this.currentStation.prices[this.currentStation.prices.length - 1].price;
+            let upperBound = currentPrice + 0.2;
+            let lowerBound = currentPrice - 0.2;
+            let postBody;
+            if (this.newCurrentPrice > upperBound || this.newCurrentPrice < lowerBound) {
+                console.log('Price is not within allowed range');
+                this.getSingleStation(id);
+                return;
+            } else {
+                postBody = {
+                    price: parseFloat(this.newCurrentPrice),
+                    station_id: id
+                }
             }
 
             let response = await fetch(URL + "/price", {
@@ -369,6 +379,9 @@ var app = new Vue({
                 // created successfully
                 this.newCurrentPrice = "";
                 this.getSingleStation(id);
+                currentPrice = 0;
+                upperBound = 0;
+                lowerBound = 0;
             } else {
                 console.log("Error posting price:", response.status);
             }
