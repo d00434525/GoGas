@@ -1,5 +1,6 @@
 const URL = 'http://localhost:8080';
 
+var SSMAP;
 var MAP;
 var GEOCODER;
 
@@ -299,6 +300,12 @@ var app = new Vue({
             this.geocoder = GEOCODER;
             this.mapIsInitialized = true;
         },
+        initializeSSMap: function() {
+            console.log(SSMAP);
+            this.map = SSMAP;
+            this.geocoder = GEOCODER;
+            this.mapIsInitialized = true
+        },
         addMarkers: function(stations){
             stations.forEach(station => {
                 this.addMarker(station.address);
@@ -408,7 +415,7 @@ var app = new Vue({
 
 // This function is a callback that is given to the google api
 // It is ran when the api has finished loading
-function initMap(address = "") {
+function initMap(singleStationAdress = "") {
     // geocoder is for turning an address (1234 E 5678 S) into Latitude and Longitude
     GEOCODER = new google.maps.Geocoder();
 
@@ -417,7 +424,7 @@ function initMap(address = "") {
         switch (status) {
         case "OK":
             // creates the map
-            //if(address = ""){
+            if(singleStationAddress = ""){
             MAP = new google.maps.Map(document.getElementById("map"), {
                     zoom: 13,
                     center: results[0].geometry.location,
@@ -426,13 +433,13 @@ function initMap(address = "") {
                 });
             console.log("results", results)
             console.log("results [0]", results[0])
-            // }else {
-            //     MAP = new google.maps.Map(document.getElementById("map"), {
-            //         zoom: 16,
-            //         center: this.currentStation.address,
-            //         styles: myStyles,
-            //     });
-            // }
+            }else {
+                SSMAP = new google.maps.Map(document.getElementById("ssmap"), {
+                    zoom: 16,
+                    //center: this.currentSta
+                    styles: myStyles,
+                });
+            }
             //add station markers
             app.addMarkers(app.allStations)
             // calls vue's initialize map function
