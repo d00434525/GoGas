@@ -237,6 +237,10 @@ var app = new Vue({
                  // reload page
                 window.location.reload(); 
             }
+            else if (response.status == 400 || response.status == 401){
+                this.errorOccurred = true;
+                this.errorMessage = "Login Info was Incorrect.";
+            }
         },
 
         // get session

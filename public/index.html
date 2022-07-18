@@ -428,6 +428,26 @@
                               </v-btn>
                             </template>
                           </v-snackbar>
+                          <v-snackbar
+                            shaped
+                            centered
+                            timeout="2000"
+                            v-model="errorOccurred"
+                          >
+                            {{ errorMessage }}
+
+                            <template v-slot:action="{ attrs }">
+                              <v-btn
+                                color="pink"
+                                text
+                                v-bind="attrs"
+                                @click="errorOccurred = false"
+                              >
+                                Close
+                              </v-btn>
+                            </template>
+                          </v-snackbar>
+                        </div>
                         </div>
                       </v-dialog>
                     </v-row>
