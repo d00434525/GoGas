@@ -46,6 +46,8 @@ var app = new Vue({
         currentStation: "",
         currentStationPrices: [],
         sparklineGradient: ["#FFB17A", "yellow"],
+        currentStationDialog: false,
+        newCurrentPrice: "",
 
         // rating stuff
         rating: 0,
@@ -343,11 +345,38 @@ var app = new Vue({
             } catch (err) {
                 console.log(err)
             }
-
-            
         },
         reloadMap: function() {
             initMap();
+        },
+        // Post price on a station
+        postPrice: async function (id) {
+            let postBody = {
+                price: parseFloat(this.newCurrentPrice),
+                station_id: id
+            }
+
+            let response = await fetch(URL + "/price", {
+                method: "POST",
+                body: JSON.stringify(postBody),
+                headers: {
+                    "Content-Type" : "application/json"
+                },
+                credentials: "include"
+            });
+
+            if (response.status == 201) {
+                // created successfully
+                this.newCurrentPrice = "";
+                this.getSingleStation(id);
+            } else {
+                console.log("Error posting price:", response.status);
+            }
+        },
+
+        // Get all current station prices
+        getAllPrices: function (station) {
+            return station.prices[station.prices.length -1].price
         }
     },
     created: function () {
@@ -355,7 +384,7 @@ var app = new Vue({
         this.getStations();
     }
 })
-  
+
 // This function is a callback that is given to the google api
 // It is ran when the api has finished loading
 function initMap() {

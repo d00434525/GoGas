@@ -109,12 +109,7 @@
                         <v-list-item-title class="d-flex justify-space-between">
                           <div>{{ station.name }} {{ station.address }}</div>
                           <div>
-                            <span class="actual_price"
-                              ><b
-                                >${{ station.prices[station.prices.length
-                                -1].price }}</b
-                              ></span
-                            >
+                            <span class="actual_price"><b>${{ getAllPrices(station) }}</b></span>
                           </div>
                         </v-list-item-title>
                       </v-list-item-content>
@@ -519,7 +514,7 @@
                               </div>
                             </template>
                             <div>
-                              <h1 class="">{{ currentStation.name }}</h1>
+                              <h1>{{ currentStation.name }}</h1>
                               <h3>{{ currentStation.address }}</h3>
                               <h4><i>{{ currentStation.pumpHours }}</i></h4>
                             </div>
@@ -533,8 +528,7 @@
                                       dark
                                       large
                                       color="#FFB17A"
-                                      v-bind="attrs"
-                                      v-on="on"
+                                      @click="currentStationDialog = true"
                                     >
                                       <v-icon dark color="black">
                                         mdi-currency-usd
@@ -547,17 +541,12 @@
                             </template>
                           </div>
                         </v-list-item-title>
-                        <v-list-item id="recent_price" class="mb-4">
-                          <p>
-                            CURRENT PRICE:
-                            <span class="actual_price"
-                              ><b
-                                >${{
-                                currentStation.prices[currentStation.prices.length
-                                - 1].price }}</b
-                              ></span
-                            >
-                          </p>
+
+                        <v-list-item id="recent_price">
+                          <p>CURRENT PRICE: <span class="actual_price"><b>${{ currentStation.prices[currentStation.prices.length - 1].price }}</b></span></p>
+                        </v-list-item>
+                        <v-list-item id="recent_price_user" class="mb-4">
+                          <p><i>Current price posted by: <span class="actual_price">{{ currentStation.prices[currentStation.prices.length - 1].user.name }}</span></i></p>
                         </v-list-item>
                         <template>
                           <v-card
@@ -620,6 +609,66 @@
                               <v-btn text color="teal accent-4"> Delete </v-btn>
                             </v-card-actions>
                           </v-card>
+                        </template>
+                        <template>
+                          <v-row justify="center">
+                            <v-dialog
+                              v-model="currentStationDialog"
+                              persistent
+                              max-width="600px"
+                            >
+                              <v-card>
+                                <v-card-title>
+                                  <span class="text-h5" id="current_station_dialog_header">Post update price for {{ currentStation.name }} {{ currentStation.address}}</span>
+                                </v-card-title>
+                                <v-card-text>
+                                  <v-container>
+                                    <v-row>
+                                      <v-col
+                                        cols="12"
+                                        sm="6"
+                                        md="4"
+                                      >
+                                        <v-text-field
+                                          label="Enter current price"
+                                          required
+                                          v-model="newCurrentPrice"
+                                        ></v-text-field>
+                                      </v-col>
+                                      <v-col
+                                        cols="12"
+                                        sm="6"
+                                        md="4"
+                                      >
+
+                                    </v-row>
+                                  </v-container>
+                                </v-card-text>
+                                <v-card-actions>
+                                  <v-btn
+                                  class="mx-2 black--text"
+                                  dark
+                                  large
+                                  color="#FFB17A"
+                                  @click="currentStationDialog = false"
+                                >
+                                  Back
+                                </v-btn>
+                                  <v-spacer></v-spacer>
+
+                                  <v-btn
+                                  class="mx-2 black--text"
+                                  dark
+                                  large
+                                  color="#FFB17A"
+                                  @click="currentStationPrices = []; postPrice(currentStation._id); currentStationDialog = false;"
+                                >
+                                  Post new price
+                                </v-btn>
+                                </v-card-actions>
+                              </v-card>
+                            </v-dialog>
+                          </v-row>
                         </template>
                       </v-list-item-content>
                     </v-list-item>

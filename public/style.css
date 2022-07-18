@@ -207,6 +207,15 @@
     align-items: center;
 }
 
+#recent_price_user {
+    font-size: 1rem;
+    font-weight: bold;
+    color: black;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
 .actual_price {
     color: var(--orange-color);
 }
@@ -215,4 +224,9 @@
     display: flex;
     position: fixed;
     right: 0px;
+}
+
+#current_station_dialog_header {
+    color: var(--nav-color);
+    width: 100%;
 }
