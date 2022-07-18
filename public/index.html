@@ -36,7 +36,7 @@
         <h1>Welcome to Go Gas</h1>
         <button v-on:click="page = 'register'">Register</button>
         <button v-on:click="page = 'signIn'">Sign In</button>
-        <button @click="page = 'main'">Continue as Guest</button>
+        <button @click="page = 'main', guest = true">Continue as Guest</button>
       </div>
 
       <!-- MAIN PAGE -->
@@ -50,6 +50,9 @@
               width="175px"
             />
           </div>
+          <v-row v-if="guest == false" class="text-center justify-center mr-15">
+            <h2 class="white--text">Welcome, &nbsp {{ userName }}</h2>
+          </v-row>
           <div class="nav_buttons">
             <template v-if="guest == true && dialogScreen == 'main'">
               <div class="text-center">
@@ -431,6 +434,9 @@
           <div>
             <img src="./images/gogaslogo.svg" alt="Go Gas Logo" width="175px" />
           </div>
+          <v-row v-if="guest == false" class="text-center justify-center mr-15">
+            <h2 class="white--text">Welcome, &nbsp {{ userName }}</h2>
+          </v-row>
           <div class="nav_buttons">
             <template v-if="guest == true && dialogScreen == 'main'">
               <div class="text-center">
