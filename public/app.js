@@ -276,8 +276,8 @@ var app = new Vue({
             GEOCODER.geocode( {'address': address}, (results, status) => {
                 if (status == 'OK') {
                     // centers/zooms map
-                    this.map.setCenter(results[0].geometry.location);
-                    this.map.setZoom(16);
+                    // this.map.setCenter(results[0].geometry.location);
+                    // this.map.setZoom(16);
                     
                     // creates new marker
                     var marker = new google.maps.Marker({
@@ -365,7 +365,7 @@ function initMap() {
         case "OK":
             // creates the map
             MAP = new google.maps.Map(document.getElementById("map"), {
-                zoom: 14,
+                zoom: 13,
                 center: results[0].geometry.location,
                 styles: myStyles,
             });
