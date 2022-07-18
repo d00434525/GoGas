@@ -420,6 +420,15 @@ var app = new Vue({
     created: function () {
         this.getSession();
         this.getStations();
+    },
+    computed: {
+        allStationsAverage: function () {
+            let sum = 0;
+            this.allStations.forEach(station => {
+                sum += this.getAllPrices(station);
+            });
+            return sum / this.allStations.length;
+        }
     }
 })
 
