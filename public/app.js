@@ -397,6 +397,22 @@ var app = new Vue({
         // Get all current station prices
         getAllPrices: function (station) {
             return station.prices[station.prices.length -1].price
+        },
+
+        // Delete a review on a station
+        deleteReview: async function (stationId, reviewId) {
+            let response = await fetch(URL + "/station/" + stationId + "/review/" + reviewId, {
+                method: "DELETE",
+                credentials: "include"
+            });
+
+            if (response.status == 200) {
+                // deleted successfully
+                console.log("deleted review");
+                this.getSingleStation(stationId);
+            } else {
+                console.log("Error deleting review:", response.status);
+            }
         }
     },
     created: function () {
