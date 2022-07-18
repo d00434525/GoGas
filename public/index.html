@@ -305,10 +305,10 @@
                                     <v-btn
                                       color="#FFB17A"
                                       class="ma-4 black--text fs-100"
-                                      v-on:click="dialogScreen = 'home'"
+                                      v-on:click="dialogScreen = 'home', reloadMap(), console.log('back clicked')"
                                       v-bind:style=" {fontSize: '20px'}"
                                     >
-                                      Back
+                                      Back 
                                       <v-icon
                                         right
                                         dark
@@ -536,7 +536,7 @@
                                     color="#FFB17A"
                                     v-bind="attrs"
                                     v-on="on"
-                                    @click="setPage('main'); currentStationPrices = []"
+                                    @click="setPage('main'); currentStationPrices = [], reloadMap()"
                                   >
                                     <v-icon dark color="black">
                                       mdi-keyboard-backspace
