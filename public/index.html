@@ -113,7 +113,7 @@
                       v-for="(station, index) in allStations"
                       :key="index"
                       link
-                      @click="getSingleStation(station._id)"
+                      @click="getSingleStation(station._id), reloadMap();"
                     >
                       <v-list-item-content>
                         <v-list-item-title class="d-flex justify-space-between">
@@ -305,7 +305,7 @@
                                     <v-btn
                                       color="#FFB17A"
                                       class="ma-4 black--text fs-100"
-                                      v-on:click="dialogScreen = 'home', reloadMap(), console.log('back clicked')"
+                                      v-on:click="dialogScreen = 'home', reloadMap()"
                                       v-bind:style=" {fontSize: '20px'}"
                                     >
                                       Back 
@@ -536,7 +536,7 @@
                                     color="#FFB17A"
                                     v-bind="attrs"
                                     v-on="on"
-                                    @click="setPage('main'); currentStationPrices = [], reloadMap()"
+                                    @click="setPage('main'); currentStationPrices = [],itWorked(), reloadMap()"
                                   >
                                     <v-icon dark color="black">
                                       mdi-keyboard-backspace
@@ -648,9 +648,35 @@
                 </v-sheet>
               </v-col>
 
+              <!-- SINGLE STATION MAP -->
               <v-col>
-                <v-sheet min-height="43vh" rounded="lg" class="mb-4" max-width="50vw">
-                  <!--  -->
+                <v-sheet git rounded="lg" class="mb-4" max-width="50vw">
+                  <v-col>
+                    <v-sheet min-height="100%" rounded="lg" >
+                      <v-col>
+                        <v-sheet min-height="100%" rounded="lg">
+                          <v-main class="green lighten-5 pt-0">
+                            <v-container class="fill-height white">
+                              <v-container>
+                                <v-row>
+                                    <v-col>
+                                        <v-sheet v-show="mapIsInitialized" height="300px" id="map"></v-sheet>
+                                        <v-sheet v-if="!mapIsInitialized" class="transparent" height="600">
+                                            <v-card class="fill-height" loading="green lighten-2">
+                                                <v-card-title>Loading Map</v-card-title>
+                                                <v-card-text>
+                                                    If this is taking a long time, make sure you've
+                                                    entered in your google api key in the html script tag. It
+                                                    will not work until you've provided one
+                                                </v-card-text>
+                                            </v-card>
+                                        </v-sheet>
+                                    </v-col>
+                                </v-row>
+                            </v-container>
+                          </v-main>
+                        </v-sheet>
+                      </v-col>
                 </v-sheet>
                 <v-sheet min-height="43vh" rounded="lg" class="mt-4" max-width="50vw">
                   <template>

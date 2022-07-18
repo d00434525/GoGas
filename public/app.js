@@ -303,6 +303,10 @@ var app = new Vue({
                 console.log(station.address);
             });
         },
+        centerMarker: function () {
+            this.map.setCenter(this.currentStation.geometry.location);
+            this.map.setZoom(16);
+        },
 
         // Post review on a station
         postReview: async function (id) {
@@ -348,6 +352,9 @@ var app = new Vue({
         },
         reloadMap: function() {
             initMap();
+        },
+        itWorked: function(){
+            console.log("it worked?")
         }
     },
     created: function () {
@@ -358,7 +365,7 @@ var app = new Vue({
   
 // This function is a callback that is given to the google api
 // It is ran when the api has finished loading
-function initMap() {
+function initMap(address = null) {
     // geocoder is for turning an address (1234 E 5678 S) into Latitude and Longitude
     GEOCODER = new google.maps.Geocoder();
 
@@ -367,11 +374,19 @@ function initMap() {
         switch (status) {
         case "OK":
             // creates the map
-            MAP = new google.maps.Map(document.getElementById("map"), {
-                zoom: 13,
-                center: results[0].geometry.location,
-                styles: myStyles,
-            });
+            if (address = null){
+                MAP = new google.maps.Map(document.getElementById("map"), {
+                    zoom: 13,
+                    center: results[0].geometry.location,
+                    styles: myStyles,
+                });
+            } else {
+                MAP = new google.maps.Map(document.getElementById("map"), {
+                    zoom: 16,
+                    center: address.geometry.location,
+                    styles: myStyles,
+                });
+            }
             //add station markers
             app.addMarkers(app.allStations)
             // calls vue's initialize map function
