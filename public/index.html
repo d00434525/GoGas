@@ -42,8 +42,13 @@
       <!-- MAIN PAGE -->
       <v-app id="inspire" v-if="page == 'main'">
         <v-app-bar app color="#4F4789" flat elevation="4">
-          <div>
-            <img src="./images/gogaslogo.svg" alt="Go Gas Logo" width="175px" />
+          <div id="main_header">
+            <img
+              v-on:click="page = 'main'"
+              src="./images/gogaslogo.svg"
+              alt="Go Gas Logo"
+              width="175px"
+            />
           </div>
           <div class="nav_buttons">
             <template v-if="guest == true && dialogScreen == 'main'">
@@ -55,12 +60,7 @@
                   v-bind:style=" {fontSize: '20px'}"
                 >
                   Register
-                  <v-icon
-                    right
-                    dark
-                  >
-                    mdi-login-variant
-                  </v-icon>
+                  <v-icon right dark> mdi-login-variant </v-icon>
                 </v-btn>
               </div>
             </template>
@@ -73,12 +73,7 @@
                   v-bind:style=" {fontSize: '20px'}"
                 >
                   Sign In
-                  <v-icon
-                    right
-                    dark
-                  >
-                    mdi-account-plus-outline
-                  </v-icon>
+                  <v-icon right dark> mdi-account-plus-outline </v-icon>
                 </v-btn>
               </div>
             </template>
@@ -91,12 +86,7 @@
                   v-bind:style=" {fontSize: '20px'}"
                 >
                   Logout
-                  <v-icon
-                    right
-                    dark
-                  >
-                    mdi-account-minus-outline
-                  </v-icon>
+                  <v-icon right dark> mdi-account-minus-outline </v-icon>
                 </v-btn>
               </div>
             </template>
@@ -117,11 +107,9 @@
                     >
                       <v-list-item-content>
                         <v-list-item-title class="d-flex justify-space-between">
+                          <div>{{ station.name }} {{ station.address }}</div>
                           <div>
-                            {{ station.name }} {{ station.address }}
-                          </div> 
-                          <div>
-                            <span class="actual_price"><b>${{ station.prices[station.prices.length -1].price }}</b></span>
+                            <span class="actual_price"><b>${{ getAllPrices(station) }}</b></span>
                           </div>
                         </v-list-item-title>
                       </v-list-item-content>
@@ -132,26 +120,38 @@
 
               <!-- MAP -->
               <v-col>
-                <v-sheet min-height="100%" rounded="lg" >
+                <v-sheet min-height="100%" rounded="lg">
                   <v-col>
                     <v-sheet min-height="100%" rounded="lg">
                       <v-main class="green lighten-5 pt-0">
                         <v-container class="fill-height white">
-                            <v-row>
-                                <v-col>
-                                    <v-sheet v-show="mapIsInitialized" height="600" id="map"></v-sheet>
-                                    <v-sheet v-if="!mapIsInitialized" class="transparent" height="600">
-                                        <v-card class="fill-height" loading="green lighten-2">
-                                            <v-card-title>Loading Map</v-card-title>
-                                            <v-card-text>
-                                                If this is taking a long time, make sure you've
-                                                entered in your google api key in the html script tag. It
-                                                will not work until you've provided one
-                                            </v-card-text>
-                                        </v-card>
-                                    </v-sheet>
-                                </v-col>
-                            </v-row>
+                          <v-row>
+                            <v-col>
+                              <v-sheet
+                                v-show="mapIsInitialized"
+                                height="600"
+                                id="map"
+                              ></v-sheet>
+                              <v-sheet
+                                v-if="!mapIsInitialized"
+                                class="transparent"
+                                height="600"
+                              >
+                                <v-card
+                                  class="fill-height"
+                                  loading="green lighten-2"
+                                >
+                                  <v-card-title>Loading Map</v-card-title>
+                                  <v-card-text>
+                                    If this is taking a long time, make sure
+                                    you've entered in your google api key in the
+                                    html script tag. It will not work until
+                                    you've provided one
+                                  </v-card-text>
+                                </v-card>
+                              </v-sheet>
+                            </v-col>
+                          </v-row>
                         </v-container>
                       </v-main>
                     </v-sheet>
@@ -183,12 +183,7 @@
                                 v-bind:style=" {fontSize: '20px'}"
                               >
                                 Sign In
-                                <v-icon
-                                  right
-                                  dark
-                                >
-                                  mdi-login-variant
-                                </v-icon>
+                                <v-icon right dark> mdi-login-variant </v-icon>
                               </v-btn>
                             </div>
                           </template>
@@ -202,16 +197,13 @@
                                 v-bind:style=" {fontSize: '20px'}"
                               >
                                 Register
-                                <v-icon
-                                  right
-                                  dark
-                                >
+                                <v-icon right dark>
                                   mdi-account-plus-outline
                                 </v-icon>
                               </v-btn>
                             </div>
                           </template>
-                          
+
                           <template>
                             <div class="text-center">
                               <v-btn
@@ -221,10 +213,7 @@
                                 v-bind:style=" {fontSize: '20px'}"
                               >
                                 Continue as Guest
-                                <v-icon
-                                  right
-                                  dark
-                                >
+                                <v-icon right dark>
                                   mdi-account-arrow-right-outline
                                 </v-icon>
                               </v-btn>
@@ -289,10 +278,7 @@
                                       v-bind:style=" {fontSize: '20px'}"
                                     >
                                       Register
-                                      <v-icon
-                                        right
-                                        dark
-                                      >
+                                      <v-icon right dark>
                                         mdi-account-plus-outline
                                       </v-icon>
                                     </v-btn>
@@ -308,11 +294,8 @@
                                       v-on:click="dialogScreen = 'home', reloadMap()"
                                       v-bind:style=" {fontSize: '20px'}"
                                     >
-                                      Back 
-                                      <v-icon
-                                        right
-                                        dark
-                                      >
+                                      Back
+                                      <v-icon right dark>
                                         mdi-keyboard-backspace
                                       </v-icon>
                                     </v-btn>
@@ -323,25 +306,24 @@
                           </div>
                           <!-- snackbar goes here -->
                           <v-snackbar
-                          shaped
-                          centered
-                          timeout="2000"
-                          v-model="errorOccurred"
-                        >
-                          {{ errorMessage }}
-        
-                          <template v-slot:action="{ attrs }">
-                          <v-btn
-                            color="pink"
-                            text
-                            v-bind="attrs"
-                            @click="errorOccurred = false"
+                            shaped
+                            centered
+                            timeout="2000"
+                            v-model="errorOccurred"
                           >
-                            Close
-                          </v-btn>
-                          </template>
-                        </v-snackbar>
-        
+                            {{ errorMessage }}
+
+                            <template v-slot:action="{ attrs }">
+                              <v-btn
+                                color="pink"
+                                text
+                                v-bind="attrs"
+                                @click="errorOccurred = false"
+                              >
+                                Close
+                              </v-btn>
+                            </template>
+                          </v-snackbar>
                         </div>
                         <!-- SIGN IN PAGE -->
                         <div id="login_page" v-if="dialogScreen == 'login'">
@@ -385,10 +367,7 @@
                                       v-bind:style=" {fontSize: '20px'}"
                                     >
                                       Sign In
-                                      <v-icon
-                                        right
-                                        dark
-                                      >
+                                      <v-icon right dark>
                                         mdi-login-variant
                                       </v-icon>
                                     </v-btn>
@@ -405,10 +384,7 @@
                                       v-bind:style=" {fontSize: '20px'}"
                                     >
                                       Back
-                                      <v-icon
-                                        right
-                                        dark
-                                      >
+                                      <v-icon right dark>
                                         mdi-keyboard-backspace
                                       </v-icon>
                                     </v-btn>
@@ -419,25 +395,25 @@
                           </div>
                           <!-- LOGIN SNACKBAR AFTER CREATING USER -->
                           <v-snackbar
-                          timeout="2000"
-                          shaped
-                          centered
-                          color="blue-grey"
-                          v-model="successfullyCreated"
-                        >
-                          {{ successMessage }}
-        
-                          <template v-slot:action="{ attrs }">
-                          <v-btn
-                            color="pink"
-                            text
-                            v-bind="attrs"
-                            @click="successfullyCreated = false"
+                            timeout="2000"
+                            shaped
+                            centered
+                            color="blue-grey"
+                            v-model="successfullyCreated"
                           >
-                            Close
-                          </v-btn>
-                          </template>
-                        </v-snackbar>
+                            {{ successMessage }}
+
+                            <template v-slot:action="{ attrs }">
+                              <v-btn
+                                color="pink"
+                                text
+                                v-bind="attrs"
+                                @click="successfullyCreated = false"
+                              >
+                                Close
+                              </v-btn>
+                            </template>
+                          </v-snackbar>
                         </div>
                       </v-dialog>
                     </v-row>
@@ -465,12 +441,7 @@
                   v-bind:style=" {fontSize: '20px'}"
                 >
                   Register
-                  <v-icon
-                    right
-                    dark
-                  >
-                    mdi-login-variant
-                  </v-icon>
+                  <v-icon right dark> mdi-login-variant </v-icon>
                 </v-btn>
               </div>
             </template>
@@ -483,12 +454,7 @@
                   v-bind:style=" {fontSize: '20px'}"
                 >
                   Sign In
-                  <v-icon
-                    right
-                    dark
-                  >
-                    mdi-account-plus-outline
-                  </v-icon>
+                  <v-icon right dark> mdi-account-plus-outline </v-icon>
                 </v-btn>
               </div>
             </template>
@@ -501,12 +467,7 @@
                   v-bind:style=" {fontSize: '20px'}"
                 >
                   Logout
-                  <v-icon
-                    right
-                    dark
-                  >
-                    mdi-account-minus-outline
-                  </v-icon>
+                  <v-icon right dark> mdi-account-minus-outline </v-icon>
                 </v-btn>
               </div>
             </template>
@@ -518,17 +479,23 @@
           <v-container>
             <v-row>
               <v-col id="column" cols="2">
-                <v-sheet rounded="lg" width="45vw" height="88vh" class="overflow-y-auto">
-                  <v-list color="transparent" >
+                <v-sheet
+                  rounded="lg"
+                  width="45vw"
+                  height="88vh"
+                  class="overflow-y-auto"
+                >
+                  <v-list color="transparent">
                     <v-list-item>
                       <v-list-item-content>
                         <v-list-item-title class="text-center mb-8">
                           <div class="d-flex justify-space-around align-center">
                             <template>
-                              <div class="text-center"> 
+                              <div class="text-center">
                                 <v-tooltip left>
                                   <template v-slot:activator="{ on, attrs }">
                                     <v-btn
+<<<<<<< HEAD
                                     class="mx-2"
                                     fab
                                     dark
@@ -542,33 +509,47 @@
                                       mdi-keyboard-backspace
                                     </v-icon>
                                   </v-btn>
+=======
+                                      class="mx-2"
+                                      fab
+                                      dark
+                                      large
+                                      color="#FFB17A"
+                                      v-bind="attrs"
+                                      v-on="on"
+                                      @click="setPage('main'); currentStationPrices = [], reloadMap()"
+                                    >
+                                      <v-icon dark color="black">
+                                        mdi-keyboard-backspace
+                                      </v-icon>
+                                    </v-btn>
+>>>>>>> main
                                   </template>
                                   <span>Back to main page</span>
                                 </v-tooltip>
                               </div>
                             </template>
                             <div>
-                              <h1 class="">{{ currentStation.name }}</h1>
+                              <h1>{{ currentStation.name }}</h1>
                               <h3>{{ currentStation.address }}</h3>
                               <h4><i>{{ currentStation.pumpHours }}</i></h4>
                             </div>
                             <template>
-                              <div class="text-center"> 
+                              <div class="text-center">
                                 <v-tooltip right>
                                   <template v-slot:activator="{ on, attrs }">
                                     <v-btn
-                                    class="mx-2"
-                                    fab
-                                    dark
-                                    large
-                                    color="#FFB17A"
-                                    v-bind="attrs"
-                                    v-on="on"
-                                  >
-                                    <v-icon dark color="black">
-                                      mdi-currency-usd
-                                    </v-icon>
-                                  </v-btn>
+                                      class="mx-2"
+                                      fab
+                                      dark
+                                      large
+                                      color="#FFB17A"
+                                      @click="currentStationDialog = true"
+                                    >
+                                      <v-icon dark color="black">
+                                        mdi-currency-usd
+                                      </v-icon>
+                                    </v-btn>
                                   </template>
                                   <span>Post updated price</span>
                                 </v-tooltip>
@@ -576,8 +557,12 @@
                             </template>
                           </div>
                         </v-list-item-title>
-                        <v-list-item id="recent_price" class="mb-4">
+
+                        <v-list-item id="recent_price">
                           <p>CURRENT PRICE: <span class="actual_price"><b>${{ currentStation.prices[currentStation.prices.length - 1].price }}</b></span></p>
+                        </v-list-item>
+                        <v-list-item id="recent_price_user" class="mb-4">
+                          <p><i>Current price posted by: <span class="actual_price">{{ currentStation.prices[currentStation.prices.length - 1].user.name }}</span></i></p>
                         </v-list-item>
                         <template>
                           <v-card
@@ -609,7 +594,9 @@
                             <v-divider></v-divider>
                           </v-card>
                         </template>
-                        <h1 class="d-flex justify-space-around mt-8">Reviews</h1>
+                        <h1 class="d-flex justify-space-around mt-8">
+                          Reviews
+                        </h1>
                         <template>
                           <v-card
                             class="mx-auto mt-8"
@@ -617,30 +604,87 @@
                             v-for="(review, index) in currentStation.reviews"
                             :key="index"
                           >
-                            <v-card-title class="d-flex align-center justify-space-between">
-                                <p id="review_username">{{ review.user.name }}</p>
-                                <div class="text-center">
-                                  <v-rating
-                                    v-model="review.rating"
-                                    background-color="orange lighten-3"
-                                    color="#FFB17A"
-                                    large
-                                    readonly
-                                  ></v-rating>
-                                </div>
+                            <v-card-title
+                              class="d-flex align-center justify-space-between"
+                            >
+                              <p id="review_username">{{ review.user.name }}</p>
+                              <div class="text-center">
+                                <v-rating
+                                  v-model="review.rating"
+                                  background-color="orange lighten-3"
+                                  color="#FFB17A"
+                                  large
+                                  readonly
+                                ></v-rating>
+                              </div>
                             </v-card-title>
                             <v-card-text>
                               <p id="review_comment">{{ review.comment}}</p>
                             </v-card-text>
                             <v-card-actions>
-                              <v-btn
-                                text
-                                color="teal accent-4"
-                              >
-                                Delete
-                              </v-btn>
+                              <v-btn text color="teal accent-4"> Delete </v-btn>
                             </v-card-actions>
                           </v-card>
+                        </template>
+                        <template>
+                          <v-row justify="center">
+                            <v-dialog
+                              v-model="currentStationDialog"
+                              persistent
+                              max-width="600px"
+                            >
+                              <v-card>
+                                <v-card-title>
+                                  <span class="text-h5" id="current_station_dialog_header">Post update price for {{ currentStation.name }} {{ currentStation.address}}</span>
+                                </v-card-title>
+                                <v-card-text>
+                                  <v-container>
+                                    <v-row>
+                                      <v-col
+                                        cols="12"
+                                        sm="6"
+                                        md="4"
+                                      >
+                                        <v-text-field
+                                          label="Enter current price"
+                                          required
+                                          v-model="newCurrentPrice"
+                                        ></v-text-field>
+                                      </v-col>
+                                      <v-col
+                                        cols="12"
+                                        sm="6"
+                                        md="4"
+                                      >
+
+                                    </v-row>
+                                  </v-container>
+                                </v-card-text>
+                                <v-card-actions>
+                                  <v-btn
+                                  class="mx-2 black--text"
+                                  dark
+                                  large
+                                  color="#FFB17A"
+                                  @click="currentStationDialog = false"
+                                >
+                                  Back
+                                </v-btn>
+                                  <v-spacer></v-spacer>
+
+                                  <v-btn
+                                  class="mx-2 black--text"
+                                  dark
+                                  large
+                                  color="#FFB17A"
+                                  @click="currentStationPrices = []; postPrice(currentStation._id); currentStationDialog = false;"
+                                >
+                                  Post new price
+                                </v-btn>
+                                </v-card-actions>
+                              </v-card>
+                            </v-dialog>
+                          </v-row>
                         </template>
                       </v-list-item-content>
                     </v-list-item>
@@ -650,6 +694,7 @@
 
               <!-- SINGLE STATION MAP -->
               <v-col>
+<<<<<<< HEAD
                 <v-sheet git rounded="lg" class="mb-4" max-width="50vw">
                   <v-col>
                     <v-sheet min-height="100%" rounded="lg" >
@@ -677,8 +722,22 @@
                           </v-main>
                         </v-sheet>
                       </v-col>
+=======
+                <v-sheet
+                  min-height="43vh"
+                  rounded="lg"
+                  class="mb-4"
+                  max-width="50vw"
+                >
+                  <!--  -->
+>>>>>>> main
                 </v-sheet>
-                <v-sheet min-height="43vh" rounded="lg" class="mt-4" max-width="50vw">
+                <v-sheet
+                  min-height="43vh"
+                  rounded="lg"
+                  class="mt-4"
+                  max-width="50vw"
+                >
                   <template>
                     <v-card class="mx-auto" height="43vh" elevation="0">
                       <v-card-title>Leave a Review</v-card-title>
@@ -697,11 +756,18 @@
                             ></v-rating>
                           </div>
                         </template>
-                        <v-text-field label="Enter a comment..." v-model="comment">
+                        <v-text-field
+                          label="Enter a comment..."
+                          v-model="comment"
+                        >
                         </v-text-field>
                       </v-card-text>
                       <v-card-actions>
-                        <v-btn text color="#FFB17A" @click="postReview(currentStation._id)">
+                        <v-btn
+                          text
+                          color="#FFB17A"
+                          @click="postReview(currentStation._id)"
+                        >
                           Submit Review
                         </v-btn>
                       </v-card-actions>
@@ -719,8 +785,8 @@
     <script src="https://cdn.jsdelivr.net/npm/vuetify@2.x/dist/vuetify.js"></script>
     <script src="app.js"></script>
     <script
-    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA_AU3PAvFLx6xjRd6Mt-ASoqFnLr0sWXo&callback=initMap&v=weekly"
-        defer
+      src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA_AU3PAvFLx6xjRd6Mt-ASoqFnLr0sWXo&callback=initMap&v=weekly"
+      defer
     ></script>
   </body>
 </html>
