@@ -346,6 +346,9 @@ var app = new Vue({
 
             
         },
+        reloadMap: function() {
+            initMap();
+        }
     },
     created: function () {
         this.getSession();
