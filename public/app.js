@@ -368,7 +368,7 @@ var app = new Vue({
                 return;
             } else {
                 postBody = {
-                    price: parseFloat(this.newCurrentPrice),
+                    price: parseFloat(this.newCurrentPrice).toFixed(2),
                     station_id: id
                 }
             }
@@ -428,7 +428,9 @@ var app = new Vue({
                 sum += parseFloat(this.getAllPrices(station));
             });
             return (sum / this.allStations.length);
-        }
+        },
+
+        
     }
 })
 

@@ -560,7 +560,7 @@
                         </v-list-item-title>
 
                         <v-list-item id="recent_price">
-                          <p>CURRENT PRICE: <span class="actual_price"><b>${{ currentStation.prices[currentStation.prices.length - 1].price }}</b></span></p>
+                          <p>CURRENT PRICE: <span class="actual_price"><b>${{ currentStation.prices[currentStation.prices.length - 1].price.toFixed(2) }}</b></span></p>
                         </v-list-item>
                         <v-list-item id="recent_price_user" class="mb-4">
                           <p><i>Current price posted by: <span class="actual_price">{{ currentStation.prices[currentStation.prices.length - 1].user.name }}</span></i></p>
