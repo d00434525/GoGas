@@ -384,6 +384,7 @@ var app = new Vue({
                 lowerBound = 0;
             } else {
                 console.log("Error posting price:", response.status);
+                this.getSingleStation(id);
             }
         },
 
