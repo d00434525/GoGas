@@ -495,7 +495,6 @@
                                 <v-tooltip left>
                                   <template v-slot:activator="{ on, attrs }">
                                     <v-btn
-<<<<<<< HEAD
                                     class="mx-2"
                                     fab
                                     dark
@@ -509,21 +508,6 @@
                                       mdi-keyboard-backspace
                                     </v-icon>
                                   </v-btn>
-=======
-                                      class="mx-2"
-                                      fab
-                                      dark
-                                      large
-                                      color="#FFB17A"
-                                      v-bind="attrs"
-                                      v-on="on"
-                                      @click="setPage('main'); currentStationPrices = [], reloadMap()"
-                                    >
-                                      <v-icon dark color="black">
-                                        mdi-keyboard-backspace
-                                      </v-icon>
-                                    </v-btn>
->>>>>>> main
                                   </template>
                                   <span>Back to main page</span>
                                 </v-tooltip>
@@ -694,19 +678,18 @@
 
               <!-- SINGLE STATION MAP -->
               <v-col>
-<<<<<<< HEAD
                 <v-sheet git rounded="lg" class="mb-4" max-width="50vw">
                   <v-col>
                     <v-sheet min-height="100%" rounded="lg" >
                       <v-col>
                         <v-sheet min-height="100%" rounded="lg">
                           <v-main class="green lighten-5 pt-0">
-                            <v-container class="fill-height white">
+                            <v-container >
                               <v-container>
                                 <v-row>
                                     <v-col>
                                         <v-sheet v-show="mapIsInitialized" height="300px" id="map"></v-sheet>
-                                        <v-sheet v-if="!mapIsInitialized" class="transparent" height="600">
+                                        <v-sheet v-if="!mapIsInitialized" class="transparent" height="300">
                                             <v-card class="fill-height" loading="green lighten-2">
                                                 <v-card-title>Loading Map</v-card-title>
                                                 <v-card-text>
@@ -722,15 +705,13 @@
                           </v-main>
                         </v-sheet>
                       </v-col>
-=======
                 <v-sheet
                   min-height="43vh"
                   rounded="lg"
                   class="mb-4"
                   max-width="50vw"
                 >
-                  <!--  -->
->>>>>>> main
+                  <!-- -->
                 </v-sheet>
                 <v-sheet
                   min-height="43vh"

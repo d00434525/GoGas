@@ -403,19 +403,18 @@ function initMap(address = null) {
         switch (status) {
         case "OK":
             // creates the map
-            if (address = null){
                 MAP = new google.maps.Map(document.getElementById("map"), {
                     zoom: 13,
                     center: results[0].geometry.location,
                     styles: myStyles,
                 });
-            } else {
-                MAP = new google.maps.Map(document.getElementById("map"), {
-                    zoom: 16,
-                    center: address.geometry.location,
-                    styles: myStyles,
-                });
-            }
+            // } else {
+            //     MAP = new google.maps.Map(document.getElementById("map"), {
+            //         zoom: 16,
+            //         center: this.currentStation.address.geometry.location,
+            //         styles: myStyles,
+            //     });
+            // }
             //add station markers
             app.addMarkers(app.allStations)
             // calls vue's initialize map function
