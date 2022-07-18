@@ -29,11 +29,13 @@ var app = new Vue({
         rZip: "",
         dialog: true,
         dialogScreen: "home",
-        guest: false,
+        guest: true,
 
         lUsername: "",
         lPassword: "",
         loggedIn: true,
+
+        userName: "",
 
         errorOccurred: false,
         errorMessage: "",
@@ -250,6 +252,10 @@ var app = new Vue({
                 console.log("logged in");
                 let data = await response.json();
                 console.log(data);
+
+                this.userName = data.email.split("@")[0];
+                console.log("Welcome, ", this.userName);
+
                 this.page = 'main';
                 this.dialog = false;
                 this.guest = false;  
