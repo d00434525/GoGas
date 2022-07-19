@@ -512,10 +512,10 @@ function initMap() {
             //add station markers
             app.addMarkers(app.allStations)
             //map zooms in when marker is clicked
-            google.maps.event.addListener(marker,'click',function() {
-                map.setZoom(9);
-                map.setCenter(marker.getPosition());
-              });
+            // google.maps.event.addListener(marker,'click',function() {
+            //     map.setZoom(9);
+            //     map.setCenter(marker.getPosition());
+            //   });
             // calls vue's initialize map function
             app.initializeMap();
             break;
