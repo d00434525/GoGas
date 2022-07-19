@@ -121,7 +121,7 @@
                       </v-list-item-content>
                     </v-list-item>
                     <v-divider></v-divider>
-                    <v-list-item v-for="(favoriteStation) in currentUserObject.favorites" @click="getSingleStation(favoriteStation.station_id)">
+                    <v-list-item v-for="(favoriteStation) in currentUserObject.favorites" @click="getSingleStation(favoriteStation.station_id)" >
                       <v-list-item-content>
                         <v-list-item-title class="d-flex justify-space-between"> 
                             <div>{{ favoriteStation.station_name }} {{ favoriteStation.station_address }}</div>
@@ -142,7 +142,7 @@
                       v-for="(station, index) in allStations"
                       :key="index"
                       link
-                      @click="getSingleStation(station._id)"
+                      @click="getSingleStation(station._id), loadSSMap()"
                     >
                       <v-list-item-content>
                         <v-list-item-title class="d-flex justify-space-between">
@@ -751,8 +751,8 @@
                               <v-container>
                                 <v-row>
                                     <v-col>
-                                        <v-sheet v-show="mapIsInitialized" height="300px" id="ssmap"></v-sheet>
-                                        <v-sheet v-if="!mapIsInitialized" class="transparent" height="300">
+                                        <v-sheet v-if="ssmapIsInitialized" height="300px" id="ssmap"></v-sheet>
+                                        <v-sheet v-if="!ssmapIsInitialized" class="transparent" height="300">
                                             <v-card class="fill-height" loading="green lighten-2">
                                                 <v-card-title>Loading Map</v-card-title>
                                                 <v-card-text>
