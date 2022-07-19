@@ -50,6 +50,8 @@ var app = new Vue({
         sparklineGradient: ["#FFB17A", "yellow"],
         currentStationDialog: false,
         newCurrentPrice: "",
+        currentUser: "",
+        currentUserObject: {},
 
         // rating stuff
         rating: 0,
@@ -258,7 +260,9 @@ var app = new Vue({
                 console.log(data);
 
                 this.userName = data.email.split("@")[0];
+                this.currentUser = data.id;
                 console.log("Welcome, ", this.userName);
+                this.getUser(this.currentUser);
 
                 this.page = 'main';
                 this.dialog = false;
@@ -419,6 +423,57 @@ var app = new Vue({
             } else {
                 console.log("Error deleting review:", response.status);
             }
+        },
+
+        // get user 
+        getUser: async function (id) { 
+            let response = await fetch(URL + "/user/" + id);
+
+            if (response.status == 200) {
+                let data = await response.json();
+                console.log(data);
+                this.currentUserObject = data;
+            } else {
+                console.log("Error getting user:", response.status);
+            }
+        },
+
+        // add favorite station
+        addFavorite: async function (station_id) {
+            let response = await fetch(URL + "/user/" + this.currentUser + "/favorites/" + station_id, {
+                method: "POST",
+                headers: {
+                    "Content-Type" : "application/json"
+                },
+                credentials: "include"
+            });
+
+            if (response.status == 200) {
+                // created successfully
+                console.log("added favorite");
+                this.getUser(this.currentUser);
+            } else {
+                console.log("Error adding favorite:", response.status);
+            }
+        },
+
+        // remove favorite station
+        removeFavorite: async function (station_id) {
+            let response = await fetch(URL + "/user/" + this.currentUser + "/favorites/" + station_id, {
+                method: "DELETE",
+                headers: {
+                    "Content-Type" : "application/json"
+                },
+                credentials: "include"
+            });
+
+            if (response.status == 200) {
+                // deleted successfully
+                console.log("removed favorite");
+                this.getUser(this.currentUser);
+            } else {
+                console.log("Error removing favorite:", response.status);
+            }
         }
     },
     created: function () {
@@ -431,7 +486,7 @@ var app = new Vue({
             this.allStations.forEach(station => {
                 sum += parseFloat(this.getAllPrices(station));
             });
-            return (sum / this.allStations.length);
+            return (sum / this.allStations.length).toFixed(2);
         },
 
         

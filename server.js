@@ -270,5 +270,183 @@ app.delete("/station/:station_id/review/:review_id", async (req, res) => {
     res.status(200).json(review);
 });
 
+// post favorite station to user
+app.post("/user/:user_id/favorites/:station_id", async (req, res) => {
+    // check auth
+    if (!req.user) {
+        res.status(401).json({ message: "Unauthorized" });
+        return;
+    }
+
+    let user;
+    let station;
+
+    // pull user
+    try {
+        user = await User.findById(req.params.user_id);
+    } catch (err) {
+        res.status(500).json({
+            message: `error finding user when adding favorite`,
+            error: err,
+        });
+        return;
+    }
+
+    if (!user) {
+        res.status(404).json({
+            message: `user not found when adding favorite`,
+            user_id: req.params.user_id,
+        });
+        return;
+    }
+
+    // pull station
+    try {
+        station = await Station.findById(req.params.station_id);
+    } catch (err) {
+        res.status(500).json({
+            message: `error finding station when adding favorite`,
+            error: err,
+        });
+        return;
+    }
+
+    if (!station) {
+        res.status(404).json({
+            message: `station not found when adding favorite`,
+            station_id: req.params.station_id,
+        });
+        return;
+    }
+
+    // push station to user
+    try {
+        await User.findByIdAndUpdate(req.params.user_id, {
+            $push: {
+                favorites: {
+                    station_id: req.params.station_id,
+                    station_name: station.name,
+                    station_address: station.address,
+                    station_prices: station.prices,
+                }
+            }
+        }, {
+            new: true,
+        });
+    } catch (err) {
+        res.status(500).json({
+            message: `error adding favorite`,
+            error: err,
+        });
+        return;
+    }
+
+    // return the updated user
+    res.status(200).json(user);
+}
+);
+    
+
+    // get user by id
+app.get("/user/:user_id", async (req, res) => {
+    let user;
+
+    // pull user
+    try {
+        user = await User.findById(req.params.user_id);
+    } catch (err) {
+        res.status(500).json({
+            message: `error finding user`,
+            error: err,
+        });
+        return;
+    }
+
+    if (!user) {
+        res.status(404).json({
+            message: `user not found`,
+            user_id: req.params.user_id,
+        });
+        return;
+    }
+
+    // return user
+    res.status(200).json(user);
+}
+);
+
+// delete favorite station from user
+app.delete("/user/:user_id/favorites/:station_id", async (req, res) => {
+    // check auth
+    if (!req.user) {
+        res.status(401).json({ message: "Unauthorized" });
+        return;
+    }
+
+    let user;
+    let station;
+
+    // pull user
+    try {
+        user = await User.findById(req.params.user_id);
+    } catch (err) {
+        res.status(500).json({
+            message: `error finding user when deleting favorite`,
+            error: err,
+        });
+        return;
+    }
+
+    if (!user) {
+        res.status(404).json({
+            message: `user not found when deleting favorite`,
+            user_id: req.params.user_id,
+        });
+        return;
+    }
+    
+    // pull station
+    try {
+        station = await Station.findById(req.params.station_id);
+    } catch (err) {
+        res.status(500).json({
+            message: `error finding station when deleting favorite`,
+            error: err,
+        });
+        return;
+    }
+
+    if (!station) {
+        res.status(404).json({
+            message: `station not found when deleting favorite`,
+            station_id: req.params.station_id,
+        });
+        return;
+    }
+
+    // pull station from user
+    try {
+        await User.findByIdAndUpdate(req.params.user_id, {
+            $pull: {
+                favorites: {
+                    station_id: req.params.station_id,
+                }
+            }
+        }, {
+            new: true,
+        });
+    } catch (err) {
+        res.status(500).json({
+            message: `error deleting favorite`,
+            error: err,
+        });
+        return;
+    }
+
+    // return the updated user
+    res.status(200).json(user);
+}
+);
+
 // Export app
 module.exports = app;
