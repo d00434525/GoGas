@@ -319,27 +319,45 @@ app.post("/user/:user_id/favorites/:station_id", async (req, res) => {
         return;
     }
 
-    // push station to user
-    try {
-        await User.findByIdAndUpdate(req.params.user_id, {
-            $push: {
-                favorites: {
-                    station_id: req.params.station_id,
-                    station_name: station.name,
-                    station_address: station.address,
-                    station_prices: station.prices,
-                }
-            }
-        }, {
-            new: true,
-        });
-    } catch (err) {
-        res.status(500).json({
-            message: `error adding favorite`,
-            error: err,
+
+    // check if station is already in user's favorites
+    let isAlreadyFavorite = false;
+    for (let k in user.favorites) {
+        if (user.favorites[k].station_id == req.params.station_id) {
+            isAlreadyFavorite = true;
+        }
+    }
+
+    if (isAlreadyFavorite) {
+        res.status(403).json({
+            message: `station already in favorites`,
+            station_id: req.params.station_id,
         });
         return;
+    } else {
+        // push station to user
+        try {
+            await User.findByIdAndUpdate(req.params.user_id, {
+                $push: {
+                    favorites: {
+                        station_id: req.params.station_id,
+                        station_name: station.name,
+                        station_address: station.address,
+                        station_prices: station.prices,
+                    }
+                }
+            }, {
+                new: true,
+            });
+        } catch (err) {
+            res.status(500).json({
+                message: `error adding favorite`,
+                error: err,
+            });
+            return;
+        }
     }
+
 
     // return the updated user
     res.status(200).json(user);
