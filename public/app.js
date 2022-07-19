@@ -378,10 +378,20 @@ var app = new Vue({
             }
         },
         reloadMap: function() {
-            initMap();
+            MAP = new google.maps.Map(document.getElementById("map"), {
+                zoom: 13,
+                center: results[0].geometry.location,
+                styles: myStyles,
+                
+            });
         },
         loadSSMap: function(){
-            initSSMap();
+            SSMAP = new google.maps.Map(document.getElementById("ssmap"), {
+                zoom: 13,
+                center: results[0].geometry.location,
+                styles: myStyles,
+        })
+                
         },
         itWorked: function(){
             console.log("it worked?")
@@ -526,7 +536,7 @@ function initMap() {
         switch (status) {
         case "OK":
             // creates the map
-            singleStationAddress = undefined
+            //singleStationAddress = undefined
             MAP = new google.maps.Map(document.getElementById("map"), {
                     zoom: 13,
                     center: results[0].geometry.location,
