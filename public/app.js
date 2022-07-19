@@ -30,11 +30,13 @@ var app = new Vue({
         rZip: "",
         dialog: true,
         dialogScreen: "home",
-        guest: false,
+        guest: true,
 
         lUsername: "",
         lPassword: "",
         loggedIn: true,
+
+        userName: "",
 
         errorOccurred: false,
         errorMessage: "",
@@ -49,6 +51,8 @@ var app = new Vue({
         sparklineGradient: ["#FFB17A", "yellow"],
         currentStationDialog: false,
         newCurrentPrice: "",
+        currentUser: "",
+        currentUserObject: {},
 
         // rating stuff
         rating: 0,
@@ -236,6 +240,10 @@ var app = new Vue({
                  // reload page
                 window.location.reload(); 
             }
+            else if (response.status == 400 || response.status == 401){
+                this.errorOccurred = true;
+                this.errorMessage = "Login Info was Incorrect.";
+            }
         },
 
         // get session
@@ -251,6 +259,12 @@ var app = new Vue({
                 console.log("logged in");
                 let data = await response.json();
                 console.log(data);
+
+                this.userName = data.email.split("@")[0];
+                this.currentUser = data.id;
+                console.log("Welcome, ", this.userName);
+                this.getUser(this.currentUser);
+
                 this.page = 'main';
                 this.dialog = false;
                 this.guest = false;  
@@ -338,6 +352,7 @@ var app = new Vue({
                 // created successfully
                 this.rating = 0;
                 this.comment = "";
+                this.currentStationPrices = [];
                 this.getSingleStation(id);
             } else {
                 console.log("Error posting review:", response.status);
@@ -375,7 +390,7 @@ var app = new Vue({
                 return;
             } else {
                 postBody = {
-                    price: parseFloat(this.newCurrentPrice),
+                    price: parseFloat(this.newCurrentPrice).toFixed(2),
                     station_id: id
                 }
             }
@@ -404,12 +419,91 @@ var app = new Vue({
 
         // Get all current station prices
         getAllPrices: function (station) {
-            return station.prices[station.prices.length -1].price
+            return parseFloat(station.prices[station.prices.length -1].price).toFixed(2);
+        },
+
+        // Delete a review on a station
+        deleteReview: async function (stationId, reviewId) {
+            let response = await fetch(URL + "/station/" + stationId + "/review/" + reviewId, {
+                method: "DELETE",
+                credentials: "include"
+            });
+
+            if (response.status == 200) {
+                // deleted successfully
+                console.log("deleted review");
+                this.currentStationPrices = [];
+                this.getSingleStation(stationId);
+            } else {
+                console.log("Error deleting review:", response.status);
+            }
+        },
+
+        // get user 
+        getUser: async function (id) { 
+            let response = await fetch(URL + "/user/" + id);
+
+            if (response.status == 200) {
+                let data = await response.json();
+                console.log(data);
+                this.currentUserObject = data;
+            } else {
+                console.log("Error getting user:", response.status);
+            }
+        },
+
+        // add favorite station
+        addFavorite: async function (station_id) {
+            let response = await fetch(URL + "/user/" + this.currentUser + "/favorites/" + station_id, {
+                method: "POST",
+                headers: {
+                    "Content-Type" : "application/json"
+                },
+                credentials: "include"
+            });
+
+            if (response.status == 200) {
+                // created successfully
+                console.log("added favorite");
+                this.getUser(this.currentUser);
+            } else {
+                console.log("Error adding favorite:", response.status);
+            }
+        },
+
+        // remove favorite station
+        removeFavorite: async function (station_id) {
+            let response = await fetch(URL + "/user/" + this.currentUser + "/favorites/" + station_id, {
+                method: "DELETE",
+                headers: {
+                    "Content-Type" : "application/json"
+                },
+                credentials: "include"
+            });
+
+            if (response.status == 200) {
+                // deleted successfully
+                console.log("removed favorite");
+                this.getUser(this.currentUser);
+            } else {
+                console.log("Error removing favorite:", response.status);
+            }
         }
     },
     created: function () {
         this.getSession();
         this.getStations();
+    },
+    computed: {
+        allStationsAverage: function () {
+            let sum = 0;
+            this.allStations.forEach(station => {
+                sum += parseFloat(this.getAllPrices(station));
+            });
+            return (sum / this.allStations.length).toFixed(2);
+        },
+
+        
     }
 })
 
@@ -442,6 +536,11 @@ function initMap(singleStationAdress = "") {
             }
             //add station markers
             app.addMarkers(app.allStations)
+            //map zooms in when marker is clicked
+            // google.maps.event.addListener(marker,'click',function() {
+            //     map.setZoom(9);
+            //     map.setCenter(marker.getPosition());
+            //   });
             // calls vue's initialize map function
             app.initializeMap();
             break;

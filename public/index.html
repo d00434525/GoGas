@@ -36,7 +36,7 @@
         <h1>Welcome to Go Gas</h1>
         <button v-on:click="page = 'register'">Register</button>
         <button v-on:click="page = 'signIn'">Sign In</button>
-        <button @click="page = 'main'">Continue as Guest</button>
+        <button @click="page = 'main', guest = true">Continue as Guest</button>
       </div>
 
       <!-- MAIN PAGE -->
@@ -50,6 +50,9 @@
               width="175px"
             />
           </div>
+          <v-row v-if="guest == false" class="text-center justify-center mr-15">
+            <h2 class="white--text">Welcome, &nbsp {{ userName }}</h2>
+          </v-row>
           <div class="nav_buttons">
             <template v-if="guest == true && dialogScreen == 'main'">
               <div class="text-center">
@@ -99,6 +102,42 @@
               <v-col id="column" cols="2">
                 <v-sheet rounded="lg">
                   <v-list color="transparent">
+                    <v-list-item>
+                      <v-list-item-content>
+                        <v-list-item-title class="d-flex justify-space-between"> 
+                          <div>Overall Average</div>
+                          <div>
+                            <span class="actual_price"><b>${{ allStationsAverage }}</b></span>
+                          </div>
+                        </v-list-item-title>
+                      </v-list-item-content>
+                    </v-list-item>
+                    <v-divider></v-divider>
+                    <v-list-item v-if="currentUser != '' && currentUserObject.favorites.length > 0">
+                      <v-list-item-content>
+                        <v-list-item-title class="d-flex justify-space-between"> 
+                          <div>Favorites</div>
+                        </v-list-item-title>
+                      </v-list-item-content>
+                    </v-list-item>
+                    <v-divider></v-divider>
+                    <v-list-item v-for="(favoriteStation) in currentUserObject.favorites" @click="getSingleStation(favoriteStation.station_id)">
+                      <v-list-item-content>
+                        <v-list-item-title class="d-flex justify-space-between"> 
+                            <div>{{ favoriteStation.station_name }} {{ favoriteStation.station_address }}</div>
+                            <div class="actual_price"><b>${{ favoriteStation.station_prices[favoriteStation.station_prices.length - 1].price.toFixed(2) }}<v-icon right @click.stop="removeFavorite(favoriteStation.station_id)">mdi-star-remove-outline</v-icon></b></div>
+                        </v-list-item-title>
+                      </v-list-item-content>
+                    </v-list-item>
+                    <v-divider></v-divider>
+                    <v-list-item>
+                      <v-list-item-content>
+                        <v-list-item-title class="d-flex justify-space-between"> 
+                          <div>Gas Stations</div>
+                        </v-list-item-title>
+                      </v-list-item-content>
+                    </v-list-item>
+                    <v-divider></v-divider>
                     <v-list-item
                       v-for="(station, index) in allStations"
                       :key="index"
@@ -109,7 +148,7 @@
                         <v-list-item-title class="d-flex justify-space-between">
                           <div>{{ station.name }} {{ station.address }}</div>
                           <div>
-                            <span class="actual_price"><b>${{ getAllPrices(station) }}</b></span>
+                            <span class="actual_price"><b>${{ getAllPrices(station) }}<v-icon v-if="guest === false" right @click.stop="addFavorite(station._id)">mdi-star-plus-outline</v-icon></b></span>
                           </div>
                         </v-list-item-title>
                       </v-list-item-content>
@@ -345,7 +384,7 @@
                             <h1>Sign In</h1>
                             <input
                               id="login_username"
-                              placeholder="Username"
+                              placeholder="Email"
                               v-model="lUsername"
                               class="input_style"
                             /><br />
@@ -414,6 +453,26 @@
                               </v-btn>
                             </template>
                           </v-snackbar>
+                          <v-snackbar
+                            shaped
+                            centered
+                            timeout="2000"
+                            v-model="errorOccurred"
+                          >
+                            {{ errorMessage }}
+
+                            <template v-slot:action="{ attrs }">
+                              <v-btn
+                                color="pink"
+                                text
+                                v-bind="attrs"
+                                @click="errorOccurred = false"
+                              >
+                                Close
+                              </v-btn>
+                            </template>
+                          </v-snackbar>
+                        </div>
                         </div>
                       </v-dialog>
                     </v-row>
@@ -429,8 +488,11 @@
       <v-app id="inspire" v-if="page == 'station'">
         <v-app-bar app color="#4F4789" flat elevation="4">
           <div>
-            <img src="./images/gogaslogo.svg" alt="Go Gas Logo" width="175px" />
+            <img v-on:href @click="setPage('main'); currentStationPrices = [], reloadMap()" src="./images/gogaslogo.svg" alt="Go Gas Logo" width="175px" />
           </div>
+          <v-row v-if="guest == false" class="text-center justify-center mr-15">
+            <h2 class="white--text">Welcome, &nbsp {{ userName }}</h2>
+          </v-row>
           <div class="nav_buttons">
             <template v-if="guest == true && dialogScreen == 'main'">
               <div class="text-center">
@@ -529,6 +591,7 @@
                                       large
                                       color="#FFB17A"
                                       @click="currentStationDialog = true"
+                                      v-if="guest === false"
                                     >
                                       <v-icon dark color="black">
                                         mdi-currency-usd
@@ -543,7 +606,7 @@
                         </v-list-item-title>
 
                         <v-list-item id="recent_price">
-                          <p>CURRENT PRICE: <span class="actual_price"><b>${{ currentStation.prices[currentStation.prices.length - 1].price }}</b></span></p>
+                          <p>CURRENT PRICE: <span class="actual_price"><b>${{ currentStation.prices[currentStation.prices.length - 1].price.toFixed(2) }}</b></span></p>
                         </v-list-item>
                         <v-list-item id="recent_price_user" class="mb-4">
                           <p><i>Current price posted by: <span class="actual_price">{{ currentStation.prices[currentStation.prices.length - 1].user.name }}</span></i></p>
@@ -603,10 +666,10 @@
                               </div>
                             </v-card-title>
                             <v-card-text>
-                              <p id="review_comment">{{ review.comment}}</p>
+                              <p id="review_comment">{{ review.comment }}</p>
                             </v-card-text>
                             <v-card-actions>
-                              <v-btn text color="teal accent-4"> Delete </v-btn>
+                              <v-btn v-if="guest === false" text color="teal accent-4" @click="deleteReview(currentStation._id, review._id)"> Delete </v-btn>
                             </v-card-actions>
                           </v-card>
                         </template>
@@ -720,7 +783,7 @@
                   max-width="50vw"
                 >
                   <template>
-                    <v-card class="mx-auto" height="43vh" elevation="0">
+                    <v-card class="mx-auto" height="43vh" elevation="0" :disabled="guest === true">
                       <v-card-title>Leave a Review</v-card-title>
                       <v-card-text>
                         <span
