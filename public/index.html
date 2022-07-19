@@ -124,7 +124,8 @@
                     <v-list-item v-for="(favoriteStation) in currentUserObject.favorites" @click="getSingleStation(favoriteStation.station_id)">
                       <v-list-item-content>
                         <v-list-item-title class="d-flex justify-space-between"> 
-                            <div>{{ favoriteStation.station_name }} {{ favoriteStation.station_address }}</div>
+                            <div>{{ favoriteStation.station_name }}<br>
+                               {{ favoriteStation.station_address }}</div>
                             <div class="actual_price"><b>${{ favoriteStation.station_prices[favoriteStation.station_prices.length - 1].price.toFixed(2) }}<v-icon right @click.stop="removeFavorite(favoriteStation.station_id)">mdi-star-remove-outline</v-icon></b></div>
                         </v-list-item-title>
                       </v-list-item-content>
