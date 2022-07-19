@@ -98,6 +98,7 @@ var app = new Vue({
         // load station page
         loadStationPage: function () {
             this.page = 'station';
+            this.currentStationPricesCheck();
         },
 
         // get gas station by id
@@ -474,6 +475,12 @@ var app = new Vue({
             } else {
                 console.log("Error removing favorite:", response.status);
             }
+        },
+        currentStationPricesCheck: function () {
+            while (this.currentStationPrices.length > 10) {
+                this.currentStationPrices.shift();
+            }
+
         }
     },
     created: function () {
@@ -487,9 +494,7 @@ var app = new Vue({
                 sum += parseFloat(this.getAllPrices(station));
             });
             return (sum / this.allStations.length).toFixed(2);
-        },
-
-        
+        }
     }
 })
 
