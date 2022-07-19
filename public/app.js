@@ -16,7 +16,24 @@ const myStyles = [
 
 var app = new Vue({
     el: "#app",
-    vuetify: new Vuetify(),
+    vuetify: new Vuetify({
+        theme: {
+            themes: {
+              light: {
+                primary: '#2196f3',
+                secondary: '#fafafa',
+                accent: '#82B1FF',
+                error: '#FF5252',
+                background: '#ffaaaa',
+              },
+              dark: {
+                primary: '#2196f3',
+                secondary: '#25b4ff',
+                background: "#5c5c5c",
+              },
+            },
+          },
+    }),
     data:{
         // data members go here
         page: "main",
