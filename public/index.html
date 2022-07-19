@@ -113,7 +113,7 @@
                       </v-list-item-content>
                     </v-list-item>
                     <v-divider></v-divider>
-                    <v-list-item v-if="currentUser != ''">
+                    <v-list-item v-if="currentUser != '' && currentUserObject.favorites.length > 0">
                       <v-list-item-content>
                         <v-list-item-title class="d-flex justify-space-between"> 
                           <div>Favorites</div>
@@ -121,11 +121,11 @@
                       </v-list-item-content>
                     </v-list-item>
                     <v-divider></v-divider>
-                    <v-list-item v-if="currentUser != '' && currentUserObject.favorites.length > 0" v-for="(favoriteStation, index) in currentUserObject.favorites" @click="getSingleStation(favoriteStation.station_id)">
+                    <v-list-item v-for="(favoriteStation) in currentUserObject.favorites" @click="getSingleStation(favoriteStation.station_id)">
                       <v-list-item-content>
                         <v-list-item-title class="d-flex justify-space-between"> 
                             <div>{{ favoriteStation.station_name }} {{ favoriteStation.station_address }}</div>
-                            <div class="actual_price"><b>${{ favoriteStation.station_prices[favoriteStation.station_prices.length - 1].price.toFixed(2) }}<v-icon right @click="removeFavorite(favoriteStation.station_id)">mdi-star-remove-outline</v-icon></b></div>
+                            <div class="actual_price"><b>${{ favoriteStation.station_prices[favoriteStation.station_prices.length - 1].price.toFixed(2) }}<v-icon right @click.stop="removeFavorite(favoriteStation.station_id)">mdi-star-remove-outline</v-icon></b></div>
                         </v-list-item-title>
                       </v-list-item-content>
                     </v-list-item>
@@ -148,7 +148,7 @@
                         <v-list-item-title class="d-flex justify-space-between">
                           <div>{{ station.name }} {{ station.address }}</div>
                           <div>
-                            <span class="actual_price"><b>${{ getAllPrices(station) }}<v-icon right @click="addFavorite(station._id)">mdi-star-plus-outline</v-icon></b></span>
+                            <span class="actual_price"><b>${{ getAllPrices(station) }}<v-icon v-if="guest === false" right @click.stop="addFavorite(station._id)">mdi-star-plus-outline</v-icon></b></span>
                           </div>
                         </v-list-item-title>
                       </v-list-item-content>
@@ -591,6 +591,7 @@
                                       large
                                       color="#FFB17A"
                                       @click="currentStationDialog = true"
+                                      v-if="guest === false"
                                     >
                                       <v-icon dark color="black">
                                         mdi-currency-usd
@@ -665,7 +666,7 @@
                               </div>
                             </v-card-title>
                             <v-card-text>
-                              <p id="review_comment">{{ review.comment}}</p>
+                              <p id="review_comment">{{ review.comment }}</p>
                             </v-card-text>
                             <v-card-actions>
                               <v-btn text color="teal accent-4" @click="deleteReview(currentStation._id, review._id)"> Delete </v-btn>
@@ -754,7 +755,7 @@
                   max-width="50vw"
                 >
                   <template>
-                    <v-card class="mx-auto" height="43vh" elevation="0">
+                    <v-card class="mx-auto" height="43vh" elevation="0" :disabled="guest === true">
                       <v-card-title>Leave a Review</v-card-title>
                       <v-card-text>
                         <span
