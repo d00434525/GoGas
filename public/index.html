@@ -40,7 +40,7 @@
       </div>
 
       <!-- MAIN PAGE -->
-      <v-app id="inspire" v-if="page == 'main'">
+      <v-app id="inspire" v-show="page == 'main'">
         <v-app-bar app color="#4F4789" flat elevation="4">
           <div id="main_header">
             <img
@@ -175,7 +175,7 @@
                                 id="map"
                               ></v-sheet>
                               <v-sheet
-                                v-if="!mapIsInitialized"
+                                v-show="!mapIsInitialized"
                                 class="transparent"
                                 height="600"
                               >
@@ -199,7 +199,7 @@
                     </v-sheet>
                   </v-col>
 
-                  <template v-if="!loggedIn">
+                  <template v-show="!loggedIn">
                     <v-row justify="center">
                       <v-dialog
                         round
@@ -333,7 +333,7 @@
                                     <v-btn
                                       color="#FFB17A"
                                       class="ma-4 black--text fs-100"
-                                      v-on:click="dialogScreen = 'home', reloadMap(), console.log('back clicked')"
+                                      v-on:click="dialogScreen = 'home', console.log('back clicked')"
                                       v-bind:style=" {fontSize: '20px'}"
                                     >
                                       Back
@@ -491,7 +491,7 @@
       <v-app id="inspire" v-if="page == 'station'">
         <v-app-bar app color="#4F4789" flat elevation="4">
           <div>
-            <img v-on:href @click="setPage('main'); currentStationPrices = [], reloadMap()" src="./images/gogaslogo.svg" alt="Go Gas Logo" width="175px" />
+            <img v-on:href @click="setPage('main'); currentStationPrices = []" src="./images/gogaslogo.svg" alt="Go Gas Logo" width="175px" />
           </div>
           <v-row v-if="guest == false" class="text-center justify-center mr-15">
             <h2 class="white--text">Welcome, &nbsp {{ userName }}</h2>
@@ -567,7 +567,7 @@
                                       color="#FFB17A"
                                       v-bind="attrs"
                                       v-on="on"
-                                      @click="setPage('main'); currentStationPrices = [], reloadMap()"
+                                      @click="setPage('main'); currentStationPrices = []"
                                     >
                                       <v-icon dark color="black">
                                         mdi-keyboard-backspace
