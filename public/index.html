@@ -146,7 +146,10 @@
                     >
                       <v-list-item-content>
                         <v-list-item-title class="d-flex justify-space-between">
-                          <div>{{ station.name }} {{ station.address }}</div>
+                          <div>
+                            {{ station.name }}<br>
+                            {{ station.address }}
+                          </div>
                           <div>
                             <span class="actual_price"><b>${{ getAllPrices(station) }}<v-icon v-if="guest === false" right @click.stop="addFavorite(station._id)">mdi-star-plus-outline</v-icon></b></span>
                           </div>
