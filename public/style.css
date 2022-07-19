@@ -190,6 +190,14 @@ img {
     flex: 0 0 30%;
     max-width: 100%;
 }
+#main_header img {
+    width: 175px;
+    transition: 1s;
+}
+#main_header img:hover {
+    width: 190px;
+}
+
 
 /* ============ SINGLE STATION PAGE ============ */
 #review_username {
