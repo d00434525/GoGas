@@ -121,7 +121,7 @@
                       </v-list-item-content>
                     </v-list-item>
                     <v-divider></v-divider>
-                    <v-list-item v-for="(favoriteStation) in currentUserObject.favorites" @click="getSingleStation(favoriteStation.station_id)">
+                    <v-list-item v-for="(favoriteStation) in currentUserObject.favorites" @click="getSingleStation(favoriteStation.station_id)" >
                       <v-list-item-content>
                         <v-list-item-title class="d-flex justify-space-between"> 
                             <div>{{ favoriteStation.station_name }} {{ favoriteStation.station_address }}</div>
@@ -142,7 +142,7 @@
                       v-for="(station, index) in allStations"
                       :key="index"
                       link
-                      @click="getSingleStation(station._id)"
+                      @click="getSingleStation(station._id), loadSSMap()"
                     >
                       <v-list-item-content>
                         <v-list-item-title class="d-flex justify-space-between">
@@ -333,7 +333,11 @@
                                     <v-btn
                                       color="#FFB17A"
                                       class="ma-4 black--text fs-100"
+<<<<<<< HEAD
                                       v-on:click="dialogScreen = 'home', console.log('back clicked')"
+=======
+                                      v-on:click="dialogScreen = 'home', reloadMap()"
+>>>>>>> 58d07ea15be336fb991d116ad86cc669124140f6
                                       v-bind:style=" {fontSize: '20px'}"
                                     >
                                       Back
@@ -742,14 +746,42 @@
                 </v-sheet>
               </v-col>
 
+              <!-- SINGLE STATION MAP -->
               <v-col>
+                <v-sheet git rounded="lg" class="mb-4" max-width="50vw">
+                  <v-col>
+                    <v-sheet min-height="100%" rounded="lg" >
+                      <v-col>
+                        <v-sheet min-height="100%" rounded="lg">
+                          <v-main class="green lighten-5 pt-0">
+                            <v-container >
+                              <v-container>
+                                <v-row>
+                                    <v-col>
+                                        <v-sheet v-if="ssmapIsInitialized" height="300px" id="ssmap"></v-sheet>
+                                        <v-sheet v-if="!ssmapIsInitialized" class="transparent" height="300">
+                                            <v-card class="fill-height" loading="green lighten-2">
+                                                <v-card-title>Loading Map</v-card-title>
+                                                <v-card-text>
+                                                    If this is taking a long time, make sure you've
+                                                    entered in your google api key in the html script tag. It
+                                                    will not work until you've provided one
+                                                </v-card-text>
+                                            </v-card>
+                                        </v-sheet>
+                                    </v-col>
+                                </v-row>
+                            </v-container>
+                          </v-main>
+                        </v-sheet>
+                      </v-col>
                 <v-sheet
                   min-height="43vh"
                   rounded="lg"
                   class="mb-4"
                   max-width="50vw"
                 >
-                  <!--  -->
+                  <!-- -->
                 </v-sheet>
                 <v-sheet
                   min-height="43vh"
@@ -804,7 +836,7 @@
     <script src="https://cdn.jsdelivr.net/npm/vuetify@2.x/dist/vuetify.js"></script>
     <script src="app.js"></script>
     <script
-      src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA_AU3PAvFLx6xjRd6Mt-ASoqFnLr0sWXo&callback=initMap&v=weekly"
+      src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAvSzePow7KVU-UkzfH9ivuq8lNuzt6aWM&callback=initMap&v=weekly"
       defer
     ></script>
   </body>

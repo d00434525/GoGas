@@ -1,5 +1,6 @@
 const URL = 'http://localhost:8080';
 
+var SSMAP;
 var MAP;
 var GEOCODER;
 
@@ -59,10 +60,12 @@ var app = new Vue({
 
         //MAP
         map: null,
+        ssmap: null,
         geocoder: null,
 
         // displays a placeholder if false
         mapIsInitialized: false,
+        ssmapIsInitialized: false,
 
         // if you want to look at the most recent marker object in the console:
         recentMarker: null,
@@ -314,11 +317,24 @@ var app = new Vue({
             this.geocoder = GEOCODER;
             this.mapIsInitialized = true;
         },
+        initializeSSMap: function() {
+            console.log(SSMAP);
+            this.ssmap = SSMAP;
+            this.geocoder = GEOCODER;
+            this.ssmapIsInitialized = true
+        },
+        reloadSSMap: function(){
+            initSSMap();
+        },
         addMarkers: function(stations){
             stations.forEach(station => {
                 this.addMarker(station.address);
                 console.log(station.address);
             });
+        },
+        centerMarker: function () {
+            this.map.setCenter(this.currentStation.geometry.location);
+            this.map.setZoom(16);
         },
 
         // Post review on a station
@@ -363,7 +379,23 @@ var app = new Vue({
             }
         },
         reloadMap: function() {
-            initMap();
+            MAP = new google.maps.Map(document.getElementById("map"), {
+                zoom: 13,
+                center: results[0].geometry.location,
+                styles: myStyles,
+                
+            });
+        },
+        loadSSMap: function(){
+            SSMAP = new google.maps.Map(document.getElementById("ssmap"), {
+                zoom: 13,
+                center: results[0].geometry.location,
+                styles: myStyles,
+        })
+                
+        },
+        itWorked: function(){
+            console.log("it worked?")
         },
         // Post price on a station
         postPrice: async function (id) {
@@ -509,11 +541,22 @@ function initMap() {
         switch (status) {
         case "OK":
             // creates the map
+            //singleStationAddress = undefined
             MAP = new google.maps.Map(document.getElementById("map"), {
-                zoom: 13,
-                center: results[0].geometry.location,
-                styles: myStyles,
-            });
+                    zoom: 13,
+                    center: results[0].geometry.location,
+                    styles: myStyles,
+                    
+                });
+            // console.log("results", results)
+            // console.log("results [0]", results[0])
+            // }else {
+            //     SSMAP = new google.maps.Map(document.getElementById("ssmap"), {
+            //         zoom: 16,
+            //         //center: this.currentSta
+            //         styles: myStyles,
+            //     });
+            // }
             //add station markers
             app.addMarkers(app.allStations)
             //map zooms in when marker is clicked
@@ -529,3 +572,47 @@ function initMap() {
         }
     });
 }
+
+function initSSMap() {
+    // geocoder is for turning an address (1234 E 5678 S) into Latitude and Longitude
+    GEOCODER = new google.maps.Geocoder();
+    console.log("INITSSMAP RAN");
+    
+    singleStationAddress = app.currentStation.address
+    // Center on the map on St. George using the Geocoder
+    GEOCODER.geocode({'address' : singleStationAddress}, function (results, status) {
+        switch (status) {
+        case "OK":
+            // creates the map
+            console.log(singleStationAddress);
+            SSMAP = new google.maps.Map(document.getElementById("ssmap"), {
+                    zoom: 13,
+                    center: results[0].geometry.location,
+                    styles: myStyles,
+                    
+                });
+            console.log("results", results)
+            console.log("results [0]", results[0])
+            // }else {
+            //     SSMAP = new google.maps.Map(document.getElementById("ssmap"), {
+            //         zoom: 16,
+            //         //center: this.currentSta
+            //         styles: myStyles,
+            //     });
+            // }
+            //add station markers
+            app.addMarkers(app.allStations)
+            //map zooms in when marker is clicked
+            // google.maps.event.addListener(marker,'click',function() {
+            //     map.setZoom(9);
+            //     map.setCenter(marker.getPosition());
+            //   });
+            // calls vue's initialize map function
+            app.initializeSSMap();
+            break;
+        default:
+            console.error('Geocode was not successful for the following reason: ' + status);
+        }
+    });
+}
+
