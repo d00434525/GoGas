@@ -669,7 +669,7 @@
                               <p id="review_comment">{{ review.comment }}</p>
                             </v-card-text>
                             <v-card-actions>
-                              <v-btn text color="teal accent-4" @click="deleteReview(currentStation._id, review._id)"> Delete </v-btn>
+                              <v-btn v-if="guest === false" text color="teal accent-4" @click="deleteReview(currentStation._id, review._id)"> Delete </v-btn>
                             </v-card-actions>
                           </v-card>
                         </template>
