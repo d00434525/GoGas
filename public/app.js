@@ -299,7 +299,34 @@ var app = new Vue({
                     var marker = new google.maps.Marker({
                         map: this.map,
                         position: results[0].geometry.location,
+                        animation: google.maps.Animation.DROP
+                    })
+
+                    //when marker is clicked info will display what gas station it is
+                    // var infowindow = new google.maps.InfoWindow({
+                    //     content: "BEN",
+                    // })
+
+                    //map should zoom in when marker is clicked
+                    google.maps.event.addListener(marker, 'click', () => {
+                        this.map.setZoom(16);
+                        this.map.setCenter(marker.getPosition());
+                        // infowindow.open(map, marker);
                     });
+                    
+                    //an event that calls the function to make the markers animate
+                    marker.addListener('mouseover', toggleBounce);
+
+                    //the function that makes the marker bounce when hovered
+                    function toggleBounce() {
+                        if (marker.getAnimation() !== null) {
+                            marker.setAnimation(null);
+                        } else {
+                            marker.setAnimation(google.maps.Animation.BOUNCE);
+                        }
+                    }
+
+                    
                     this.recentMarker = marker;
                 } else {
                     console.log('Geocode was not successful for the following reason: ' + status);
@@ -511,11 +538,7 @@ function initMap() {
             });
             //add station markers
             app.addMarkers(app.allStations)
-            //map zooms in when marker is clicked
-            // google.maps.event.addListener(marker,'click',function() {
-            //     map.setZoom(9);
-            //     map.setCenter(marker.getPosition());
-            //   });
+
             // calls vue's initialize map function
             app.initializeMap();
             break;
