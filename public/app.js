@@ -65,7 +65,7 @@ var app = new Vue({
 
         // displays a placeholder if false
         mapIsInitialized: false,
-        ssmapIsInitialized: false,
+        ssmapIsInitialized: true,
 
         // if you want to look at the most recent marker object in the console:
         recentMarker: null,
@@ -513,7 +513,11 @@ var app = new Vue({
                 this.currentStationPrices.shift();
             }
 
+        },
+        ssStationMarker: function() {
+            
         }
+
     },
     created: function () {
         this.getSession();
@@ -566,6 +570,7 @@ function initMap() {
             //   });
             // calls vue's initialize map function
             app.initializeMap();
+            initSSMap();
             break;
         default:
             console.error('Geocode was not successful for the following reason: ' + status);
@@ -579,12 +584,12 @@ function initSSMap() {
     console.log("INITSSMAP RAN");
     
     singleStationAddress = app.currentStation.address
-    // Center on the map on St. George using the Geocoder
-    GEOCODER.geocode({'address' : singleStationAddress}, function (results, status) {
+    //Center on the map on St. George using the Geocoder
+    GEOCODER.geocode({'address' : "Saint George, UT"}, function (results, status) {
         switch (status) {
         case "OK":
             // creates the map
-            console.log(singleStationAddress);
+            //console.log(singleStationAddress);
             SSMAP = new google.maps.Map(document.getElementById("ssmap"), {
                     zoom: 13,
                     center: results[0].geometry.location,
@@ -611,8 +616,13 @@ function initSSMap() {
             app.initializeSSMap();
             break;
         default:
+            SSMAP = new google.maps.Map(document.getElementById("ssmap"), {
+                zoom: 13,
+                center: {lat: 37.0965, lng: -113.5684},
+                styles: myStyles,
+            })
             console.error('Geocode was not successful for the following reason: ' + status);
         }
     });
-}
 
+}

@@ -142,7 +142,7 @@
                       v-for="(station, index) in allStations"
                       :key="index"
                       link
-                      @click="getSingleStation(station._id), loadSSMap()"
+                      @click="getSingleStation(station._id)"
                     >
                       <v-list-item-content>
                         <v-list-item-title class="d-flex justify-space-between">
@@ -333,11 +333,7 @@
                                     <v-btn
                                       color="#FFB17A"
                                       class="ma-4 black--text fs-100"
-<<<<<<< HEAD
                                       v-on:click="dialogScreen = 'home', console.log('back clicked')"
-=======
-                                      v-on:click="dialogScreen = 'home', reloadMap()"
->>>>>>> 58d07ea15be336fb991d116ad86cc669124140f6
                                       v-bind:style=" {fontSize: '20px'}"
                                     >
                                       Back
@@ -492,7 +488,7 @@
       </v-app>
 
       <!-- SINGLE STATION PAGE -->
-      <v-app id="inspire" v-if="page == 'station'">
+      <v-app id="inspire" v-show="page == 'station'">
         <v-app-bar app color="#4F4789" flat elevation="4">
           <div>
             <img v-on:href @click="setPage('main'); currentStationPrices = []" src="./images/gogaslogo.svg" alt="Go Gas Logo" width="175px" />
@@ -554,7 +550,7 @@
                   height="88vh"
                   class="overflow-y-auto"
                 >
-                  <v-list color="transparent">
+                  <v-list color="transparent" v-if="page == 'station'">
                     <v-list-item>
                       <v-list-item-content>
                         <v-list-item-title class="text-center mb-8">
@@ -758,8 +754,8 @@
                               <v-container>
                                 <v-row>
                                     <v-col>
-                                        <v-sheet v-if="ssmapIsInitialized" height="300px" id="ssmap"></v-sheet>
-                                        <v-sheet v-if="!ssmapIsInitialized" class="transparent" height="300">
+                                        <v-sheet v-show="ssmapIsInitialized" height="300px" id="ssmap"></v-sheet>
+                                        <v-sheet v-show="!ssmapIsInitialized" class="transparent" height="300">
                                             <v-card class="fill-height" loading="green lighten-2">
                                                 <v-card-title>Loading Map</v-card-title>
                                                 <v-card-text>
@@ -782,6 +778,7 @@
                   max-width="50vw"
                 >
                   <!-- -->
+                  Shenanigans
                 </v-sheet>
                 <v-sheet
                   min-height="43vh"
