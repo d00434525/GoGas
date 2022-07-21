@@ -54,6 +54,7 @@ var app = new Vue({
         currentUser: "",
         currentUserObject: {},
         stationLocation: {},
+        allUsers: [],
 
         // rating stuff
         rating: 0,
@@ -305,11 +306,39 @@ var app = new Vue({
                     var marker = new google.maps.Marker({
                         map: this.map,
                         position: results[0].geometry.location,
+                        animation: google.maps.Animation.DROP
+                    })
+
+                    //when marker is clicked info will display what gas station it is
+                    // var infowindow = new google.maps.InfoWindow({
+                    //     content: "BEN",
+                    // })
+
+                    //map should zoom in when marker is clicked
+                    google.maps.event.addListener(marker, 'click', () => {
+                        this.map.setZoom(16);
+                        this.map.setCenter(marker.getPosition());
+                        // infowindow.open(map, marker);
                     });
                     console.log("marker", marker)
                     this.markers[address] = marker;
                     this.stationLocation[this.currentStation] = marker.position
                     console.log("Station Location",this.stationLocation)
+                    
+                    //an event that calls the function to make the markers animate
+                    marker.addListener('mouseover', toggleBounce);
+
+                    //the function that makes the marker bounce when hovered
+                    function toggleBounce() {
+                        if (marker.getAnimation() !== null) {
+                            marker.setAnimation(null);
+                        } else {
+                            marker.setAnimation(google.maps.Animation.BOUNCE);
+                        }
+                    }
+
+                    
+                    this.recentMarker = marker;
                 } else {
                     console.log('Geocode was not successful for the following reason: ' + status);
                 }
@@ -533,7 +562,46 @@ var app = new Vue({
         resetMarker: function() {
             this.markers[this.previousMarker].setMap(MAP)
             SSMAP.setZoom(13)
-        }
+        },
+        ratingAverage: function (station) {
+            let sum = 0;
+            for (let i = 0; i < station.length; i ++){
+                sum += station[i].rating;
+            }
+            return (sum / station.length);
+
+        },
+
+        // get all users (admin only)
+        getAllUsers: async function () {
+            let response = await fetch(URL + "/users");
+
+            if (response.status == 200) {
+                let data = await response.json();
+                console.log(data);
+                this.allUsers = data;
+            } else {
+                console.log("Error getting users:", response.status);
+            }
+        },
+
+        // delete user (admin only)
+        deleteUser: async function (id) {
+            let response = await fetch(URL + "/user/" + id, {
+                method: "DELETE",
+                credentials: "include"
+            });
+
+            if (response.status == 200) {
+                // deleted successfully
+                console.log("deleted user");
+                this.getAllUsers();
+
+            } else {
+                console.log("Error deleting user:", response.status);
+            }
+        },
+
 
     },
     created: function () {
@@ -587,11 +655,7 @@ function initMap() {
             // }
             //add station markers
             app.addMarkers(app.allStations)
-            //map zooms in when marker is clicked
-            // google.maps.event.addListener(marker,'click',function() {
-            //     map.setZoom(9);
-            //     map.setCenter(marker.getPosition());
-            //   });
+
             // calls vue's initialize map function
             app.initializeMap();
             //initSSMap();

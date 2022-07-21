@@ -41,7 +41,7 @@ app.post("/user", async (req, res) => {
 app.get("/stations", async (req, res) => {
     let allStations = [];
     try {
-        allStations = await Station.find({}, "-reviews");
+        allStations = await Station.find({});
     } catch (err) {
         res.status(500).json({
             message: "Failed to get stations",
@@ -344,6 +344,7 @@ app.post("/user/:user_id/favorites/:station_id", async (req, res) => {
                         station_name: station.name,
                         station_address: station.address,
                         station_prices: station.prices,
+                        station_reviews: station.reviews,
                     }
                 }
             }, {
@@ -456,6 +457,87 @@ app.delete("/user/:user_id/favorites/:station_id", async (req, res) => {
     } catch (err) {
         res.status(500).json({
             message: `error deleting favorite`,
+            error: err,
+        });
+        return;
+    }
+
+    // return the updated user
+    res.status(200).json(user);
+}
+);
+
+// get all users (admin only)
+app.get("/users", async (req, res) => {
+    // check auth
+    if (!req.user) {
+        res.status(401).json({ message: "Unauthorized" });
+        return;
+    }
+
+    if (!req.user.admin) {
+        res.status(403).json({ message: "Not an admin" });
+        return;
+    }
+
+    let users;
+
+    // pull users
+    try {
+        users = await User.find();
+    } catch (err) {
+        res.status(500).json({
+            message: `error finding users`,
+            error: err,
+        });
+        return;
+    }
+
+    // return users
+    res.status(200).json(users);
+}
+);
+
+// delete user (admin only)
+app.delete("/user/:user_id", async (req, res) => {
+    // check auth
+    if (!req.user) {
+        res.status(401).json({ message: "Unauthorized" });
+        return;
+    }
+
+    if (!req.user.admin) {
+        res.status(403).json({ message: "Not an admin" });
+        return;
+    }
+
+    let user;
+
+    // pull user
+    try {
+        user = await User.findById(req.params.user_id);
+    } catch (err) {
+        res.status(500).json({
+            message: `error finding user when deleting`,
+            error: err,
+        });
+        return;
+    }
+
+    if (!user) {
+        res.status(404).json({
+            message: `user not found when deleting`,
+            user_id: req.params.user_id,
+        });
+        return;
+    }
+
+    // delete user
+    try {
+        await User.findByIdAndDelete(req.params.user_id);
+    } catch (err) {
+        res.status(500).json({
+            message: `error deleting user`,
             error: err,
         });
         return;
