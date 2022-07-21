@@ -214,7 +214,7 @@
                     </v-sheet>
                   </v-col>
 
-                  <template v-show="!loggedIn">
+                  <template>
                     <v-row justify="center">
                       <v-dialog
                         round
@@ -222,6 +222,7 @@
                         persistent
                         max-width="600px"
                         class="my-auto"
+                        v-if="!loggedIn"
                       >
                         <template v-slot:activator="{ on, attrs }"> </template>
                         <!-- HOME DIALOG GOES HERE -->
@@ -230,7 +231,7 @@
                           width="600px"
                           v-if="dialogScreen == 'home'"
                         > -->
-                        <div v-if="dialogScreen == 'home'" >
+                        <div v-if="dialogScreen == 'home'">
                           <v-sheet
                             width="600px"
                             rounded-lg
