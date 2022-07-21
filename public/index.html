@@ -96,7 +96,7 @@
                 class="ma-4 black--text fs-100"
                 v-on:click="setPage('admin')"
                 v-bind:style=" {fontSize: '20px'}"
-                v-if="currentUserObject.admin"
+                v-show="currentUserObject.admin"
               >
                 Admin
                 <v-icon right dark> mdi-shield-crown-outline </v-icon>
@@ -815,6 +815,48 @@
             </v-row>
           </v-container>
         </v-main>
+      </v-app>
+
+      <!-- ADMIN PAGE -->
+      <v-app id="inspire" v-show="page == 'admin'">
+        <v-app-bar app color="#4F4789" flat elevation="4">
+          <div id="main_header">
+            <img
+              v-on:click="page = 'main'"
+              src="./images/gogaslogo.svg"
+              alt="Go Gas Logo"
+              width="175px"
+            />
+          </div>
+          <v-row v-if="guest == false" class="text-center justify-center mr-15">
+            <h2 class="white--text">Welcome, &nbsp {{ userName }}</h2>
+          </v-row>
+          <div class="nav_buttons">
+            <template v-if="loggedIn && dialogScreen == 'main'">
+              <div class="text-center">
+                <v-btn
+                  color="#FFB17A"
+                  class="ma-4 black--text fs-100"
+                  v-on:click="logoutUser()"
+                  v-bind:style=" {fontSize: '20px'}"
+                >
+                  Logout
+                  <v-icon right dark> mdi-account-minus-outline </v-icon>
+                </v-btn>
+                <v-btn
+                color="#FFB17A"
+                class="ma-4 black--text fs-100"
+                v-on:click="setPage('main')"
+                v-bind:style=" {fontSize: '20px'}"
+                v-show="currentUserObject.admin"
+              >
+                Back to Home
+                <v-icon right dark> mdi-keyboard-backspace </v-icon>
+              </v-btn>
+              </div>
+            </template>
+          </div>
+        </v-app-bar>
       </v-app>
     </div>
 
