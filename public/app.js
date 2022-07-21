@@ -55,6 +55,12 @@ var app = new Vue({
         allUsers: [],
         allReviews: [],
 
+        // Post station stuff
+        newStationName: "",
+        newStationAddress: "",
+        newStationType: "",
+        newStationPumpHours: "",
+
         // rating stuff
         rating: 0,
         comment: "",
@@ -555,6 +561,54 @@ var app = new Vue({
             });
         },
 
+        // delete station (admin only)
+        deleteStation: async function (id) {
+            let response = await fetch(URL + "/station/" + id, {
+                method: "DELETE",
+                credentials: "include"
+            });
+
+            if (response.status == 200) {
+                // deleted successfully
+                console.log("deleted station");
+                this.getAllStations();
+
+            } else {
+                console.log("Error deleting station:", response.status);
+            }
+        },
+
+        // post station (admin only)
+        postStation: async function () {
+            let postBody = {
+                name: this.newStationName,
+                address: this.newStationAddress,
+                stationType: this.newStationType,
+                pumpHours: this.newStationPumpHours,
+            }
+
+            let response = await fetch(URL + "/station", {
+                method: "POST",
+                body: JSON.stringify(postBody),
+                headers: {
+                    "Content-Type" : "application/json"
+                },
+                credentials: "include"
+            });
+
+            if (response.status == 201) {
+                // created successfully
+                console.log("created station");
+                this.newStationName = "";
+                this.newStationAddress = "";
+                this.newStationType = "";
+                this.newStationPumpHours = "";
+                this.getAllStations();
+            } else {
+                console.log("Error posting station:", response.status);
+            }
+        },  
+
     },
     created: function () {
         this.getSession();
@@ -569,7 +623,7 @@ var app = new Vue({
             return (sum / this.allStations.length).toFixed(2);
         }
     }
-})
+});
 
 // This function is a callback that is given to the google api
 // It is ran when the api has finished loading
