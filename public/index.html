@@ -94,7 +94,7 @@
                 <v-btn
                 color="#FFB17A"
                 class="ma-4 black--text fs-100"
-                v-on:click="setPage('admin'); getAllUsers()"
+                v-on:click="setPage('admin'); getAllUsers(); getAllReviews()"
                 v-bind:style=" {fontSize: '20px'}"
                 v-show="currentUserObject.admin"
               >
@@ -925,8 +925,9 @@
                 sm="4"
               >
                 <v-sheet
-                  rounded="lg"
-                  min-height="70vh"
+                max-height="70vh"
+                rounded="lg"
+                class="overflow-y-auto"
                 >
                   <!--  -->
                   <v-list color="transparent">
@@ -947,6 +948,7 @@
                           <div>
                             <b>Email: </b>{{ user.username }}<br>
                             <b>Username: </b>{{ user.name }}<br>
+                            <b>User ID: </b>{{ user._id }}<br>
                             <b>Admin: </b>{{ user.admin }}<br>
                           </div>
                           <div>
@@ -972,8 +974,18 @@
                   <v-list color="transparent">
                     <v-list-item>
                       <v-list-item-content>
-                        <v-list-item-title class="d-flex justify-space-between"> 
+                        <v-list-item-title class="d-flex justify-space-between align-center"> 
                           <div><strong>Gas Stations</strong></div>
+                          <div>                
+                            <v-btn
+                            color="#FFB17A"
+                            class="black--text"
+                            @click="dialog = true"
+                            v-bind:style=" {fontSize: '15px'}"
+                          >
+                            New station
+                            <v-icon right dark> mdi-database-plus-outline </v-icon>
+                          </v-btn></div>
                         </v-list-item-title>
                       </v-list-item-content>
                     </v-list-item>
@@ -991,12 +1003,79 @@
                             {{ station.address }}
                           </div>
                           <div>
-                            <span class="actual_price"><b>${{ getAllPrices(station) }}<v-icon v-if="guest === false" right @click.stop="addFavorite(station._id)">mdi-trash-can-outline</v-icon></b></span>
+                            <span class="actual_price"><b>${{ getAllPrices(station) }}<v-icon v-if="guest === false" right @click.stop="deleteStation(station._id)">mdi-trash-can-outline</v-icon></b></span>
                           </div>
                         </v-list-item-title>
                       </v-list-item-content>
                     </v-list-item>
                   </v-list>
+                  <template v-if="page === 'admin'">
+                    <v-row justify="center">
+                      <v-dialog
+                        v-model="dialog"
+                        persistent
+                        max-width="600px"
+                      >
+                        <v-card>
+                          <v-card-title>
+                            <span class="text-h5">Create New Station</span>
+                          </v-card-title>
+                          <v-card-text>
+                            <v-container>
+                              <v-row>
+                                <v-col cols="12">
+                                  <v-text-field
+                                    label="Station Name*"
+                                    v-model="newStationName"
+                                    required
+                                  ></v-text-field>
+                                </v-col>
+                                <v-col cols="12">
+                                  <v-text-field
+                                    label="Station Address*"
+                                    v-model="newStationAddress"
+                                    required
+                                  ></v-text-field>
+                                </v-col>
+                                <v-col cols="12">
+                                  <v-text-field
+                                    label="Station Pump Type*"
+                                    v-model="newStationType"
+                                    required
+                                  ></v-text-field>
+                                </v-col>
+                                <v-col cols="12">
+                                  <v-text-field
+                                    label="Station Pump Hours*"
+                                    v-model="newStationPumpHours"
+                                    required
+                                  ></v-text-field>
+                                </v-col>
+                              </v-row>
+                            </v-container>
+                            <small>*indicates required field</small>
+                          </v-card-text>
+                          <v-card-actions>
+                            <v-spacer></v-spacer>
+                            <v-btn
+                              color="blue darken-1"
+                              text
+                              @click="dialog = false"
+                            >
+                              Cancel
+                            </v-btn>
+                            <v-btn
+                              color="blue darken-1"
+                              text
+                              @click="dialog = false;"
+                            >
+                              Submit
+                            </v-btn>
+                          </v-card-actions>
+                        </v-card>
+                      </v-dialog>
+                    </v-row>
+                  </template>
                 </v-sheet>
               </v-col>
     
@@ -1005,10 +1084,39 @@
                 sm="4"
               >
                 <v-sheet
-                  rounded="lg"
-                  min-height="70vh"
+                max-height="70vh"
+                rounded="lg"
+                class="overflow-y-auto"
                 >
                   <!--  -->
+                  <v-list color="transparent">
+                    <v-list-item>
+                      <v-list-item-content>
+                        <v-list-item-title class="d-flex justify-space-between"> 
+                          <div><strong>Reviews</strong></div>
+                        </v-list-item-title>
+                      </v-list-item-content>
+                    </v-list-item>
+                    <v-divider></v-divider>
+                    <v-list-item                       
+                    v-for="(review, index) in allReviews"
+                    :key="index"
+                    >
+                      <v-list-item-content>
+                        <v-list-item-title class="d-flex justify-space-between align-center">
+                          <div :style="{width: '20px'}">
+                            <b>Poster ID: </b>{{ review.userid }}<br>
+                            <b>Station: </b>{{ review.station_name }}<br>
+                            <b>Rating: </b>{{ review.rating }}<br>
+                            <b>Comment: </b>{{ review.comment }}<br>
+                          </div>
+                          <div>
+                            <span><b><v-icon v-if="guest === false" right @click.stop="">mdi-trash-can-outline</v-icon></b></span>
+                          </div>
+                        </v-list-item-title>
+                      </v-list-item-content>
+                    </v-list-item>
+                  </v-list>
                 </v-sheet>
               </v-col>
             </v-row>

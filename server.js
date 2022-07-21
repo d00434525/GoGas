@@ -109,6 +109,12 @@ app.post("/station", async (req, res) => {
         return;
     }
 
+    // Check if user is admin
+    if (!req.user.admin) {
+        res.status(403).json({message: "Not an admin"});
+        return;
+    }
+
     // Create new station
     try {
         let station = await Station.create({
@@ -545,6 +551,56 @@ app.delete("/user/:user_id", async (req, res) => {
 
     // return the updated user
     res.status(200).json(user);
+}
+);
+
+// delete station (admin only)
+app.delete("/station/:station_id", async (req, res) => {
+    // check auth
+    if (!req.user) {
+        res.status(401).json({ message: "Unauthorized" });
+        return;
+    }
+
+    if (!req.user.admin) {
+        res.status(403).json({ message: "Not an admin" });
+        return;
+    }
+
+    let station;
+
+    // pull station
+    try {
+        station = await Station.findById(req.params.station_id);
+    } catch (err) {
+        res.status(500).json({
+            message: `error finding station when deleting`,
+            error: err,
+        });
+        return;
+    }
+
+    if (!station) {
+        res.status(404).json({
+            message: `station not found when deleting`,
+            station_id: req.params.station_id,
+        });
+        return;
+    }
+
+    // delete station
+    try {
+        await Station.findByIdAndDelete(req.params.station_id);
+    } catch (err) {
+        res.status(500).json({
+            message: `error deleting station`,
+            error: err,
+        });
+        return;
+    }
+
+    // return the updated station
+    res.status(200).json(station);
 }
 );
 

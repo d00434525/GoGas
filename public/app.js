@@ -55,6 +55,13 @@ var app = new Vue({
         currentUserObject: {},
         stationLocation: {},
         allUsers: [],
+        allReviews: [],
+
+        // Post station stuff
+        newStationName: "",
+        newStationAddress: "",
+        newStationType: "",
+        newStationPumpHours: "",
 
         // rating stuff
         rating: 0,
@@ -608,6 +615,67 @@ var app = new Vue({
             }
         },
 
+        // get all reviews
+        getAllReviews: function () {
+            this.allStations.forEach(station => {
+                station.reviews.forEach(review => {
+                    this.allReviews.push({station_name: station.name,
+                        rating: review.rating,
+                        comment: review.comment,
+                        userid: review.user_id,
+                    });
+                });
+            });
+        },
+
+        // delete station (admin only)
+        deleteStation: async function (id) {
+            let response = await fetch(URL + "/station/" + id, {
+                method: "DELETE",
+                credentials: "include"
+            });
+
+            if (response.status == 200) {
+                // deleted successfully
+                console.log("deleted station");
+                this.allStations = [];
+                this.getStations();
+
+            } else {
+                console.log("Error deleting station:", response.status);
+            }
+        },
+
+        // post station (admin only)
+        postStation: async function () {
+            let postBody = {
+                name: this.newStationName,
+                address: this.newStationAddress,
+                stationType: this.newStationType,
+                pumpHours: this.newStationPumpHours,
+            }
+
+            let response = await fetch(URL + "/station", {
+                method: "POST",
+                body: JSON.stringify(postBody),
+                headers: {
+                    "Content-Type" : "application/json"
+                },
+                credentials: "include"
+            });
+
+            if (response.status == 201) {
+                // created successfully
+                console.log("created station");
+                this.newStationName = "";
+                this.newStationAddress = "";
+                this.newStationType = "";
+                this.newStationPumpHours = "";
+                this.getStations();
+            } else {
+                console.log("Error posting station:", response.status);
+            }
+        },  
 
     },
     created: function () {
@@ -623,7 +691,7 @@ var app = new Vue({
             return (sum / this.allStations.length).toFixed(2);
         }
     }
-})
+});
 
 
 
