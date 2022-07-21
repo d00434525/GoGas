@@ -52,6 +52,7 @@ var app = new Vue({
         newCurrentPrice: "",
         currentUser: "",
         currentUserObject: {},
+        allUsers: [],
 
         // rating stuff
         rating: 0,
@@ -508,7 +509,39 @@ var app = new Vue({
                 this.currentStationPrices.shift();
             }
 
-        }
+        },
+
+        // get all users (admin only)
+        getAllUsers: async function () {
+            let response = await fetch(URL + "/users");
+
+            if (response.status == 200) {
+                let data = await response.json();
+                console.log(data);
+                this.allUsers = data;
+            } else {
+                console.log("Error getting users:", response.status);
+            }
+        },
+
+        // delete user (admin only)
+        deleteUser: async function (id) {
+            let response = await fetch(URL + "/user/" + id, {
+                method: "DELETE",
+                credentials: "include"
+            });
+
+            if (response.status == 200) {
+                // deleted successfully
+                console.log("deleted user");
+                this.getAllUsers();
+
+            } else {
+                console.log("Error deleting user:", response.status);
+            }
+        },
+
+
     },
     created: function () {
         this.getSession();
