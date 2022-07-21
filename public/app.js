@@ -53,6 +53,7 @@ var app = new Vue({
         currentUser: "",
         currentUserObject: {},
         allUsers: [],
+        allReviews: [],
 
         // rating stuff
         rating: 0,
@@ -541,6 +542,18 @@ var app = new Vue({
             }
         },
 
+        // get all reviews
+        getAllReviews: function () {
+            this.allStations.forEach(station => {
+                station.reviews.forEach(review => {
+                    this.allReviews.push({station_name: station.name,
+                        rating: review.rating,
+                        comment: review.comment,
+                        userid: review.user_id,
+                    });
+                });
+            });
+        },
 
     },
     created: function () {
