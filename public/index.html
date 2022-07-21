@@ -160,6 +160,7 @@
                           <div>
                             {{ station.name }}<br>
                             {{ station.address }}
+                            <v-rating length="5" v-model="station.reviews[0].rating"></v-rating>
                           </div>
                           <div>
                             <span class="actual_price"><b>${{ getAllPrices(station) }}<v-icon v-if="guest === false" right @click.stop="addFavorite(station._id)">mdi-star-plus-outline</v-icon></b></span>
