@@ -673,7 +673,11 @@
                               <p id="review_comment">{{ review.comment }}</p>
                             </v-card-text>
                             <v-card-actions>
-                              <v-btn v-if="guest === false && currentUserObject.name === review.user.name" text color="teal accent-4" 
+                              <v-btn v-if="guest === false && currentUserObject.name === review.user.name" 
+                              class="mx-2 black--text"
+                              dark
+                              large
+                              color="#FFB17A"
                               @click="deleteReview(currentStation._id, review._id)"> 
                               Delete </v-btn>
                             </v-card-actions>
