@@ -53,6 +53,7 @@ var app = new Vue({
         newCurrentPrice: "",
         currentUser: "",
         currentUserObject: {},
+        stationLocation: {},
 
         // rating stuff
         rating: 0,
@@ -304,7 +305,10 @@ var app = new Vue({
                         map: this.map,
                         position: results[0].geometry.location,
                     });
+                    //console.log("marker" marker)
                     this.recentMarker = marker;
+                    this.stationLocation[this.currentStation] = marker.position
+                    console.log("Station Location",this.stationLocation)
                 } else {
                     console.log('Geocode was not successful for the following reason: ' + status);
                 }
@@ -392,10 +396,6 @@ var app = new Vue({
                 center: results[0].geometry.location,
                 styles: myStyles,
         })
-                
-        },
-        itWorked: function(){
-            console.log("it worked?")
         },
         // Post price on a station
         postPrice: async function (id) {
@@ -552,8 +552,8 @@ function initMap() {
                     styles: myStyles,
                     
                 });
-            // console.log("results", results)
-            // console.log("results [0]", results[0])
+            console.log("results", results)
+            console.log("results [0]", results[0].geometry.location)
             // }else {
             //     SSMAP = new google.maps.Map(document.getElementById("ssmap"), {
             //         zoom: 16,
@@ -596,8 +596,8 @@ function initSSMap() {
                     styles: myStyles,
                     
                 });
-            console.log("results", results)
-            console.log("results [0]", results[0])
+            console.log("SSresults", results)
+            console.log("SSresults [0]", results[0])
             // }else {
             //     SSMAP = new google.maps.Map(document.getElementById("ssmap"), {
             //         zoom: 16,
