@@ -64,6 +64,7 @@ var app = new Vue({
         map: null,
         ssmap: null,
         geocoder: null,
+        bounceAnimation: "",
 
         // displays a placeholder if false
         mapIsInitialized: false,
@@ -345,6 +346,23 @@ var app = new Vue({
                 this.addressInput = "";
             });
         },
+        hoverBounce: function(station) {
+            if(station.address != this.bounceAnimation){
+                this.bounceAnimation = station.address
+                console.log(this.bounceAnimation);
+                let marker = this.markers[this.bounceAnimation]
+                console.log("listBounce", marker, this.bounceAnimation);
+                // if (marker.getAnimation() !== null) {
+                //     marker.setAnimation(null);
+                // } else {
+                    marker.setAnimation(google.maps.Animation.BOUNCE);
+                //}
+                setTimeout(() => {
+                    marker.setAnimation(null)
+                }, 3000)
+            }
+        },
+
         initializeMap: function () {
             console.log(MAP);
             this.map = MAP;
