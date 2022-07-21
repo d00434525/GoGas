@@ -41,7 +41,7 @@ app.post("/user", async (req, res) => {
 app.get("/stations", async (req, res) => {
     let allStations = [];
     try {
-        allStations = await Station.find({}, "-reviews");
+        allStations = await Station.find({});
     } catch (err) {
         res.status(500).json({
             message: "Failed to get stations",
