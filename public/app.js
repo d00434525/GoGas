@@ -305,8 +305,8 @@ var app = new Vue({
                         map: this.map,
                         position: results[0].geometry.location,
                     });
-                    //console.log("marker" marker)
-                    this.recentMarker = marker;
+                    console.log("marker", marker)
+                    this.markers[address] = marker;
                     this.stationLocation[this.currentStation] = marker.position
                     console.log("Station Location",this.stationLocation)
                 } else {
@@ -515,7 +515,12 @@ var app = new Vue({
 
         },
         ssStationMarker: function() {
-            
+            setTimeout(() => {
+                this.markers[this.currentStation.address].setMap(SSMAP)
+            }, "1000")
+        },
+        resetMarker: function() {
+            this.currentStation.address.setMap(MAP)
         }
 
     },
@@ -533,6 +538,8 @@ var app = new Vue({
         }
     }
 })
+
+
 
 // This function is a callback that is given to the google api
 // It is ran when the api has finished loading
@@ -554,6 +561,11 @@ function initMap() {
                 });
             console.log("results", results)
             console.log("results [0]", results[0].geometry.location)
+            SSMAP = new google.maps.Map(document.getElementById("ssmap"), {
+                zoom: 13,
+                center: results[0].geometry.location,
+                styles: myStyles,
+            });
             // }else {
             //     SSMAP = new google.maps.Map(document.getElementById("ssmap"), {
             //         zoom: 16,
@@ -578,51 +590,52 @@ function initMap() {
     });
 }
 
-function initSSMap() {
-    // geocoder is for turning an address (1234 E 5678 S) into Latitude and Longitude
-    GEOCODER = new google.maps.Geocoder();
-    console.log("INITSSMAP RAN");
+// function initSSMap() {
+//     // geocoder is for turning an address (1234 E 5678 S) into Latitude and Longitude
+//     GEOCODER = new google.maps.Geocoder();
+//     console.log("INITSSMAP RAN");
     
-    singleStationAddress = app.currentStation.address
-    //Center on the map on St. George using the Geocoder
-    GEOCODER.geocode({'address' : "Saint George, UT"}, function (results, status) {
-        switch (status) {
-        case "OK":
-            // creates the map
-            //console.log(singleStationAddress);
-            SSMAP = new google.maps.Map(document.getElementById("ssmap"), {
-                    zoom: 13,
-                    center: results[0].geometry.location,
-                    styles: myStyles,
+//     singleStationAddress = app.currentStation.address
+//     //Center on the map on St. George using the Geocoder
+//     GEOCODER.geocode({'address' : "Saint George, UT"}, function (results, status) {
+//         switch (status) {
+//         case "OK":
+//             // creates the map
+//             //console.log(singleStationAddress);
+//             SSMAP = new google.maps.Map(document.getElementById("ssmap"), {
+//                     zoom: 13,
+//                     center: results[0].geometry.location,
+//                     styles: myStyles,
                     
-                });
-            console.log("SSresults", results)
-            console.log("SSresults [0]", results[0])
-            // }else {
-            //     SSMAP = new google.maps.Map(document.getElementById("ssmap"), {
-            //         zoom: 16,
-            //         //center: this.currentSta
-            //         styles: myStyles,
-            //     });
-            // }
-            //add station markers
-            app.addMarkers(app.allStations)
-            //map zooms in when marker is clicked
-            // google.maps.event.addListener(marker,'click',function() {
-            //     map.setZoom(9);
-            //     map.setCenter(marker.getPosition());
-            //   });
-            // calls vue's initialize map function
-            app.initializeSSMap();
-            break;
-        default:
-            SSMAP = new google.maps.Map(document.getElementById("ssmap"), {
-                zoom: 13,
-                center: {lat: 37.0965, lng: -113.5684},
-                styles: myStyles,
-            })
-            console.error('Geocode was not successful for the following reason: ' + status);
-        }
-    });
+//                 });
+//             app.recentMarker.setMap(app.map)
+//             console.log("SSresults", results)
+//             console.log("SSresults [0]", results[0])
+//             // }else {
+//             //     SSMAP = new google.maps.Map(document.getElementById("ssmap"), {
+//             //         zoom: 16,
+//             //         //center: this.currentSta
+//             //         styles: myStyles,
+//             //     });
+//             // }
+//             //add station markers
+//             app.addMarkers(app.allStations)
+//             //map zooms in when marker is clicked
+//             // google.maps.event.addListener(marker,'click',function() {
+//             //     map.setZoom(9);
+//             //     map.setCenter(marker.getPosition());
+//             //   });
+//             // calls vue's initialize map function
+//             app.initializeSSMap();
+//             break;
+//         default:
+//             SSMAP = new google.maps.Map(document.getElementById("ssmap"), {
+//                 zoom: 13,
+//                 center: {lat: 37.0965, lng: -113.5684},
+//                 styles: myStyles,
+//             })
+//             console.error('Geocode was not successful for the following reason: ' + status);
+//         }
+//     });
 
-}
+//}

@@ -142,7 +142,7 @@
                       v-for="(station, index) in allStations"
                       :key="index"
                       link
-                      @click="getSingleStation(station._id)"
+                      @click="getSingleStation(station._id), ssStationMarker()"
                     >
                       <v-list-item-content>
                         <v-list-item-title class="d-flex justify-space-between">
@@ -754,8 +754,8 @@
                               <v-container>
                                 <v-row>
                                     <v-col>
-                                        <v-sheet v-show="ssmapIsInitialized" height="300px" id="ssmap"></v-sheet>
-                                        <v-sheet v-show="!ssmapIsInitialized" class="transparent" height="300">
+                                        <v-sheet v-show="mapIsInitialized" height="300px" id="ssmap"></v-sheet>
+                                        <v-sheet v-show="!mapIsInitialized" class="transparent" height="300">
                                             <v-card class="fill-height" loading="green lighten-2">
                                                 <v-card-title>Loading Map</v-card-title>
                                                 <v-card-text>
