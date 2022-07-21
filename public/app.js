@@ -328,9 +328,9 @@ var app = new Vue({
             this.geocoder = GEOCODER;
             this.ssmapIsInitialized = true
         },
-        reloadSSMap: function(){
-            initSSMap();
-        },
+        // reloadSSMap: function(){
+        //     initSSMap();
+        // },
         addMarkers: function(stations){
             stations.forEach(station => {
                 this.addMarker(station.address);
@@ -516,10 +516,19 @@ var app = new Vue({
 
         },
         ssStationMarker: function() {
-            setTimeout(() => {
+            if(!this.previousMarker){
+                setTimeout(() => {
+                    this.markers[this.currentStation.address].setMap(SSMAP)
+                    SSMAP.setCenter(this.markers[this.currentStation.address].getPosition())
+                    SSMAP.setZoom(15)
+                    this.previousMarker = this.currentStation.address
+                }, "1000")
+            }else{
                 this.markers[this.currentStation.address].setMap(SSMAP)
+                SSMAP.setCenter(this.markers[this.currentStation.address].getPosition())
+                SSMAP.setZoom(15)
                 this.previousMarker = this.currentStation.address
-            }, "1000")
+            }
         },
         resetMarker: function() {
             this.markers[this.previousMarker].setMap(MAP)
@@ -585,7 +594,7 @@ function initMap() {
             //   });
             // calls vue's initialize map function
             app.initializeMap();
-            initSSMap();
+            //initSSMap();
             break;
         default:
             console.error('Geocode was not successful for the following reason: ' + status);
