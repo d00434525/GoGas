@@ -958,56 +958,39 @@
                       >
                         <v-card>
                           <v-card-title>
-                            <span class="text-h5">User Profile</span>
+                            <span class="text-h5">Create New Station</span>
                           </v-card-title>
                           <v-card-text>
                             <v-container>
                               <v-row>
-                                <v-col
-                                  cols="12"
-                                  sm="6"
-                                  md="4"
-                                >
+                                <v-col cols="12">
                                   <v-text-field
-                                    label="Legal first name*"
-                                    required
-                                  ></v-text-field>
-                                </v-col>
-                                <v-col
-                                  cols="12"
-                                  sm="6"
-                                  md="4"
-                                >
-                                  <v-text-field
-                                    label="Legal middle name"
-                                    hint="example of helper text only on focus"
-                                  ></v-text-field>
-                                </v-col>
-                                <v-col
-                                  cols="12"
-                                  sm="6"
-                                  md="4"
-                                >
-                                  <v-text-field
-                                    label="Legal last name*"
-                                    hint="example of persistent helper text"
-                                    persistent-hint
+                                    label="Station Name*"
+                                    v-model="newStationName"
                                     required
                                   ></v-text-field>
                                 </v-col>
                                 <v-col cols="12">
                                   <v-text-field
-                                    label="Email*"
+                                    label="Station Address*"
+                                    v-model="newStationAddress"
                                     required
                                   ></v-text-field>
                                 </v-col>
                                 <v-col cols="12">
                                   <v-text-field
-                                    label="Password*"
-                                    type="password"
+                                    label="Station Pump Type*"
+                                    v-model="newStationType"
                                     required
                                   ></v-text-field>
-
+                                </v-col>
+                                <v-col cols="12">
+                                  <v-text-field
+                                    label="Station Pump Hours*"
+                                    v-model="newStationPumpHours"
+                                    required
+                                  ></v-text-field>
+                                </v-col>
                               </v-row>
                             </v-container>
                             <small>*indicates required field</small>
@@ -1019,14 +1002,14 @@
                               text
                               @click="dialog = false"
                             >
-                              Close
+                              Cancel
                             </v-btn>
                             <v-btn
                               color="blue darken-1"
                               text
-                              @click="dialog = false"
+                              @click="dialog = false;"
                             >
-                              Save
+                              Submit
                             </v-btn>
                           </v-card-actions>
                         </v-card>

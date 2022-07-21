@@ -571,7 +571,8 @@ var app = new Vue({
             if (response.status == 200) {
                 // deleted successfully
                 console.log("deleted station");
-                this.getAllStations();
+                this.allStations = [];
+                this.getStations();
 
             } else {
                 console.log("Error deleting station:", response.status);
@@ -603,7 +604,7 @@ var app = new Vue({
                 this.newStationAddress = "";
                 this.newStationType = "";
                 this.newStationPumpHours = "";
-                this.getAllStations();
+                this.getStations();
             } else {
                 console.log("Error posting station:", response.status);
             }
