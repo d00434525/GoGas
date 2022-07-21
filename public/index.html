@@ -135,7 +135,9 @@
                       <v-list-item-content>
                         <v-list-item-title class="d-flex justify-space-between"> 
                             <div>{{ favoriteStation.station_name }}<br>
-                               {{ favoriteStation.station_address }}</div>
+                               {{ favoriteStation.station_address }}
+                               <v-rating length="5" background-color="#ffb17a" color="#4f4789" readonly half-increments :value="ratingAverage(favoriteStation.station_reviews)"></v-rating>
+                              </div>
                             <div class="actual_price"><b>${{ favoriteStation.station_prices[favoriteStation.station_prices.length - 1].price.toFixed(2) }}<v-icon right @click.stop="removeFavorite(favoriteStation.station_id)">mdi-star-remove-outline</v-icon></b></div>
                         </v-list-item-title>
                       </v-list-item-content>

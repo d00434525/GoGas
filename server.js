@@ -344,6 +344,7 @@ app.post("/user/:user_id/favorites/:station_id", async (req, res) => {
                         station_name: station.name,
                         station_address: station.address,
                         station_prices: station.prices,
+                        station_reviews: station.reviews,
                     }
                 }
             }, {
