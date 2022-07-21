@@ -73,6 +73,7 @@ var app = new Vue({
 
         addressInput: "",
         markers: [],
+        previousMarker: "",
 
 
     },
@@ -517,10 +518,12 @@ var app = new Vue({
         ssStationMarker: function() {
             setTimeout(() => {
                 this.markers[this.currentStation.address].setMap(SSMAP)
+                this.previousMarker = this.currentStation.address
             }, "1000")
         },
         resetMarker: function() {
-            this.currentStation.address.setMap(MAP)
+            this.markers[this.previousMarker].setMap(MAP)
+            
         }
 
     },

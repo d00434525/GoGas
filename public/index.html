@@ -567,7 +567,7 @@
                                       color="#FFB17A"
                                       v-bind="attrs"
                                       v-on="on"
-                                      @click="setPage('main'); currentStationPrices = []"
+                                      @click="setPage('main'), resetMarker(); currentStationPrices = []"
                                     >
                                       <v-icon dark color="black">
                                         mdi-keyboard-backspace
