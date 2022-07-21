@@ -309,16 +309,20 @@ var app = new Vue({
                         animation: google.maps.Animation.DROP
                     })
 
+
+                    const contentString = 
+                    '<div> {{ station.name }} </div'
+
                     //when marker is clicked info will display what gas station it is
-                    // var infowindow = new google.maps.InfoWindow({
-                    //     content: "BEN",
-                    // })
+                    var infowindow = new google.maps.InfoWindow({
+                         content: contentString,
+                     })
 
                     //map should zoom in when marker is clicked
                     google.maps.event.addListener(marker, 'click', () => {
                         this.map.setZoom(16);
                         this.map.setCenter(marker.getPosition());
-                        // infowindow.open(map, marker);
+                        infowindow.open(map, marker);
                     });
                     console.log("marker", marker)
                     this.markers[address] = marker;
@@ -370,6 +374,8 @@ var app = new Vue({
             this.map.setCenter(this.currentStation.geometry.location);
             this.map.setZoom(16);
         },
+
+
 
         // Post review on a station
         postReview: async function (id) {
