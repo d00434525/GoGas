@@ -673,7 +673,9 @@
                               <p id="review_comment">{{ review.comment }}</p>
                             </v-card-text>
                             <v-card-actions>
-                              <v-btn v-if="guest === false" text color="teal accent-4" @click="deleteReview(currentStation._id, review._id)"> Delete </v-btn>
+                              <v-btn v-if="guest === false && currentUserObject.name === review.user.name" text color="teal accent-4" 
+                              @click="deleteReview(currentStation._id, review._id)"> 
+                              Delete </v-btn>
                             </v-card-actions>
                           </v-card>
                         </template>
@@ -805,7 +807,7 @@
     <script src="https://cdn.jsdelivr.net/npm/vuetify@2.x/dist/vuetify.js"></script>
     <script src="app.js"></script>
     <script
-      src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA_AU3PAvFLx6xjRd6Mt-ASoqFnLr0sWXo&callback=initMap&v=weekly"
+      src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAvSzePow7KVU-UkzfH9ivuq8lNuzt6aWM&callback=initMap&v=weekly"
       defer
     ></script>
   </body>
