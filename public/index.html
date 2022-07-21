@@ -745,40 +745,39 @@
               <!-- SINGLE STATION MAP -->
               <v-col>
                 <v-sheet git rounded="lg" class="mb-4" max-width="50vw">
-                  <v-col>
-                    <v-sheet min-height="100%" rounded="lg" >
-                      <v-col>
-                        <v-sheet min-height="100%" rounded="lg">
-                          <v-main class="green lighten-5 pt-0">
-                            <v-container >
-                              <v-container>
-                                <v-row>
-                                    <v-col>
-                                        <v-sheet v-show="mapIsInitialized" height="300px" id="ssmap"></v-sheet>
-                                        <v-sheet v-show="!mapIsInitialized" class="transparent" height="300">
-                                            <v-card class="fill-height" loading="green lighten-2">
-                                                <v-card-title>Loading Map</v-card-title>
-                                                <v-card-text>
-                                                    If this is taking a long time, make sure you've
-                                                    entered in your google api key in the html script tag. It
-                                                    will not work until you've provided one
-                                                </v-card-text>
-                                            </v-card>
-                                        </v-sheet>
-                                    </v-col>
-                                </v-row>
-                            </v-container>
-                          </v-main>
-                        </v-sheet>
-                      </v-col>
+                  
                 <v-sheet
                   min-height="43vh"
                   rounded="lg"
                   class="mb-4"
                   max-width="50vw"
-                >
+                ><v-col>
+                  <v-sheet min-height="100%" rounded="lg" >
+                    <v-col>
+                      <v-sheet min-height="100%" rounded="lg">
+                        <v-main class="green lighten-5 pt-0">
+                          <v-container >
+                            <v-container>
+                              <v-row>
+                                  <v-col>
+                                      <v-sheet v-show="mapIsInitialized" height="300px" id="ssmap"></v-sheet>
+                                      <v-sheet v-show="!mapIsInitialized" class="transparent" height="300">
+                                          <v-card class="fill-height" loading="green lighten-2">
+                                              <v-card-title>Loading Map</v-card-title>
+                                              <v-card-text>
+                                                  If this is taking a long time, make sure you've
+                                                  entered in your google api key in the html script tag. It
+                                                  will not work until you've provided one
+                                              </v-card-text>
+                                          </v-card>
+                                      </v-sheet>
+                                  </v-col>
+                              </v-row>
+                          </v-container>
+                        </v-main>
+                      </v-sheet>
+                    </v-col>
                   <!-- -->
-                  Shenanigans
                 </v-sheet>
                 <v-sheet
                   min-height="43vh"

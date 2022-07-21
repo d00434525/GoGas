@@ -532,7 +532,7 @@ var app = new Vue({
         },
         resetMarker: function() {
             this.markers[this.previousMarker].setMap(MAP)
-            
+            SSMAP.setZoom(13)
         }
 
     },
