@@ -145,7 +145,7 @@
                       link
                       @click="getSingleStation(station._id)"
                     >
-                      <v-list-item-content>
+                      <v-list-item-content @mouseover="toggleHover()">
                         <v-list-item-title class="d-flex justify-space-between">
                           <div>
                             {{ station.name }}<br>
@@ -211,141 +211,168 @@
                       >
                         <template v-slot:activator="{ on, attrs }"> </template>
                         <!-- HOME DIALOG GOES HERE -->
-                        <div
+                        <!-- <div
                           id="home_dialog"
                           width="600px"
                           v-if="dialogScreen == 'home'"
-                        >
-                          <h1>Welcome to Go Gas</h1>
-                          <template>
-                            <div class="text-center">
-                              <v-btn
-                                color="#FFB17A"
-                                class="ma-4 black--text fs-100"
-                                v-on:click="dialogScreen = 'login'"
-                                v-bind:style=" {fontSize: '20px'}"
-                              >
-                                Sign In
-                                <v-icon right dark> mdi-login-variant </v-icon>
-                              </v-btn>
-                            </div>
-                          </template>
+                        > -->
+                        <div v-if="dialogScreen == 'home'" >
+                          <v-sheet
+                            width="600px"
+                            rounded-lg
+                             >
+                            <v-app-bar 
+                            id="home_dialog"
+                            color="#4F4789">
+                              <h1>Welcome to Go Gas</h1>
+                            </v-app-bar>
+                            <template>
+                              <div class="text-center">
+                                <v-btn 
+                                  color="#FFB17A"
+                                  class="ma-4 black--text fs-100"
+                                  v-on:click="dialogScreen = 'login'"
+                                  v-bind:style=" {fontSize: '20px'}"
+                                >
+                                  Sign In
+                                  <v-icon right dark> mdi-login-variant </v-icon>
+                                </v-btn>
+                              </div>
+                            </template>
 
-                          <template>
-                            <div class="text-center">
-                              <v-btn
-                                color="#FFB17A"
-                                class="ma-4 black--text fs-100"
-                                v-on:click="dialogScreen = 'register'"
-                                v-bind:style=" {fontSize: '20px'}"
-                              >
-                                Register
-                                <v-icon right dark>
-                                  mdi-account-plus-outline
-                                </v-icon>
-                              </v-btn>
-                            </div>
-                          </template>
+                            <template>
+                              <div class="text-center">
+                                <v-btn
+                                  color="#FFB17A"
+                                  class="ma-4 black--text fs-100"
+                                  v-on:click="dialogScreen = 'register'"
+                                  v-bind:style=" {fontSize: '20px'}"
+                                >
+                                  Register
+                                  <v-icon right dark>
+                                    mdi-account-plus-outline
+                                  </v-icon>
+                                </v-btn>
+                              </div>
+                            </template>
 
-                          <template>
-                            <div class="text-center">
-                              <v-btn
-                                color="#FFB17A"
-                                class="ma-4 black--text fs-100"
-                                v-on:click="dialog = false, guest = true, dialogScreen ='main'"
-                                v-bind:style=" {fontSize: '20px'}"
-                              >
-                                Continue as Guest
-                                <v-icon right dark>
-                                  mdi-account-arrow-right-outline
-                                </v-icon>
-                              </v-btn>
-                            </div>
-                          </template>
+                            <template>
+                              <div class="text-center">
+                                <v-btn
+                                  color="#FFB17A"
+                                  class="ma-4 black--text fs-100"
+                                  v-on:click="dialog = false, guest = true, dialogScreen ='main'"
+                                  v-bind:style=" {fontSize: '20px'}"
+                                >
+                                  Continue as Guest
+                                  <v-icon right dark>
+                                    mdi-account-arrow-right-outline
+                                  </v-icon>
+                                </v-btn>
+                              </div>
+                            </template>
+                          </v-sheet>
                         </div>
                         <!-- REGISTER DIALOG GOES HERE -->
                         <div
-                          id="register_page"
                           v-if="dialogScreen == 'register'"
                         >
-                          <div id="register_header">
-                            <img
-                              src="./images/gogaslogo.svg"
-                              alt="Go Gas Logo"
-                              width="175px"
-                            />
-                          </div>
-                          <div id="register_body">
-                            <h1>Register</h1>
-                            <input
-                              id="register_username"
-                              placeholder="Email"
-                              v-model="rUsername"
-                              class="input_style"
-                            /><br />
-                            <input
-                              id="register_name"
-                              placeholder="Name"
-                              v-model="rName"
-                              class="input_style"
-                            /><br />
-                            <input
-                              id="register_pass"
-                              placeholder="Password"
-                              v-model="rPass"
-                              class="input_style"
-                              type="password"
-                            /><br />
-                            <input
-                              id="register_confirmPass"
-                              placeholder="Confirm Password"
-                              v-model="rConfirmPass"
-                              class="input_style"
-                              type="password"
-                            /><br />
-                            <input
-                              id="register_zip"
-                              placeholder="Zip"
-                              v-model="rZip"
-                              class="input_style"
-                              type="number"
-                            />
-                            <v-row class="mb-4">
-                              <v-col class="col-12" sm="6">
-                                <template>
-                                  <div class="text-center">
-                                    <v-btn
-                                      color="#FFB17A"
-                                      class="ma-4 black--text fs-100"
-                                      v-on:click="registerUser()"
-                                      v-bind:style=" {fontSize: '20px'}"
-                                    >
-                                      Register
-                                      <v-icon right dark>
-                                        mdi-account-plus-outline
-                                      </v-icon>
-                                    </v-btn>
-                                  </div>
-                                </template>
-                              </v-col>
-                              <v-col class="col-12" sm="6">
-                                <template>
-                                  <div class="text-center">
-                                    <v-btn
-                                      color="#FFB17A"
-                                      class="ma-4 black--text fs-100"
-                                      v-on:click="dialogScreen = 'home', reloadMap(), console.log('back clicked')"
-                                      v-bind:style=" {fontSize: '20px'}"
-                                    >
-                                      Back
-                                      <v-icon right dark>
-                                        mdi-keyboard-backspace
-                                      </v-icon>
-                                    </v-btn>
-                                  </div>
-                                </template>
-                              </v-col>
-                            </v-row>
+                        <v-sheet
+                        width="600px"
+                        rounded-lg>
+                        <v-app-bar 
+                        id="register_dialog"
+                        color = "#4F4789">
+                          <h1>Go Gas Registration</h1>
+                        </v-app-bar>
+                            <div class="col-12" sm="10" >
+                              <v-text-field
+                                prepend-icon="mdi-email"
+                                color="#FFB17A"
+                                id="register_username"
+                                label="Email"
+                                placeholder="johndoe@gmail.com"
+                                v-model="rUsername"
+                                class="input_style"
+                              ></v-text-field>
+                              <br />
+                              <v-text-field
+                                prepend-icon="mdi-account-circle"
+                                color="#FFB17A"
+                                id="register_name"
+                                label="Name"
+                                placeholder="John Doe"
+                                v-model="rName"
+                                class="input_style"
+                              ></v-text-field>
+                              <br />
+                              <v-text-field
+                                prepend-icon="mdi-lock"
+                                color="#FFB17A"
+                                id="register_pass"
+                                label="Password"
+                                v-model="rPass"
+                                class="input_style"
+                                type="password"
+                              ></v-text-field>
+                              <br />
+                              <v-text-field
+                                prepend-icon="mdi-lock-check"
+                                color="#FFB17A"
+                                id="register_confirmPass"
+                                label="Confirm Password"
+                                v-model="rConfirmPass"
+                                class="input_style"
+                                type="password"
+                              ></v-text-field>
+                              <br />
+                              <v-text-field
+                                prepend-icon="mdi-map-marker-radius"
+                                color="#FFB17A"
+                                id="register_zip"
+                                label="ZIP"
+                                placeholder="12345"
+                                v-model="rZip"
+                                class="input_style"
+                                type="number"
+                              /></v-text-field>
+                              <v-row class="mb-4">
+                                <v-col class="col-12" sm="6">
+                                  <template>
+                                    <div class="text-center">
+                                      <v-btn
+                                        color="#FFB17A"
+                                        class="ma-4 black--text fs-100"
+                                        v-on:click="registerUser()"
+                                        v-bind:style=" {fontSize: '20px'}"
+                                      >
+                                        Register
+                                        <v-icon right dark>
+                                          mdi-account-plus-outline
+                                        </v-icon>
+                                      </v-btn>
+                                    </div>
+                                  </template>
+                                </v-col>
+                                <v-col class="col-12" sm="6">
+                                  <template>
+                                    <div class="text-center">
+                                      <v-btn
+                                        color="#FFB17A"
+                                        class="ma-4 black--text fs-100"
+                                        v-on:click="dialogScreen = 'home', reloadMap(), console.log('back clicked')"
+                                        v-bind:style=" {fontSize: '20px'}"
+                                      >
+                                        Back
+                                        <v-icon right dark>
+                                          mdi-keyboard-backspace
+                                        </v-icon>
+                                      </v-btn>
+                                    </div>
+                                  </template>
+                                </v-col>
+                              </v-row>
+                            <v-sheet>
                           </div>
                           <!-- snackbar goes here -->
                           <v-snackbar
@@ -369,36 +396,37 @@
                           </v-snackbar>
                         </div>
                         <!-- SIGN IN PAGE -->
-                        <div id="login_page" v-if="dialogScreen == 'login'">
-                          <div id="login_header">
-                            <img
-                              src="./images/gogaslogo.svg"
-                              alt="Go Gas Logo"
-                              width="175px"
-                            />
-                          </div>
-                          <!-- <div id="login_body">
-                                <h1>Sign In</h1>
-                                <input id="login_email" placeholder="Email" v-model="lEmail" class="input_style"><br>
-                                <input id="login_password" placeholder="Password" v-model="lPassword" class="input_style"><br>
-                                <button @click="setPage('home')" class="button_style">Login</button>
-                                <button v-on:click="dialogScreen = 'home'" class="button_style">Go Back</button>
-                            </div> -->
-                          <div id="login_body">
-                            <h1>Sign In</h1>
-                            <input
-                              id="login_username"
-                              placeholder="Email"
-                              v-model="lUsername"
-                              class="input_style"
-                            /><br />
-                            <input
-                              id="login_password"
-                              placeholder="Password"
-                              v-model="lPassword"
-                              class="input_style"
-                              type="password"
-                            /><br />
+                        <div v-if="dialogScreen == 'login'">
+                        <v-sheet 
+                        width="600px"
+                        rounded-lg>
+                          <v-app-bar 
+                          id="login_dialog"
+                          color="#4F4789">
+                            <h1>Go Gas Login</h1>
+                          </v-app-bar>
+                          <div class="col-12" sm="6">
+                            <v-text-field
+                                prepend-icon="mdi-email"
+                                color="#FFB17A"
+                                id="register_username"
+                                label="Email"
+                                placeholder="johndoe@gmail.com"
+                                v-model="rUsername"
+                                class="input_style"
+                            ></v-text-field>
+                            <br />
+                            <v-text-field
+                                prepend-icon="mdi-lock"
+                                color="#FFB17A"
+                                id="register_pass"
+                                label="Password"
+                                v-model="rPass"
+                                class="input_style"
+                                type="password"
+                            ></v-text-field>
+                            <br />
+
                             <v-row class="mb-4">
                               <v-col class="col-12" sm="6">
                                 <template>
@@ -435,7 +463,8 @@
                                 </template>
                               </v-col>
                             </v-row>
-                          </div>
+                        </v-sheet>
+                        </div>
                           <!-- LOGIN SNACKBAR AFTER CREATING USER -->
                           <v-snackbar
                             timeout="2000"
@@ -805,7 +834,7 @@
     <script src="https://cdn.jsdelivr.net/npm/vuetify@2.x/dist/vuetify.js"></script>
     <script src="app.js"></script>
     <script
-      src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA_AU3PAvFLx6xjRd6Mt-ASoqFnLr0sWXo&callback=initMap&v=weekly"
+      src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAvSzePow7KVU-UkzfH9ivuq8lNuzt6aWM&callback=initMap&v=weekly"
       defer
     ></script>
   </body>
