@@ -508,6 +508,14 @@ var app = new Vue({
                 this.currentStationPrices.shift();
             }
 
+        },
+        ratingAverage: function (station) {
+            let sum = 0;
+            for (let i = 0; i < station.length; i ++){
+                sum += station[i].rating;
+            }
+            return (sum / station.length);
+
         }
     },
     created: function () {
