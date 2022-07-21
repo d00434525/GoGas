@@ -60,6 +60,7 @@ const userSchema = mongoose.Schema({
     name: { type: String, required: true, unique: true},
     zip: { type: Number, required: true},
     favorites: { type: Array, default: [], required: false },
+    admin: { type: Boolean, default: false, required: true },
 });
 
 // Encrypt password
