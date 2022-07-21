@@ -94,7 +94,7 @@
                 <v-btn
                 color="#FFB17A"
                 class="ma-4 black--text fs-100"
-                v-on:click="setPage('admin')"
+                v-on:click="setPage('admin'); getAllUsers()"
                 v-bind:style=" {fontSize: '20px'}"
                 v-show="currentUserObject.admin"
               >
@@ -858,6 +858,103 @@
             </template>
           </div>
         </v-app-bar>
+        <v-main class="grey lighten-3">
+          <v-container>
+            <v-row>
+              <v-col
+                cols="12"
+                sm="4"
+              >
+                <v-sheet
+                  rounded="lg"
+                  min-height="70vh"
+                >
+                  <!--  -->
+                  <v-list color="transparent">
+                    <v-list-item>
+                      <v-list-item-content>
+                        <v-list-item-title class="d-flex justify-space-between"> 
+                          <div><strong>Users</strong></div>
+                        </v-list-item-title>
+                      </v-list-item-content>
+                    </v-list-item>
+                    <v-divider></v-divider>
+                    <v-list-item                       
+                    v-for="(user, index) in allUsers"
+                    :key="index"
+                    >
+                      <v-list-item-content>
+                        <v-list-item-title class="d-flex justify-space-between align-center">
+                          <div>
+                            <b>Email: </b>{{ user.username }}<br>
+                            <b>Username: </b>{{ user.name }}<br>
+                            <b>Admin: </b>{{ user.admin }}<br>
+                          </div>
+                          <div>
+                            <span><b><v-icon v-if="guest === false" right @click.stop="">mdi-trash-can-outline</v-icon></b></span>
+                          </div>
+                        </v-list-item-title>
+                      </v-list-item-content>
+                    </v-list-item>
+                  </v-list>
+                </v-sheet>
+              </v-col>
+    
+              <v-col
+                cols="12"
+                sm="4"
+              >
+                <v-sheet
+                  max-height="70vh"
+                  rounded="lg"
+                  class="overflow-y-auto"
+                >
+                  <!--  -->
+                  <v-list color="transparent">
+                    <v-list-item>
+                      <v-list-item-content>
+                        <v-list-item-title class="d-flex justify-space-between"> 
+                          <div><strong>Gas Stations</strong></div>
+                        </v-list-item-title>
+                      </v-list-item-content>
+                    </v-list-item>
+                    <v-divider></v-divider>
+                    <v-list-item
+                      v-for="(station, index) in allStations"
+                      :key="index"
+                      link
+                      @click="getSingleStation(station._id)"
+                    >
+                      <v-list-item-content>
+                        <v-list-item-title class="d-flex justify-space-between align-center">
+                          <div>
+                            {{ station.name }}<br>
+                            {{ station.address }}
+                          </div>
+                          <div>
+                            <span class="actual_price"><b>${{ getAllPrices(station) }}<v-icon v-if="guest === false" right @click.stop="addFavorite(station._id)">mdi-trash-can-outline</v-icon></b></span>
+                          </div>
+                        </v-list-item-title>
+                      </v-list-item-content>
+                    </v-list-item>
+                  </v-list>
+                </v-sheet>
+              </v-col>
+    
+              <v-col
+                cols="12"
+                sm="4"
+              >
+                <v-sheet
+                  rounded="lg"
+                  min-height="70vh"
+                >
+                  <!--  -->
+                </v-sheet>
+              </v-col>
+            </v-row>
+          </v-container>
+        </v-main>
       </v-app>
     </div>
 

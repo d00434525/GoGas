@@ -35,7 +35,7 @@ const setUpAuth = function (app) {
     app.use(passport.authenticate("session"));
 
     passport.serializeUser(function (user, callback) {
-        callback(null, {id: user._id, username: user.username, password: user.password});
+        callback(null, {id: user._id, username: user.username, password: user.password, admin: user.admin});
     });
 
     passport.deserializeUser(function (user, callback){
