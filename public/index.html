@@ -643,36 +643,45 @@
                               <h3>{{ currentStation.address }}</h3>
                               <h4><i>{{ currentStation.pumpHours }}</i></h4>
                             </div>
-                            <template>
-                              <div class="text-center">
-                                <v-tooltip right>
-                                  <template v-slot:activator="{ on, attrs }">
-                                    <v-btn
-                                      class="mx-2"
-                                      fab
-                                      dark
-                                      large
-                                      color="#FFB17A"
-                                      @click="currentStationDialog = true"
-                                      v-if="guest === false"
-                                    >
-                                      <v-icon dark color="black">
-                                        mdi-currency-usd
-                                      </v-icon>
-                                    </v-btn>
-                                  </template>
-                                  <span>Post updated price</span>
-                                </v-tooltip>
-                              </div>
-                            </template>
                           </div>
                         </v-list-item-title>
-
                         <v-list-item id="recent_price">
                           <p>CURRENT PRICE: <span class="actual_price"><b>${{ currentStation.prices[currentStation.prices.length - 1].price.toFixed(2) }}</b></span></p>
                         </v-list-item>
                         <v-list-item id="recent_price_user" class="mb-4">
                           <p><i>Current price posted by: <span class="actual_price">{{ currentStation.prices[currentStation.prices.length - 1].user.name }}</span></i></p>
+                        </v-list-item>
+                        <v-list-item>
+                          <div class="d-flex align-center mx-auto">
+                            <template>
+                              <v-form>
+                                <v-container>
+                                  <v-row>
+                                    <v-col
+                                      cols="12"
+                                      sm="12"
+                                    >
+                                      <v-text-field
+                                        label="Enter new price"
+                                        color="#FFB17A"
+                                        v-model="newCurrentPrice"
+                                        type="number"
+                                      ></v-text-field>
+                                    </v-col>
+                                  </v-row>
+                                </v-container>
+                              </v-form>
+                            </template>
+                            <v-btn
+                            color="#FFB17A"
+                            class="ma-4 black--text fs-100"
+                            @click="currentStationPrices = []; postPrice(currentStation._id); currentStationDialog = false; currentStationPricesCheck()"
+                            v-bind:style=" {fontSize: '15px'}"
+                            >
+                                Post Updated Price
+                              <v-icon right dark> mdi-currency-usd </v-icon>
+                            </v-btn>
+                          </div>
                         </v-list-item>
                         <template>
                           <v-card
@@ -742,66 +751,6 @@
                               <span><b>Posted on: </b>{{ review.createdAt.split('T')[0] }}</span>
                             </v-card-actions>
                           </v-card>
-                        </template>
-                        <template>
-                          <v-row justify="center">
-                            <v-dialog
-                              v-model="currentStationDialog"
-                              persistent
-                              max-width="600px"
-                            >
-                              <v-card>
-                                <v-card-title>
-                                  <span class="text-h5" id="current_station_dialog_header">Post update price for {{ currentStation.name }} {{ currentStation.address}}</span>
-                                </v-card-title>
-                                <v-card-text>
-                                  <v-container>
-                                    <v-row>
-                                      <v-col
-                                        cols="12"
-                                        sm="6"
-                                        md="4"
-                                      >
-                                        <v-text-field
-                                          label="Enter current price"
-                                          required
-                                          v-model="newCurrentPrice"
-                                        ></v-text-field>
-                                      </v-col>
-                                      <v-col
-                                        cols="12"
-                                        sm="6"
-                                        md="4"
-                                      >
-
-                                    </v-row>
-                                  </v-container>
-                                </v-card-text>
-                                <v-card-actions>
-                                  <v-btn
-                                  class="mx-2 black--text"
-                                  dark
-                                  large
-                                  color="#FFB17A"
-                                  @click="currentStationDialog = false"
-                                >
-                                  Back
-                                </v-btn>
-                                  <v-spacer></v-spacer>
-
-                                  <v-btn
-                                  class="mx-2 black--text"
-                                  dark
-                                  large
-                                  color="#FFB17A"
-                                  @click="currentStationPrices = []; postPrice(currentStation._id); currentStationDialog = false; currentStationPricesCheck()"
-                                >
-                                  Post new price
-                                </v-btn>
-                                </v-card-actions>
-                              </v-card>
-                            </v-dialog>
-                          </v-row>
                         </template>
                       </v-list-item-content>
                     </v-list-item>
