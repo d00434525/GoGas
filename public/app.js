@@ -377,7 +377,7 @@ var app = new Vue({
                 //}
                 setTimeout(() => {
                     marker.setAnimation(null)
-                }, 3000)
+                }, 1000)
             }
         },
 
