@@ -505,54 +505,54 @@ app.get("/users", async (req, res) => {
 );
 
 // delete user (admin only)
-app.delete("/user/:user_id", async (req, res) => {
-    // check auth
-    if (!req.user) {
-        res.status(401).json({ message: "Unauthorized" });
-        return;
-    }
+// app.delete("/user/:user_id", async (req, res) => {
+//     // check auth
+//     if (!req.user) {
+//         res.status(401).json({ message: "Unauthorized" });
+//         return;
+//     }
 
-    if (!req.user.admin) {
-        res.status(403).json({ message: "Not an admin" });
-        return;
-    }
+//     if (!req.user.admin) {
+//         res.status(403).json({ message: "Not an admin" });
+//         return;
+//     }
 
-    let user;
+//     let user;
 
-    // pull user
-    try {
-        user = await User.findById(req.params.user_id);
-    } catch (err) {
-        res.status(500).json({
-            message: `error finding user when deleting`,
-            error: err,
-        });
-        return;
-    }
+//     // pull user
+//     try {
+//         user = await User.findById(req.params.user_id);
+//     } catch (err) {
+//         res.status(500).json({
+//             message: `error finding user when deleting`,
+//             error: err,
+//         });
+//         return;
+//     }
 
-    if (!user) {
-        res.status(404).json({
-            message: `user not found when deleting`,
-            user_id: req.params.user_id,
-        });
-        return;
-    }
+//     if (!user) {
+//         res.status(404).json({
+//             message: `user not found when deleting`,
+//             user_id: req.params.user_id,
+//         });
+//         return;
+//     }
 
-    // delete user
-    try {
-        await User.findByIdAndDelete(req.params.user_id);
-    } catch (err) {
-        res.status(500).json({
-            message: `error deleting user`,
-            error: err,
-        });
-        return;
-    }
+//     // delete user
+//     try {
+//         await User.findByIdAndDelete(req.params.user_id);
+//     } catch (err) {
+//         res.status(500).json({
+//             message: `error deleting user`,
+//             error: err,
+//         });
+//         return;
+//     }
 
-    // return the updated user
-    res.status(200).json(user);
-}
-);
+//     // return the updated user
+//     res.status(200).json(user);
+// }
+// );
 
 // delete station (admin only)
 app.delete("/station/:station_id", async (req, res) => {
@@ -601,6 +601,73 @@ app.delete("/station/:station_id", async (req, res) => {
 
     // return the updated station
     res.status(200).json(station);
+}
+);
+
+// delete user and their reviews (admin only)
+app.delete("/user/:user_id", async (req, res) => {
+    // check auth
+    if (!req.user) {
+        res.status(401).json({ message: "Unauthorized" });
+        return;
+    }
+
+    if (!req.user.admin) {
+        res.status(403).json({ message: "Not an admin" });
+        return;
+    }
+
+    let user;
+
+    // pull user
+    try {
+        user = await User.findById(req.params.user_id);
+    } catch (err) {
+        res.status(500).json({
+            message: `error finding user when deleting`,
+            error: err,
+        });
+        return;
+    }
+
+    if (!user) {
+        res.status(404).json({
+            message: `user not found when deleting`,
+            user_id: req.params.user_id,
+        });
+        return;
+    }
+
+    // delete user reviews on each station
+    try {
+        await Station.updateMany({}, {
+            $pull: {
+                reviews: {
+                    user_id: req.params.user_id,
+                }
+            }
+        });
+    } catch (err) {
+        res.status(500).json({
+            message: `error deleting user reviews`,
+            error: err,
+        });
+        return;
+    }
+
+    // delete user
+    try {
+        await User.findByIdAndDelete(req.params.user_id);
+    } catch (err) {
+        res.status(500).json({
+            message: `error deleting user`,
+            error: err,
+        });
+        return;
+    }
+
+    // return the updated user
+    res.status(200).json(user);
 }
 );
 

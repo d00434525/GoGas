@@ -133,7 +133,7 @@
                     <v-divider></v-divider>
                     <v-list-item v-for="(favoriteStation) in currentUserObject.favorites" @click="getSingleStation(favoriteStation.station_id)" >
                       <v-list-item-content>
-                        <v-list-item-title class="d-flex justify-space-between"> 
+                        <v-list-item-title class="d-flex justify-space-between align-center"> 
                             <div>{{ favoriteStation.station_name }}<br>
                                {{ favoriteStation.station_address }}
                                <v-rating length="5" background-color="#ffb17a" color="#4f4789" readonly half-increments :value="ratingAverage(favoriteStation.station_reviews)"></v-rating>
@@ -214,7 +214,7 @@
                     </v-sheet>
                   </v-col>
 
-                  <template v-show="!loggedIn">
+                  <template>
                     <v-row justify="center">
                       <v-dialog
                         round
@@ -222,6 +222,7 @@
                         persistent
                         max-width="600px"
                         class="my-auto"
+                        v-if="!loggedIn"
                       >
                         <template v-slot:activator="{ on, attrs }"> </template>
                         <!-- HOME DIALOG GOES HERE -->
@@ -230,7 +231,7 @@
                           width="600px"
                           v-if="dialogScreen == 'home'"
                         > -->
-                        <div v-if="dialogScreen == 'home'" >
+                        <div v-if="dialogScreen == 'home'">
                           <v-sheet
                             width="600px"
                             rounded-lg
@@ -423,19 +424,19 @@
                             <v-text-field
                                 prepend-icon="mdi-email"
                                 color="#FFB17A"
-                                id="register_username"
+                                id="login_username"
                                 label="Email"
                                 placeholder="johndoe@gmail.com"
-                                v-model="rUsername"
+                                v-model="lUsername"
                                 class="input_style"
                             ></v-text-field>
                             <br />
                             <v-text-field
                                 prepend-icon="mdi-lock"
                                 color="#FFB17A"
-                                id="register_pass"
+                                id="login_pass"
                                 label="Password"
-                                v-model="rPass"
+                                v-model="lPassword"
                                 class="input_style"
                                 type="password"
                             ></v-text-field>
@@ -953,7 +954,7 @@
                             <b>Admin: </b>{{ user.admin }}<br>
                           </div>
                           <div>
-                            <span><b><v-icon v-if="guest === false" right @click.stop="">mdi-trash-can-outline</v-icon></b></span>
+                            <span><b><v-icon v-if="guest === false" right @click.stop="deleteUser(user._id)">mdi-trash-can-outline</v-icon></b></span>
                           </div>
                         </v-list-item-title>
                       </v-list-item-content>
