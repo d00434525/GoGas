@@ -40,7 +40,7 @@
       </div>
 
       <!-- MAIN PAGE -->
-      <v-app id="inspire" v-show="page == 'main'">
+      <v-app id="inspire" v-if="page == 'main'">
         <v-app-bar app color="#4F4789" flat elevation="4">
           <div id="main_header">
             <img
@@ -214,7 +214,7 @@
                     </v-sheet>
                   </v-col>
 
-                  <template>
+                  <template v-if="!loggedIn">
                     <v-row justify="center">
                       <v-dialog
                         round
@@ -222,7 +222,6 @@
                         persistent
                         max-width="600px"
                         class="my-auto"
-                        v-if="!loggedIn"
                       >
                         <template v-slot:activator="{ on, attrs }"> </template>
                         <!-- HOME DIALOG GOES HERE -->
@@ -982,7 +981,7 @@
                             <v-btn
                             color="#FFB17A"
                             class="black--text"
-                            @click="dialog = true"
+                            @click="adminDialog = true"
                             v-bind:style=" {fontSize: '15px'}"
                           >
                             New station
@@ -1011,73 +1010,6 @@
                       </v-list-item-content>
                     </v-list-item>
                   </v-list>
-                  <template v-if="page === 'admin'">
-                    <v-row justify="center">
-                      <v-dialog
-                        v-model="dialog"
-                        persistent
-                        max-width="600px"
-                      >
-                        <v-card>
-                          <v-card-title>
-                            <span class="text-h5">Create New Station</span>
-                          </v-card-title>
-                          <v-card-text>
-                            <v-container>
-                              <v-row>
-                                <v-col cols="12">
-                                  <v-text-field
-                                    label="Station Name*"
-                                    v-model="newStationName"
-                                    required
-                                  ></v-text-field>
-                                </v-col>
-                                <v-col cols="12">
-                                  <v-text-field
-                                    label="Station Address*"
-                                    v-model="newStationAddress"
-                                    required
-                                  ></v-text-field>
-                                </v-col>
-                                <v-col cols="12">
-                                  <v-text-field
-                                    label="Station Pump Type*"
-                                    v-model="newStationType"
-                                    required
-                                  ></v-text-field>
-                                </v-col>
-                                <v-col cols="12">
-                                  <v-text-field
-                                    label="Station Pump Hours*"
-                                    v-model="newStationPumpHours"
-                                    required
-                                  ></v-text-field>
-                                </v-col>
-                              </v-row>
-                            </v-container>
-                            <small>*indicates required field</small>
-                          </v-card-text>
-                          <v-card-actions>
-                            <v-spacer></v-spacer>
-                            <v-btn
-                              color="blue darken-1"
-                              text
-                              @click="dialog = false"
-                            >
-                              Cancel
-                            </v-btn>
-                            <v-btn
-                              color="blue darken-1"
-                              text
-                              @click="dialog = false;"
-                            >
-                              Submit
-                            </v-btn>
-                          </v-card-actions>
-                        </v-card>
-                      </v-dialog>
-                    </v-row>
-                  </template>
                 </v-sheet>
               </v-col>
     

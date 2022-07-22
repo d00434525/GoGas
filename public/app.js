@@ -56,6 +56,7 @@ var app = new Vue({
         stationLocation: {},
         allUsers: [],
         allReviews: [],
+        adminDialog: false,
 
         // Post station stuff
         newStationName: "",
