@@ -339,10 +339,8 @@ var app = new Vue({
                         this.map.setCenter(marker.getPosition());
                         infowindow.open(map, marker);
                     });
-                    console.log("marker", marker)
                     this.markers[address] = marker;
                     this.stationLocation[this.currentStation] = marker.position
-                    console.log("Station Location",this.stationLocation)
                     
                     //an event that calls the function to make the markers animate
                     marker.addListener('mouseover', toggleBounce);
@@ -399,7 +397,6 @@ var app = new Vue({
         addMarkers: function(stations){
             stations.forEach(station => {
                 this.addMarker(station.address);
-                console.log(station.address);
             });
         },
         centerMarker: function () {
@@ -771,8 +768,6 @@ function initMap() {
                     styles: myStyles,
                     
                 });
-            console.log("results", results)
-            console.log("results [0]", results[0].geometry.location)
             SSMAP = new google.maps.Map(document.getElementById("ssmap"), {
                 zoom: 13,
                 center: results[0].geometry.location,
