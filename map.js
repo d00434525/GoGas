@@ -1,3 +1,40 @@
+// var SSMAP;
+// var MAP;
+// var GEOCODER;
+
+// //disables points of interest (POI)
+// const myStyles = [
+//     {
+//         featureType: "poi",
+//         elementType: "labels",
+//         stylers: [
+//               { visibility: "off" }
+//         ]
+//     }
+// ];
+
+// var app = new Vue({
+//     el: "#app",
+//     data: {
+//         map: null,
+//         ssmap: null,
+//         geocoder: null,
+
+//         // displays placeholder if false
+//         mapIsInitialized: false,
+//         ssmapIsInitialized: true,
+
+//         // if you want to look at the most recent marker object in the console:
+//         recentMarker: null,
+
+//         addressInput: "",
+//         markers: [],
+//         previousMarker: "",
+//     }
+// })
+
+// module.exports
+
 const URL = 'http://localhost:8080';
 
 
