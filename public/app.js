@@ -84,6 +84,12 @@ var app = new Vue({
         markers: [],
         previousMarker: "",
 
+        //password visibility
+        show: false,
+        show1: false,
+        show2: false,
+
+
 
     },
     methods:{
