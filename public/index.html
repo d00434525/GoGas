@@ -964,8 +964,10 @@
                             <b>User ID: </b>{{ user._id }}<br>
                             <b>Admin: </b>{{ user.admin }}<br>
                           </div>
-                          <div>
-                            <span><b><v-icon v-if="guest === false" right @click.stop="deleteUser(user._id)">mdi-trash-can-outline</v-icon></b></span>
+                          <div class="d-flex flex-column">
+                            <span class="pb-2"><b><v-icon v-if="guest === false" right @click.stop="deleteUser(user._id)">mdi-trash-can-outline</v-icon></b></span>
+                            <span class="pb-2"><b><v-icon v-if="guest === false" right @click.stop="removeAdmin(user._id)">mdi-shield-remove</v-icon></b></span>
+                            <span><b><v-icon v-if="guest === false" right @click.stop="giveAdmin(user._id)">mdi-shield-plus</v-icon></b></span>
                           </div>
                         </v-list-item-title>
                       </v-list-item-content>

@@ -671,5 +671,109 @@ app.delete("/user/:user_id", async (req, res) => {
 }
 );
 
+// give user admin status (admin only)
+app.put("/user/:user_id/admin", async (req, res) => {
+    // check auth
+    if (!req.user) {
+        res.status(401).json({ message: "Unauthorized" });
+        return;
+    }
+    
+    if (!req.user.admin) {
+        res.status(403).json({ message: "Not an admin" });
+        return;
+    }
+
+    let user;
+
+    // pull user
+    try {
+        user = await User.findById(req.params.user_id);
+    } catch (err) {
+        res.status(500).json({
+            message: `error finding user when giving admin status`,
+            error: err,
+        });
+        return;
+    }
+
+    if (!user) {
+        res.status(404).json({
+            message: `user not found when giving admin status`,
+            user_id: req.params.user_id,
+        });
+        return;
+    }
+
+    // give admin status
+    try {
+        await User.findByIdAndUpdate(req.params.user_id, {
+            admin: true,
+        });
+    } catch (err) {
+        res.status(500).json({
+            message: `error giving admin status`,
+            error: err,
+        });
+        return;
+    }
+
+    // return the updated user
+    res.status(200).json(user);
+}
+);
+
+// remove admin status (admin only)
+app.put("/user/:user_id/remove_admin", async (req, res) => {
+    // check auth
+    if (!req.user) {
+        res.status(401).json({ message: "Unauthorized" });
+        return;
+    }
+
+    if (!req.user.admin) {
+        res.status(403).json({ message: "Not an admin" });
+        return;
+    }
+
+    let user;
+
+    // pull user
+    try {
+        user = await User.findById(req.params.user_id);
+    } catch (err) {
+        res.status(500).json({
+            message: `error finding user when removing admin status`,
+            error: err,
+        });
+        return;
+    }
+
+    if (!user) {
+        res.status(404).json({
+            message: `user not found when removing admin status`,
+            user_id: req.params.user_id,
+        });
+        return;
+    }
+
+    // remove admin status
+    try {
+        await User.findByIdAndUpdate(req.params.user_id, {
+            admin: false,
+        });
+    } catch (err) {
+        res.status(500).json({
+            message: `error removing admin status`,
+            error: err,
+        });
+        return;
+    }
+
+    // return the updated user
+    res.status(200).json(user);
+}
+);
+
 // Export app
 module.exports = app;
