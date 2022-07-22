@@ -322,26 +322,35 @@
                               ></v-text-field>
                               <br />
                               <v-text-field
+                                :append-icon="show ? 'mdi-eye': 'mdi-eye-off'"
+                                :rules="[(rPass === rConfirmPass) || 'Passwords Must Match!']"
+                                :type="show ? 'text' : 'password'"
                                 prepend-icon="mdi-lock"
                                 color="#FFB17A"
                                 id="register_pass"
                                 label="Password"
                                 v-model="rPass"
                                 class="input_style"
-                                type="password"
+                                counter
+                                @click:append="show = !show"
                               ></v-text-field>
                               <br />
                               <v-text-field
+                                :append-icon="show1 ? 'mdi-eye': 'mdi-eye-off'"
+                                :rules="[(rPass === rConfirmPass) || 'Passwords Must Match!']"
+                                :type="show1 ? 'text' : 'password'"
                                 prepend-icon="mdi-lock-check"
                                 color="#FFB17A"
                                 id="register_confirmPass"
                                 label="Confirm Password"
                                 v-model="rConfirmPass"
                                 class="input_style"
-                                type="password"
+                                counter
+                                @click:append="show1 = !show1"
                               ></v-text-field>
                               <br />
                               <v-text-field
+                              
                                 prepend-icon="mdi-map-marker-radius"
                                 color="#FFB17A"
                                 id="register_zip"
@@ -432,13 +441,16 @@
                             ></v-text-field>
                             <br />
                             <v-text-field
+                                :append-icon="show ? 'mdi-eye': 'mdi-eye-off'"
+                                :type="show ? 'text' : 'password'"
                                 prepend-icon="mdi-lock"
                                 color="#FFB17A"
                                 id="login_pass"
                                 label="Password"
                                 v-model="lPassword"
                                 class="input_style"
-                                type="password"
+                                counter
+                                @click:append="show = !show"
                             ></v-text-field>
                             <br />
 
