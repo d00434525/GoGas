@@ -364,9 +364,17 @@ var app = new Vue({
                 this.addressInput = "";
             });
         },
-        hoverBounce: function(station) {
-            if(station.address != this.bounceAnimation){
-                this.bounceAnimation = station.address
+        hoverBounce: function(stationObj) {
+            console.log(stationObj)
+            if(stationObj.station_address != undefined){
+                stationAddress = stationObj.station_address
+                console.log("fav", stationAddress)
+            }else{
+                stationAddress = stationObj.address
+                console.log("non fav", stationAddress)
+            }
+            if(stationAddress != this.bounceAnimation){
+                this.bounceAnimation = stationAddress
                 console.log(this.bounceAnimation);
                 let marker = this.markers[this.bounceAnimation]
                 console.log("listBounce", marker, this.bounceAnimation);
