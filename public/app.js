@@ -700,8 +700,41 @@ var app = new Vue({
             } else {
                 console.log("Error posting station:", response.status);
             }
-        },  
+        },
 
+        // give user admin status (admin only)
+        giveAdmin: async function (id) {
+            let response = await fetch(URL + "/user/" + id + "/admin", {
+                method: "PUT",
+                credentials: "include"
+            });
+
+            if (response.status == 200) {
+                // created successfully
+                console.log("gave admin status");
+                this.getAllUsers();
+
+            } else {
+                console.log("Error giving admin status:", response.status);
+            }
+        },
+
+        // remove user admin status (admin only)
+        removeAdmin: async function (id) {
+            let response = await fetch(URL + "/user/" + id + "/remove_admin", {
+                method: "PUT",
+                credentials: "include"
+            });
+
+            if (response.status == 200) {
+                // deleted successfully
+                console.log("removed admin status");
+                this.getAllUsers();
+
+            } else {
+                console.log("Error removing admin status:", response.status);
+            }
+        },
     },
     created: function () {
         this.getSession();
