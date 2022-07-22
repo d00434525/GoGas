@@ -403,12 +403,14 @@
                             centered
                             timeout="2000"
                             v-model="errorOccurred"
+                            color="#4f4789"
+                            text-color="#ffb17a"
                           >
                             {{ errorMessage }}
 
                             <template v-slot:action="{ attrs }">
                               <v-btn
-                                color="pink"
+                                color="#ffb17a"
                                 text
                                 v-bind="attrs"
                                 @click="errorOccurred = false"
@@ -517,12 +519,14 @@
                             centered
                             timeout="2000"
                             v-model="errorOccurred"
+                            color="#4f4789"
+                            text-color="#ffb17a"
                           >
                             {{ errorMessage }}
 
                             <template v-slot:action="{ attrs }">
                               <v-btn
-                                color="pink"
+                                color="#ffb17a"
                                 text
                                 v-bind="attrs"
                                 @click="errorOccurred = false"
