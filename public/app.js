@@ -343,7 +343,7 @@ var app = new Vue({
                     this.stationLocation[this.currentStation] = marker.position
                     
                     //an event that calls the function to make the markers animate
-                    marker.addListener('mouseover', toggleBounce);
+                    //marker.addListener('mouseover', toggleBounce);
 
                     //the function that makes the marker bounce when hovered
                     function toggleBounce() {
