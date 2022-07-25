@@ -134,7 +134,7 @@
                     <v-list-item 
                     v-for="(favoriteStation) in currentUserObject.favorites" 
                     @click="getSingleStation(favoriteStation.station_id), ssStationMarker();"
-                    @mouseenter="hoverBounce(favoriteStation)"
+                    @mouseenter="favHoverBounce(favoriteStation)"
                     @mouseleave="stopBounce(favoriteStation)"  >
                       <v-list-item-content>
                         <v-list-item-title class="d-flex justify-space-between align-center"> 
