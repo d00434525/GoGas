@@ -180,3 +180,10 @@ img {
     color: var(--nav-color);
     width: 100%;
 }
+
+/* ========= Gas Station Logo ========= */
+
+.v-avatar {
+    border: 3px solid #4F4789;
+    padding: 30px;
+}
