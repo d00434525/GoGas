@@ -344,8 +344,6 @@ var app = new Vue({
                     this.stationLocation[this.currentStation] = marker.position
                     console.log("Station Location",this.stationLocation)
                     
-                    //an event that calls the function to make the markers animate
-                    marker.addListener('mouseover', toggleBounce);
 
                     //the function that makes the marker bounce when hovered
                     function toggleBounce() {
@@ -365,6 +363,7 @@ var app = new Vue({
             });
         },
         hoverBounce: function(stationObj) {
+            //checks if the station is a favorite or not, then pulls the address accordingly
             console.log(stationObj)
             if(stationObj.station_address != undefined){
                 stationAddress = stationObj.station_address
@@ -373,20 +372,27 @@ var app = new Vue({
                 stationAddress = stationObj.address
                 console.log("non fav", stationAddress)
             }
-            if(stationAddress != this.bounceAnimation){
-                this.bounceAnimation = stationAddress
-                console.log(this.bounceAnimation);
-                let marker = this.markers[this.bounceAnimation]
-                console.log("listBounce", marker, this.bounceAnimation);
-                // if (marker.getAnimation() !== null) {
-                //     marker.setAnimation(null);
-                // } else {
-                    marker.setAnimation(google.maps.Animation.BOUNCE);
-                //}
-            }
-        },
-        stopBounce: function(stationObj) {
+            //pulls the marker obj from the address
+            let marker = this.markers[stationAddress]
 
+            // sets the animation
+            marker.setAnimation(google.maps.Animation.BOUNCE);
+        },
+
+        stopBounce: function(stationObj) {
+            //checks whether or not its a favorite. Same as above
+            if(stationObj.station_address != undefined){
+                stationAddress = stationObj.station_address
+                console.log("fav", stationAddress)
+            }else{
+                stationAddress = stationObj.address
+                console.log("non fav", stationAddress)
+            }
+            // when the mouse leaves the station area one second will pass, then the event will stop. 
+            let marker = this.markers[stationAddress]
+            setTimeout(() => {
+                marker.setAnimation(null)
+            }, 1000)
         },
 
         initializeMap: function () {

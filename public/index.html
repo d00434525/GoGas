@@ -40,7 +40,7 @@
       </div>
 
       <!-- MAIN PAGE -->
-      <v-app id="inspire" v-if="page == 'main'">
+      <v-app id="inspire" v-show="page == 'main'">
         <v-app-bar app color="#4F4789" flat elevation="4">
           <div id="main_header">
             <img
@@ -134,7 +134,8 @@
                     <v-list-item 
                     v-for="(favoriteStation) in currentUserObject.favorites" 
                     @click="getSingleStation(favoriteStation.station_id), ssStationMarker();"
-                    @mouseover="hoverBounce(favoriteStation)"  >
+                    @mouseenter="hoverBounce(favoriteStation)"
+                    @mouseleave="stopBounce(favoriteStation)"  >
                       <v-list-item-content>
                         <v-list-item-title class="d-flex justify-space-between align-center"> 
                             <div>{{ favoriteStation.station_name }}<br>
@@ -160,7 +161,7 @@
                       link
                       @click="getSingleStation(station._id), ssStationMarker()"
                       @mouseenter = hoverBounce(station)
-                      @mouseleave = stopBounce
+                      @mouseleave = stopBounce(station)
                     >
                       <v-list-item-content>
                         <v-list-item-title class="d-flex justify-space-between align-center">
