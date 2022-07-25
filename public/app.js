@@ -383,10 +383,10 @@ var app = new Vue({
                 // } else {
                     marker.setAnimation(google.maps.Animation.BOUNCE);
                 //}
-                setTimeout(() => {
-                    marker.setAnimation(null)
-                }, 1000)
             }
+        },
+        stopBounce: function(stationObj) {
+
         },
 
         initializeMap: function () {
