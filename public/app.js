@@ -346,9 +346,9 @@ var app = new Vue({
                             marker.setAnimation(null);
                         } else {
                             marker.setAnimation(google.maps.Animation.BOUNCE);
-                            setTimeout(() => {
-                                marker.setAnimation(null)
-                            }, 1000)
+                            // setTimeout(() => {
+                            //     marker.setAnimation(null)
+                            // }, 1000)
                         }
                     }
 
@@ -360,9 +360,9 @@ var app = new Vue({
                 this.addressInput = "";
             });
         },
-        favHoverBounce :function(stationObj) {
+        favHoverBounce: function(stationObj) {
             stationAddress = stationObj.station_address
-            marker = this.markers[stationAddress]
+            let marker = this.markers[stationAddress]
 
         // sets the animation
             marker.setAnimation(google.maps.Animation.BOUNCE);
