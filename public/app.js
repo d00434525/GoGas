@@ -340,10 +340,8 @@ var app = new Vue({
                         this.map.setCenter(marker.getPosition());
                         infowindow.open(map, marker);
                     });
-                    //console.log("marker", marker)
                     this.markers[address] = marker;
                     this.stationLocation[this.currentStation] = marker.position
-                    //console.log("Station Location",this.stationLocation)
                     
 
                     //the function that makes the marker bounce when hovered
@@ -365,10 +363,6 @@ var app = new Vue({
         },
         favHoverBounce :function(stationObj) {
             stationAddress = stationObj.station_address
-            console.log("non fav", stationAddress)
-            console.log("marker", this.markers[stationAddress])
-        //}
-        //pulls the marker obj from the address
         marker = this.markers[stationAddress]
 
         // sets the animation
@@ -376,40 +370,30 @@ var app = new Vue({
         },
         
 
-        setFavColor: function(userObj) {
-            // userObj.favorites.forEach(favoriteStation => {
-            //     let favoriteAddy = favoriteStation.station_address.toString()
-            //     console.log(typeof favoriteAddy)
-            //     let marker = this.markers[favoriteStation.station_address]
-            //     console.log(marker)
-            // });
+        initFavColor: function(userObj) {
             let i = 0;
             this.allStations.forEach(station => {
-                address = station.address.trim()
-                favAddress = this.currentUserObject.favorites[i].station_address.trim()
-                console.log(favAddress)
-                console.log(address)
+                address = station.address
+                favAddress = userObj.favorites[i].station_address
                 if(address == favAddress){
-                    console.log(address, "==", favAddress)
                     marker = this.markers[favAddress];
-                    console.log("marker", marker)
-                    marker.setIcon("'http://maps.google.com/mapfiles/ms/icons/yellow-dot.png'")
+                    marker.setIcon('http://maps.google.com/mapfiles/ms/icons/yellow-dot.png')
                     i = i + 1
                 }
             });
         },
+        setFavColor: function(station) {
+            marker = this.markers[station]
+            marker.setIcon('http://maps.google.com/mapfiles/ms/icons/yellow-dot.png')
+        },
+        removeFavColor(station){
+            marker = this.markers[station]
+            marker.setIcon('http://maps.google.com/mapfiles/ms/icons/red-dot.png')
+        },
         hoverBounce: function(stationObj) {
-            //checks if the station is a favorite or not, then pulls the address accordingly
-            // console.log(stationObj)
-            // if(stationObj.station_address != undefined){
-            //     stationAddress = stationObj.station_address
-            //     console.log("fav", stationAddress)
-            // }else{
                 stationAddress = stationObj.address
                 console.log("non fav", stationAddress)
                 console.log("marker", this.markers[stationAddress])
-            //}
-            //pulls the marker obj from the address
             let marker = this.markers[stationAddress]
 
             // sets the animation
@@ -439,19 +423,9 @@ var app = new Vue({
             this.mapIsInitialized = true;
             console.log('current user obj', this.currentUserObject)
         },
-        // initializeSSMap: function() {
-        //     console.log(SSMAP);
-        //     this.ssmap = SSMAP;
-        //     this.geocoder = GEOCODER;
-        //     this.ssmapIsInitialized = true
-        // },
-        // reloadSSMap: function(){
-        //     initSSMap();
-        // },
         addMarkers: function(stations){
             stations.forEach(station => {
                 this.addMarker(station.address);
-                //console.log(station.address);
             });
         },
         centerMarker: function () {
@@ -502,21 +476,7 @@ var app = new Vue({
                 console.log(err)
             }
         },
-        // reloadMap: function() {
-        //     MAP = new google.maps.Map(document.getElementById("map"), {
-        //         zoom: 13,
-        //         center: results[0].geometry.location,
-        //         styles: myStyles,
-                
-        //     });
-        // },
-        // loadSSMap: function(){
-        //     SSMAP = new google.maps.Map(document.getElementById("ssmap"), {
-        //         zoom: 13,
-        //         center: results[0].geometry.location,
-        //         styles: myStyles,
-        // })
-        //},
+
         // Post price on a station
         postPrice: async function (id) {
             let currentPrice = this.currentStation.prices[this.currentStation.prices.length - 1].price;
@@ -608,7 +568,6 @@ var app = new Vue({
             } else {
                 console.log("Error adding favorite:", response.status);
             }
-            this.setFavColor(this.currentUserObject)
         },
 
         // remove favorite station
@@ -797,18 +756,14 @@ function initMap() {
                 center: results[0].geometry.location,
                 styles: myStyles,
             });
-            // }else {
-            //     SSMAP = new google.maps.Map(document.getElementById("ssmap"), {
-            //         zoom: 16,
-            //         //center: this.currentSta
-            //         styles: myStyles,
-            //     });
-            // }
             //add station markers
             app.addMarkers(app.allStations)
             // calls vue's initialize map function
             app.initializeMap();
-            app.setFavColor(app.currentUserObject)
+            console.log(app.currentUserObject)
+            setTimeout(() => {
+                app.initFavColor(app.currentUserObject)
+            }, 250)
 
             //initSSMap();
             break;
@@ -818,52 +773,3 @@ function initMap() {
     });
 }
 
-// function initSSMap() {
-//     // geocoder is for turning an address (1234 E 5678 S) into Latitude and Longitude
-//     GEOCODER = new google.maps.Geocoder();
-//     console.log("INITSSMAP RAN");
-    
-//     singleStationAddress = app.currentStation.address
-//     //Center on the map on St. George using the Geocoder
-//     GEOCODER.geocode({'address' : "Saint George, UT"}, function (results, status) {
-//         switch (status) {
-//         case "OK":
-//             // creates the map
-//             //console.log(singleStationAddress);
-//             SSMAP = new google.maps.Map(document.getElementById("ssmap"), {
-//                     zoom: 13,
-//                     center: results[0].geometry.location,
-//                     styles: myStyles,
-                    
-//                 });
-//             app.recentMarker.setMap(app.map)
-//             console.log("SSresults", results)
-//             console.log("SSresults [0]", results[0])
-//             // }else {
-//             //     SSMAP = new google.maps.Map(document.getElementById("ssmap"), {
-//             //         zoom: 16,
-//             //         //center: this.currentSta
-//             //         styles: myStyles,
-//             //     });
-//             // }
-//             //add station markers
-//             app.addMarkers(app.allStations)
-//             //map zooms in when marker is clicked
-//             // google.maps.event.addListener(marker,'click',function() {
-//             //     map.setZoom(9);
-//             //     map.setCenter(marker.getPosition());
-//             //   });
-//             // calls vue's initialize map function
-//             app.initializeSSMap();
-//             break;
-//         default:
-//             SSMAP = new google.maps.Map(document.getElementById("ssmap"), {
-//                 zoom: 13,
-//                 center: {lat: 37.0965, lng: -113.5684},
-//                 styles: myStyles,
-//             })
-//             console.error('Geocode was not successful for the following reason: ' + status);
-//         }
-//     });
-
-//}
