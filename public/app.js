@@ -325,13 +325,7 @@ var app = new Vue({
                     })
 
 
-                    const contentString = 
-                    '<div> {{ station.name }} </div'
-
-                    //when marker is clicked info will display what gas station it is
-                    var infowindow = new google.maps.InfoWindow({
-                         content: contentString,
-                     })
+                    
 
                     //map should zoom in when marker is clicked
                     google.maps.event.addListener(marker, 'click', () => {
