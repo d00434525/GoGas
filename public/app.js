@@ -331,7 +331,7 @@ var app = new Vue({
                     google.maps.event.addListener(marker, 'click', () => {
                         this.map.setZoom(16);
                         this.map.setCenter(marker.getPosition());
-                        infowindow.open(map, marker);
+                        // infowindow.open(map, marker);
                     });
                     this.markers[address] = marker;
                     this.stationLocation[this.currentStation] = marker.position
