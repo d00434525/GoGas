@@ -321,7 +321,7 @@ var app = new Vue({
                     var marker = new google.maps.Marker({
                         map: this.map,
                         position: results[0].geometry.location,
-                        animation: google.maps.Animation.DROP,
+                        //animation: google.maps.Animation.DROP,
                         icon: 'http://maps.google.com/mapfiles/ms/icons/red-dot.png'
                     })
 
@@ -346,6 +346,9 @@ var app = new Vue({
                             marker.setAnimation(null);
                         } else {
                             marker.setAnimation(google.maps.Animation.BOUNCE);
+                            setTimeout(() => {
+                                marker.setAnimation(null)
+                            }, 1000)
                         }
                     }
 
@@ -359,10 +362,10 @@ var app = new Vue({
         },
         favHoverBounce :function(stationObj) {
             stationAddress = stationObj.station_address
-        marker = this.markers[stationAddress]
+            marker = this.markers[stationAddress]
 
         // sets the animation
-        marker.setAnimation(google.maps.Animation.BOUNCE);
+            marker.setAnimation(google.maps.Animation.BOUNCE);
         },
         
 
@@ -385,6 +388,9 @@ var app = new Vue({
         removeFavColor(station){
             marker = this.markers[station]
             marker.setIcon('http://maps.google.com/mapfiles/ms/icons/red-dot.png')
+            setTimeout(() => {
+                marker.setAnimation(null)
+            },1000)
         },
         hoverBounce: function(stationObj) {
                 stationAddress = stationObj.address
@@ -397,6 +403,7 @@ var app = new Vue({
         },
 
         stopBounce: function(stationObj) {
+            console.log("is it working?")
             //checks whether or not its a favorite. Same as above
             if(stationObj.station_address != undefined){
                 stationAddress = stationObj.station_address
