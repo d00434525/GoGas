@@ -134,7 +134,7 @@
                     <v-list-item v-for="(favoriteStation) in currentUserObject.favorites" @click="getSingleStation(favoriteStation.station_id)" >
                       <v-list-item-content>
                         <v-list-item-title class="d-flex justify-space-between align-center"> 
-                            <div>{{ favoriteStation.station_name }}<br>
+                            <div><v-icon color="#FFB17A">mdi-gas-station</v-icon>{{ favoriteStation.station_name }}<br>
                                {{ favoriteStation.station_address }}
                                <v-rating length="5" background-color="#ffb17a" color="#4f4789" readonly half-increments :value="ratingAverage(favoriteStation.station_reviews)"></v-rating>
                               </div>
