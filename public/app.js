@@ -65,7 +65,7 @@ var app = new Vue({
         newStationPumpHours: "",
 
         // rating stuff
-        rating: 0,
+        rating: 1,
         comment: "",
 
         //MAP
@@ -604,7 +604,14 @@ var app = new Vue({
                 sum += station[i].rating;
             }
             return (sum / station.length);
+        },
 
+        stationRatingAverage: function (station) {
+            let sum = 0;
+            for (let i = 0; i < station.reviews.length; i ++){
+                sum += station.reviews[i].rating;
+            }
+            return (sum / station.reviews.length);
         },
 
         // get all users (admin only)

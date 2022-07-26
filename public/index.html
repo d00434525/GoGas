@@ -790,6 +790,9 @@
                         <h1 class="d-flex justify-space-around mt-8">
                           Reviews
                         </h1>
+                        <div class="d-flex justify-center align-center text-center mt-4 mb-4 text-h6">
+                          <span>Overall Rating: <v-rating length="5" size="50" background-color="#ffb17a" color="#4f4789" readonly half-increments :value="stationRatingAverage(currentStation)"></v-rating></span>
+                        </div>
                         <template>
                           <v-card
                             class="mx-auto mt-8"
