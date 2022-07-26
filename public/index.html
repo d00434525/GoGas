@@ -131,14 +131,18 @@
                       </v-list-item-content>
                     </v-list-item>
                     <v-divider></v-divider>
-                    <v-list-item v-for="(favoriteStation) in currentUserObject.favorites" @click="getSingleStation(favoriteStation.station_id)" >
+                    <v-list-item 
+                    v-for="(favoriteStation) in currentUserObject.favorites" 
+                    @click="getSingleStation(favoriteStation.station_id), ssStationMarker();"
+                    @mouseenter="favHoverBounce(favoriteStation)"
+                    @mouseleave="stopBounce(favoriteStation)"  >
                       <v-list-item-content>
                         <v-list-item-title class="d-flex justify-space-between align-center"> 
                             <div><v-icon color="#FFB17A">mdi-gas-station</v-icon>{{ favoriteStation.station_name }}<br>
                                {{ favoriteStation.station_address }}
                                <v-rating length="5" background-color="#ffb17a" color="#4f4789" readonly half-increments :value="ratingAverage(favoriteStation.station_reviews)"></v-rating>
                               </div>
-                            <div class="actual_price"><b>${{ favoriteStation.station_prices[favoriteStation.station_prices.length - 1].price.toFixed(2) }}<v-icon right @click.stop="removeFavorite(favoriteStation.station_id)">mdi-star-remove-outline</v-icon></b></div>
+                            <div class="actual_price"><b>${{ favoriteStation.station_prices[favoriteStation.station_prices.length - 1].price.toFixed(2) }}<v-icon right @click.stop="removeFavorite(favoriteStation.station_id), removeFavColor(favoriteStation.station_address)">mdi-star-remove-outline</v-icon></b></div>
                         </v-list-item-title>
                       </v-list-item-content>
                     </v-list-item>
@@ -156,7 +160,8 @@
                       :key="index"
                       link
                       @click="getSingleStation(station._id), ssStationMarker()"
-                      @mouseover = hoverBounce(station)
+                      @mouseenter = hoverBounce(station)
+                      @mouseleave = stopBounce(station)
                     >
                       <v-list-item-content>
                         <v-list-item-title class="d-flex justify-space-between align-center">
@@ -166,7 +171,7 @@
                             <v-rating length="5" background-color="#ffb17a" color="#4f4789" readonly half-increments :value="ratingAverage(station.reviews)"></v-rating>
                           </div>
                           <div>
-                            <span class="actual_price"><b>${{ getAllPrices(station) }}<v-icon v-if="guest === false" right @click.stop="addFavorite(station._id)">mdi-star-plus-outline</v-icon></b></span>
+                            <span class="actual_price"><b>${{ getAllPrices(station) }}<v-icon v-if="guest === false" right @click.stop="addFavorite(station._id), setFavColor(station.address)">mdi-star-plus-outline</v-icon></b></span>
                           </div>
                         </v-list-item-title>
                       </v-list-item-content>

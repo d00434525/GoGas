@@ -321,7 +321,8 @@ var app = new Vue({
                     var marker = new google.maps.Marker({
                         map: this.map,
                         position: results[0].geometry.location,
-                        animation: google.maps.Animation.DROP
+                        animation: google.maps.Animation.DROP,
+                        icon: 'http://maps.google.com/mapfiles/ms/icons/red-dot.png'
                     })
 
 
@@ -356,21 +357,59 @@ var app = new Vue({
                 this.addressInput = "";
             });
         },
-        hoverBounce: function(station) {
-            if(station.address != this.bounceAnimation){
-                this.bounceAnimation = station.address
-                console.log(this.bounceAnimation);
-                let marker = this.markers[this.bounceAnimation]
-                console.log("listBounce", marker, this.bounceAnimation);
-                // if (marker.getAnimation() !== null) {
-                //     marker.setAnimation(null);
-                // } else {
-                    marker.setAnimation(google.maps.Animation.BOUNCE);
-                //}
-                setTimeout(() => {
-                    marker.setAnimation(null)
-                }, 3000)
+        favHoverBounce :function(stationObj) {
+            stationAddress = stationObj.station_address
+        marker = this.markers[stationAddress]
+
+        // sets the animation
+        marker.setAnimation(google.maps.Animation.BOUNCE);
+        },
+        
+
+        initFavColor: function(userObj) {
+            let i = 0;
+            this.allStations.forEach(station => {
+                address = station.address
+                favAddress = userObj.favorites[i].station_address
+                if(address == favAddress){
+                    marker = this.markers[favAddress];
+                    marker.setIcon('http://maps.google.com/mapfiles/ms/icons/yellow-dot.png')
+                    i = i + 1
+                }
+            });
+        },
+        setFavColor: function(station) {
+            marker = this.markers[station]
+            marker.setIcon('http://maps.google.com/mapfiles/ms/icons/yellow-dot.png')
+        },
+        removeFavColor(station){
+            marker = this.markers[station]
+            marker.setIcon('http://maps.google.com/mapfiles/ms/icons/red-dot.png')
+        },
+        hoverBounce: function(stationObj) {
+                stationAddress = stationObj.address
+                console.log("non fav", stationAddress)
+                console.log("marker", this.markers[stationAddress])
+            let marker = this.markers[stationAddress]
+
+            // sets the animation
+            marker.setAnimation(google.maps.Animation.BOUNCE);
+        },
+
+        stopBounce: function(stationObj) {
+            //checks whether or not its a favorite. Same as above
+            if(stationObj.station_address != undefined){
+                stationAddress = stationObj.station_address
+                console.log("fav", stationAddress)
+            }else{
+                stationAddress = stationObj.address
+                console.log("non fav", stationAddress)
             }
+            // when the mouse leaves the station area one second will pass, then the event will stop. 
+            let marker = this.markers[stationAddress]
+            setTimeout(() => {
+                marker.setAnimation(null)
+            }, 1000)
         },
 
         initializeMap: function () {
@@ -378,16 +417,8 @@ var app = new Vue({
             this.map = MAP;
             this.geocoder = GEOCODER;
             this.mapIsInitialized = true;
+            console.log('current user obj', this.currentUserObject)
         },
-        initializeSSMap: function() {
-            console.log(SSMAP);
-            this.ssmap = SSMAP;
-            this.geocoder = GEOCODER;
-            this.ssmapIsInitialized = true
-        },
-        // reloadSSMap: function(){
-        //     initSSMap();
-        // },
         addMarkers: function(stations){
             stations.forEach(station => {
                 this.addMarker(station.address);
@@ -441,21 +472,7 @@ var app = new Vue({
                 console.log(err)
             }
         },
-        reloadMap: function() {
-            MAP = new google.maps.Map(document.getElementById("map"), {
-                zoom: 13,
-                center: results[0].geometry.location,
-                styles: myStyles,
-                
-            });
-        },
-        loadSSMap: function(){
-            SSMAP = new google.maps.Map(document.getElementById("ssmap"), {
-                zoom: 13,
-                center: results[0].geometry.location,
-                styles: myStyles,
-        })
-        },
+
         // Post price on a station
         postPrice: async function (id) {
             let currentPrice = this.currentStation.prices[this.currentStation.prices.length - 1].price;
@@ -754,6 +771,7 @@ var app = new Vue({
 // This function is a callback that is given to the google api
 // It is ran when the api has finished loading
 function initMap() {
+    
     // geocoder is for turning an address (1234 E 5678 S) into Latitude and Longitude
     GEOCODER = new google.maps.Geocoder();
 
@@ -774,18 +792,15 @@ function initMap() {
                 center: results[0].geometry.location,
                 styles: myStyles,
             });
-            // }else {
-            //     SSMAP = new google.maps.Map(document.getElementById("ssmap"), {
-            //         zoom: 16,
-            //         //center: this.currentSta
-            //         styles: myStyles,
-            //     });
-            // }
             //add station markers
             app.addMarkers(app.allStations)
-
             // calls vue's initialize map function
             app.initializeMap();
+            console.log(app.currentUserObject)
+            setTimeout(() => {
+                app.initFavColor(app.currentUserObject)
+            }, 250)
+
             //initSSMap();
             break;
         default:
@@ -794,52 +809,3 @@ function initMap() {
     });
 }
 
-// function initSSMap() {
-//     // geocoder is for turning an address (1234 E 5678 S) into Latitude and Longitude
-//     GEOCODER = new google.maps.Geocoder();
-//     console.log("INITSSMAP RAN");
-    
-//     singleStationAddress = app.currentStation.address
-//     //Center on the map on St. George using the Geocoder
-//     GEOCODER.geocode({'address' : "Saint George, UT"}, function (results, status) {
-//         switch (status) {
-//         case "OK":
-//             // creates the map
-//             //console.log(singleStationAddress);
-//             SSMAP = new google.maps.Map(document.getElementById("ssmap"), {
-//                     zoom: 13,
-//                     center: results[0].geometry.location,
-//                     styles: myStyles,
-                    
-//                 });
-//             app.recentMarker.setMap(app.map)
-//             console.log("SSresults", results)
-//             console.log("SSresults [0]", results[0])
-//             // }else {
-//             //     SSMAP = new google.maps.Map(document.getElementById("ssmap"), {
-//             //         zoom: 16,
-//             //         //center: this.currentSta
-//             //         styles: myStyles,
-//             //     });
-//             // }
-//             //add station markers
-//             app.addMarkers(app.allStations)
-//             //map zooms in when marker is clicked
-//             // google.maps.event.addListener(marker,'click',function() {
-//             //     map.setZoom(9);
-//             //     map.setCenter(marker.getPosition());
-//             //   });
-//             // calls vue's initialize map function
-//             app.initializeSSMap();
-//             break;
-//         default:
-//             SSMAP = new google.maps.Map(document.getElementById("ssmap"), {
-//                 zoom: 13,
-//                 center: {lat: 37.0965, lng: -113.5684},
-//                 styles: myStyles,
-//             })
-//             console.error('Geocode was not successful for the following reason: ' + status);
-//         }
-//     });
-
-//}
