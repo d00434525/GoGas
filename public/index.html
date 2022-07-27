@@ -966,6 +966,7 @@
                         <v-text-field
                           label="Enter a comment..."
                           v-model="comment"
+                          @keyup.enter="postReview(currentStation._id);"
                         >
                         </v-text-field>
                       </v-card-text>
