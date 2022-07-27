@@ -457,7 +457,7 @@ var app = new Vue({
 
             if (response.status == 201) {
                 // created successfully
-                this.rating = 0;
+                this.rating = 1;
                 this.comment = "";
                 this.currentStationPrices = [];
                 this.getSingleStation(id);
