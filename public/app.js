@@ -602,7 +602,7 @@ var app = new Vue({
                 let ssmapInterval = setInterval(() => {
                     if (!this.currentStation.address){
                         console.log("previous Marker",this.previousMarker)
-                        console.log(this.currentStation.address)
+                        console.log("current station address",this.currentStation.address)
                         this.markers[this.currentStation.address].setMap(SSMAP)
                         SSMAP.setCenter(this.markers[this.currentStation.address].getPosition())
                         SSMAP.setZoom(15)
@@ -611,9 +611,14 @@ var app = new Vue({
                         clearInterval(ssmapInterval)
                         ssmapInterval = null
                         console.log("interval stopped")
+                        this.markers[this.currentStation.address].setMap(SSMAP)
+                        SSMAP.setCenter(this.markers[this.currentStation.address].getPosition())
+                        SSMAP.setZoom(15)
+                        this.previousMarker = this.currentStation.address
                     }
                 }, "500")
             }else{
+                console.log("else is working")
                 this.markers[this.currentStation.address].setMap(SSMAP)
                 SSMAP.setCenter(this.markers[this.currentStation.address].getPosition())
                 SSMAP.setZoom(15)
