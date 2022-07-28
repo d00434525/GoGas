@@ -770,6 +770,17 @@ var app = new Vue({
                 console.log("Error removing admin status:", response.status);
             }
         },
+
+        // check if station is in favorites
+        isFavorite: function (station) {
+            for (let i = 0; i < this.currentUserObject.favorites.length; i++) {
+                if (this.currentUserObject.favorites[i].station_id == station._id) {
+                    return true;
+                }
+            }
+            return false;
+        }
+
     },
     created: function () {
         this.getSession();

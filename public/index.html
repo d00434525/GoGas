@@ -159,6 +159,29 @@
                       v-for="(station, index) in allStations"
                       :key="index"
                       link
+                      v-if="guest"
+                      @click="getSingleStation(station._id), ssStationMarker()"
+                      @mouseenter = hoverBounce(station)
+                      @mouseleave = stopBounce(station)
+                    >
+                      <v-list-item-content>
+                        <v-list-item-title class="d-flex justify-space-between align-center">
+                          <div>
+                            <v-icon color="#FFB17A">mdi-gas-station</v-icon>{{ station.name }}<br>
+                            {{ station.address }}
+                            <v-rating length="5" background-color="#ffb17a" color="#4f4789" readonly half-increments :value="ratingAverage(station.reviews)"></v-rating>
+                          </div>
+                          <div>
+                            <span class="actual_price"><b>${{ getAllPrices(station) }}<v-icon v-if="guest === false" right @click.stop="addFavorite(station._id), setFavColor(station.address)">mdi-star-plus-outline</v-icon></b></span>
+                          </div>
+                        </v-list-item-title>
+                      </v-list-item-content>
+                    </v-list-item>
+                    <v-list-item
+                      v-for="(station, index) in allStations"
+                      :key="index + 10000000"
+                      link
+                      v-if="!guest && !isFavorite(station)"
                       @click="getSingleStation(station._id), ssStationMarker()"
                       @mouseenter = hoverBounce(station)
                       @mouseleave = stopBounce(station)
