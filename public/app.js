@@ -57,6 +57,7 @@ var app = new Vue({
         allUsers: [],
         allReviews: [],
         adminDialog: false,
+        favorites: [],
 
         // Post station stuff
         newStationName: "",
@@ -779,7 +780,17 @@ var app = new Vue({
                 }
             }
             return false;
-        }
+        },
+
+        // add station from all stations to a new list if it is in favorites
+        getFavorites: function () {;
+            this.favorites = [];
+            this.allStations.forEach(station => {
+                if (this.isFavorite(station)) {
+                    this.favorites.push(station);
+                }
+            });
+        },
 
     },
     created: function () {
@@ -793,7 +804,7 @@ var app = new Vue({
                 sum += parseFloat(this.getAllPrices(station));
             });
             return (sum / this.allStations.length).toFixed(2);
-        }
+        },
     }
 });
 

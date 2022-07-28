@@ -775,5 +775,39 @@ app.put("/user/:user_id/remove_admin", async (req, res) => {
 }
 );
 
+// get user favorites
+app.get("/user/:user_id/favorites", async (req, res) => {
+    // check auth
+    if (!req.user) {
+        res.status(401).json({ message: "Unauthorized" });
+        return;
+    }
+
+    let user;
+
+    // pull user
+    try {
+        user = await User.findById(req.params.user_id);
+    } catch (err) {
+        res.status(500).json({
+            message: `error finding user when getting favorites`,
+            error: err,
+        });
+        return;
+    }
+
+    if (!user) {
+        res.status(404).json({
+            message: `user not found when getting favorites`,
+            user_id: req.params.user_id,
+        });
+        return;
+    }
+
+    // return favorites
+    res.status(200).json(user.favorites);
+}
+);
+
 // Export app
 module.exports = app;
