@@ -132,7 +132,8 @@
                     </v-list-item>
                     <v-divider></v-divider>
                     <v-list-item 
-                    v-for="(favoriteStation) in currentUserObject.favorites" 
+                    v-for="(favoriteStation, index) in currentUserObject.favorites" 
+                    :key="index + 387957438"
                     @click="getSingleStation(favoriteStation.station_id), ssStationMarker();"
                     @mouseenter="favHoverBounce(favoriteStation)"
                     @mouseleave="stopBounce(favoriteStation)"  >
