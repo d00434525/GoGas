@@ -779,12 +779,26 @@ var app = new Vue({
                 }
             }
             return false;
-        }
+        },
 
+        // check all stations prices against user's favorite stations and update the price in favorites
+        updateFavorites: function () {
+            setInterval(() => {
+                for (let i = 0; i < this.currentUserObject.favorites.length; i++) {
+                    for (let j = 0; j < this.allStations.length; j++) {
+                        if (this.currentUserObject.favorites[i].station_id == this.allStations[j]._id) {
+                            this.currentUserObject.favorites[i].station_prices = this.allStations[j].prices;
+                        }
+                    }
+                }
+                console.log("favorites updated");
+            }, 500)
+        },
     },
     created: function () {
         this.getSession();
         this.getStations();
+        this.updateFavorites();
     },
     computed: {
         allStationsAverage: function () {
