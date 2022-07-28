@@ -309,22 +309,24 @@ var app = new Vue({
             } else {
                 address = this.addressInput;
             }
-            
-            // uses geocode api to look up address
-            GEOCODER.geocode( {'address': address}, (results, status) => {
-                if (status == 'OK') {
-                    // centers/zooms map
-                    // this.map.setCenter(results[0].geometry.location);
-                    // this.map.setZoom(16);
-                    
-                    // creates new marker
-                    var marker = new google.maps.Marker({
-                        map: this.map,
-                        position: results[0].geometry.location,
-                        //animation: google.maps.Animation.DROP,
-                        icon: 'http://maps.google.com/mapfiles/ms/icons/red-dot.png'
-                    })
 
+            //checks cache for marker, display marker
+                // uses geocode api to look up address
+                GEOCODER.geocode( {'address': address}, (results, status) => {
+                    if (status == 'OK') {
+                        // centers/zooms map
+                        // this.map.setCenter(results[0].geometry.location);
+                        // this.map.setZoom(16);
+                        
+                        // creates new marker
+                        var marker = new google.maps.Marker({
+                            map: this.map,
+                            position: results[0].geometry.location,
+                            //animation: google.maps.Animation.DROP,
+                            icon: 'http://maps.google.com/mapfiles/ms/icons/red-dot.png'
+                        })
+                
+                        
 
                     
 
@@ -427,8 +429,20 @@ var app = new Vue({
             console.log('current user obj', this.currentUserObject)
         },
         addMarkers: function(stations){
+            //pulls from marker
             stations.forEach(station => {
-                this.addMarker(station.address);
+                console.log(station)
+                if(station.address in this.markersCache){
+                    console.log(station)
+                    station.address.setMap(MAP)
+                    console.log("marker from cache")
+                }
+                //adds to cache, displays marker
+                else{
+                    let marker = this.addMarker(station.address);
+                    this.markers[station.address] = marker
+                    console.log("caching: ", station.address, ":", marker)
+                }
             });
         },
         centerMarker: function () {
