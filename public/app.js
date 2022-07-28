@@ -105,7 +105,6 @@ var app = new Vue({
 
             // Parse response body
             let body = await response.json();
-            console.log(body);
 
             // Check if stations were retrieved
             if (response.status == 200) {
@@ -277,13 +276,10 @@ var app = new Vue({
             // Check if logged in
             if (response.status == 200) {
                 // logged in
-                console.log("logged in");
                 let data = await response.json();
-                console.log(data);
 
                 this.userName = data.email.split("@")[0];
                 this.currentUser = data.id;
-                console.log("Welcome, ", this.userName);
                 this.getUser(this.currentUser);
 
                 this.page = 'main';
@@ -292,9 +288,7 @@ var app = new Vue({
                 this.dialogScreen = 'main';
             } else if (response.status == 401) {
                 // not logged in
-                console.log("not logged in");
                 let data = await response.json();
-                console.log(data);
                 this.loggedIn = false;
             } else {
                 console.log("error GETTING /session", response.status, response);
@@ -394,8 +388,6 @@ var app = new Vue({
         },
         hoverBounce: function(stationObj) {
                 stationAddress = stationObj.address
-                console.log("non fav", stationAddress)
-                console.log("marker", this.markers[stationAddress])
             let marker = this.markers[stationAddress]
 
             // sets the animation
@@ -403,14 +395,11 @@ var app = new Vue({
         },
 
         stopBounce: function(stationObj) {
-            console.log("is it working?")
             //checks whether or not its a favorite. Same as above
             if(stationObj.station_address != undefined){
                 stationAddress = stationObj.station_address
-                console.log("fav", stationAddress)
             }else{
                 stationAddress = stationObj.address
-                console.log("non fav", stationAddress)
             }
             // when the mouse leaves the station area one second will pass, then the event will stop. 
             let marker = this.markers[stationAddress]
@@ -420,11 +409,9 @@ var app = new Vue({
         },
 
         initializeMap: function () {
-            console.log(MAP);
             this.map = MAP;
             this.geocoder = GEOCODER;
             this.mapIsInitialized = true;
-            console.log('current user obj', this.currentUserObject)
         },
         addMarkers: function(stations){
             stations.forEach(station => {
@@ -547,7 +534,6 @@ var app = new Vue({
 
             if (response.status == 200) {
                 let data = await response.json();
-                console.log(data);
                 this.currentUserObject = data;
             } else {
                 console.log("Error getting user:", response.status);
@@ -566,7 +552,6 @@ var app = new Vue({
 
             if (response.status == 200) {
                 // created successfully
-                console.log("added favorite");
                 this.getUser(this.currentUser);
             } else {
                 console.log("Error adding favorite:", response.status);
@@ -585,7 +570,6 @@ var app = new Vue({
 
             if (response.status == 200) {
                 // deleted successfully
-                console.log("removed favorite");
                 this.getUser(this.currentUser);
             } else {
                 console.log("Error removing favorite:", response.status);
@@ -601,8 +585,6 @@ var app = new Vue({
             if(!this.previousMarker){
                 let ssmapInterval = setInterval(() => {
                     if (!this.currentStation.address){
-                        console.log("previous Marker",this.previousMarker)
-                        console.log("current station address",this.currentStation.address)
                         this.markers[this.currentStation.address].setMap(SSMAP)
                         SSMAP.setCenter(this.markers[this.currentStation.address].getPosition())
                         SSMAP.setZoom(15)
@@ -610,7 +592,6 @@ var app = new Vue({
                     }else{
                         clearInterval(ssmapInterval)
                         ssmapInterval = null
-                        console.log("interval stopped")
                         this.markers[this.currentStation.address].setMap(SSMAP)
                         SSMAP.setCenter(this.markers[this.currentStation.address].getPosition())
                         SSMAP.setZoom(15)
@@ -618,7 +599,6 @@ var app = new Vue({
                     }
                 }, "500")
             }else{
-                console.log("else is working")
                 this.markers[this.currentStation.address].setMap(SSMAP)
                 SSMAP.setCenter(this.markers[this.currentStation.address].getPosition())
                 SSMAP.setZoom(15)
@@ -651,7 +631,6 @@ var app = new Vue({
 
             if (response.status == 200) {
                 let data = await response.json();
-                console.log(data);
                 this.allUsers = data;
             } else {
                 console.log("Error getting users:", response.status);
@@ -791,7 +770,6 @@ var app = new Vue({
                         }
                     }
                 }
-                console.log("favorites updated");
             }, 500)
         },
     },
@@ -841,7 +819,6 @@ function initMap() {
             app.addMarkers(app.allStations)
             // calls vue's initialize map function
             app.initializeMap();
-            console.log(app.currentUserObject)
             setTimeout(() => {
                 app.initFavColor(app.currentUserObject)
             }, 250)
