@@ -3,6 +3,7 @@ const URL = 'http://localhost:8080';
 var SSMAP;
 var MAP;
 var GEOCODER;
+let markersCache = require('./memory')
 
 // disables poi's (Points of Interest)
 const myStyles = [
@@ -73,6 +74,8 @@ var app = new Vue({
         ssmap: null,
         geocoder: null,
         bounceAnimation: "",
+        
+
 
         // displays a placeholder if false
         mapIsInitialized: false,
@@ -432,7 +435,8 @@ var app = new Vue({
             //pulls from marker
             stations.forEach(station => {
                 console.log(station)
-                if(station.address in this.markersCache){
+                console.log(markersCache)
+                if(station.address in markersCache){
                     console.log(station)
                     station.address.setMap(MAP)
                     console.log("marker from cache")
@@ -440,6 +444,7 @@ var app = new Vue({
                 //adds to cache, displays marker
                 else{
                     let marker = this.addMarker(station.address);
+                    console.log(marker);
                     this.markers[station.address] = marker
                     console.log("caching: ", station.address, ":", marker)
                 }
